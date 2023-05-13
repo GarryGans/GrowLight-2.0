@@ -8,4 +8,3 @@ All work and tested.
 
 Created with Platformio via VSCode.
 
-If you don't use Platformio, you need /lib and /src folders
