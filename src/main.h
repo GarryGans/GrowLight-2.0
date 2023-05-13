@@ -10,9 +10,6 @@
 #define holdSpeed 50
 #define holdDelay 500
 
-// byte startPinBright = 10; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
-// byte startPinLamp = 12;
-
 // Mega Ver.
 byte startPinBright = 2; // 198 ~ 24 QuantumBoard 0.30 ~ 2.70
 byte startPinLamp = 22;
