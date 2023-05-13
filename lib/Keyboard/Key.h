@@ -106,6 +106,7 @@ public:
 
     boolean ok();
     boolean valChange();
+    
     // boolean valChange(int &val, int min, int max);
 
     boolean navigation();
