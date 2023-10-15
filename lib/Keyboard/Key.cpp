@@ -301,7 +301,8 @@ boolean Key::chekSet(Screen screen)
 
 void Key::setSpeed()
 {
-    if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
+    // if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
+    if (justPressed() && getNum == 10)
     {
         autoMove = false;
 
@@ -346,7 +347,9 @@ boolean Key::setWatch()
 
 boolean Key::spectrumReDuration()
 {
-    if ((justPressed() && getNum == 14) || autoOk(duration))
+    // if ((justPressed() && getNum == 14) || autoOk(duration))
+    if (justPressed() && getNum == 14)
+
     {
         autoMove = false;
 
@@ -368,7 +371,7 @@ boolean Key::spectrumReDuration()
 boolean Key::changeBright()
 {
     // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
-    if ((justPressed() && getNum == 7))
+    if (justPressed() && getNum == 7)
 
     {
         autoMove = false;
@@ -407,7 +410,8 @@ boolean Key::changeBright()
 
 boolean Key::dayReduration()
 {
-    if ((justPressed() && getNum == 2) || autoOk(dayDuration))
+    // if ((justPressed() && getNum == 2) || autoOk(dayDuration))
+    if (justPressed() && getNum == 2)
     {
         autoMove = false;
 
