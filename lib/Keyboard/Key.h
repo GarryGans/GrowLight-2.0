@@ -93,11 +93,11 @@ public:
     void menuScreen(Screen start, Screen end);
 
     boolean autoOk(Screen screen);
-    void setScreens();
+    // void setScreens();
     boolean chekSet(Screen screen);
     void keyCommands();
     void idChange();
-    void setSpec();
+    // void setSpec();
 
     void autoScreenMove();
     void manualChangeScreen();

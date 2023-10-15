@@ -455,14 +455,18 @@ void Key::manualSwitchLight()
 {
     if (justPressed() && getNum == 1)
     {
+        Serial.println("manual");
         if (chekSet(manual))
         {
+            Serial.println("UNmanual");
             autoMove = true;
             screen = lamp;
         }
 
         else
         {
+
+            Serial.println("manual2");
             autoMove = false;
 
             resetManualBright = true;
@@ -473,7 +477,7 @@ void Key::manualSwitchLight()
 
     if (screen == manual)
     {
-        if (justPressed() && getNum == 1)
+        if (justPressed() && getNum == 9)
         {
             if (!buttonSwitch[id])
             {
