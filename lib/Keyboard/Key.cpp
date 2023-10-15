@@ -1,5 +1,7 @@
 #include "Key.h"
 
+Timer timer[3];
+
 Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
 {
 }
@@ -16,7 +18,7 @@ boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        // static byte a = 5;
+        static byte a = 5;
 
         if (timer[0].ready(a, resetCounter))
         {
@@ -94,9 +96,9 @@ void Key::idChange()
 
 void Key::autoScreenMove()
 {
-    if (screen == lamp || screen == start)
+    if (screen == lamp)
     {
-        // static byte a = 5;
+        static byte b = 3;
 
         if (autoMove && timer[1].ready(b, navigation()))
         {
@@ -214,6 +216,7 @@ boolean Key::valChange(T &val, T min, T max)
             return true;
         }
     }
+
     resetCounter = false;
 
     return false;
@@ -512,30 +515,17 @@ boolean Key::allBrigh(byte &val, byte min, byte max)
     if (screen == lamp && valChange(val, min, max))
     {
         screen = bright;
-        resetCounter = true;
     }
 
     if (autoOk(bright))
     {
         writeAllBright = true;
-        screen = lamp;
     }
 
     if (screen == bright)
     {
-        if (valChange(val, min, max))
-        {
-            resetCounter = true;
-        }
-        else
-        {
-            resetCounter = false;
-        }
-
         return true;
     }
-
-    resetCounter = false;
 
     return false;
 }
