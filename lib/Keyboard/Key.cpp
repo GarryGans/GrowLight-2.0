@@ -319,8 +319,8 @@ void Key::setSpeed()
 
 boolean Key::setWatch()
 {
-    if ((justPressed() && getNum == 3) || autoOk(watch))
-    // if ((justPressed() && getNum == 3))
+    // if ((justPressed() && getNum == 3) || autoOk(watch))
+    if ((justPressed() && getNum == 3))
     {
         autoMove = false;
 
@@ -362,7 +362,9 @@ boolean Key::spectrumReDuration()
 
 boolean Key::changeBright()
 {
-    if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
+    // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
+    if ((justPressed() && getNum == 7) )
+
     {
         autoMove = false;
 
@@ -451,7 +453,7 @@ void Key::skipEnable(boolean &skip)
 
 void Key::manualSwitchLight()
 {
-    if (isHold() && getNum == 1)
+    if (justPressed() && getNum == 1)
     {
         if (chekSet(manual))
         {
@@ -463,7 +465,6 @@ void Key::manualSwitchLight()
         {
             autoMove = false;
 
-            // resetManualPot = true;
             resetManualBright = true;
 
             screen = manual;
