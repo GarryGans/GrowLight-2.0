@@ -16,10 +16,11 @@ boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        static byte a = 5;
+        // static byte a = 5;
 
-        if (timer.ready(a, resetCounter))
+        if (timer[0].ready(a, resetCounter))
         {
+            screen = lamp;
             return true;
         }
     }
@@ -94,14 +95,14 @@ void Key::autoScreenMove()
 {
     if (screen == lamp || screen == start)
     {
-        static byte a = 5;
+        // static byte a = 5;
 
-        if (autoMove && timer.ready(a, navigation()))
+        if (autoMove && timer[1].ready(b, navigation()))
         {
             idChange();
         }
 
-        if (!autoMove && timer.ready(a, navigation()))
+        if (!autoMove && timer[2].ready(b, navigation()))
         {
             autoMove = true;
         }
@@ -141,16 +142,22 @@ boolean Key::navigation()
     {
         if (getNum == 8)
         {
+            resetCounter = true;
+
             direction = FORWARD;
             return true;
         }
 
         else if (getNum == 12)
         {
+            resetCounter = true;
+
             direction = BACK;
             return true;
         }
     }
+
+    resetCounter = false;
 
     return false;
 }
@@ -161,6 +168,8 @@ boolean Key::valChange()
     {
         if (getNum == 6)
         {
+            resetCounter = true;
+
             act = MINUS;
 
             return true;
@@ -168,11 +177,15 @@ boolean Key::valChange()
 
         else if (getNum == 15)
         {
+            resetCounter = true;
+
             act = PLUS;
 
             return true;
         }
     }
+
+    resetCounter = false;
 
     return false;
 }
@@ -184,6 +197,8 @@ boolean Key::valChange(T &val, T min, T max)
     {
         if (getNum == 6 && val > min)
         {
+            resetCounter = true;
+
             val--;
 
             return true;
@@ -191,11 +206,14 @@ boolean Key::valChange(T &val, T min, T max)
 
         else if (getNum == 15 && val < max)
         {
+            resetCounter = true;
+
             val++;
 
             return true;
         }
     }
+    resetCounter = false;
 
     return false;
 }
@@ -302,6 +320,7 @@ void Key::setSpeed()
 boolean Key::setWatch()
 {
     if ((justPressed() && getNum == 3) || autoOk(watch))
+    // if ((justPressed() && getNum == 3))
     {
         autoMove = false;
 
@@ -500,6 +519,8 @@ boolean Key::allBrigh(byte &val, byte min, byte max)
 
         return true;
     }
+
+    resetCounter = false;
 
     return false;
 }

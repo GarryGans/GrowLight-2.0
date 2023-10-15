@@ -15,7 +15,10 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    Timer timer;
+    Timer timer[3];
+
+     byte a = 5;
+     byte b = 5;
 
     enum Screen
     {
@@ -82,7 +85,7 @@ public:
     Key();
     ~Key();
 
-    //void setPresets() // Vega, Bloom(time, bright, spectr)
+    // void setPresets() // Vega, Bloom(time, bright, spectr)
     Screen changeScreen();
 
     void checkKeyboard();
@@ -106,7 +109,7 @@ public:
 
     boolean ok();
     boolean valChange();
-    
+
     // boolean valChange(int &val, int min, int max);
 
     boolean navigation();

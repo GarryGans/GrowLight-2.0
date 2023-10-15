@@ -12,7 +12,7 @@ class Bright
     friend class Screen;
 
 private:
-    Timer timer;
+    Timer timer[2];
 
     byte speed;
 

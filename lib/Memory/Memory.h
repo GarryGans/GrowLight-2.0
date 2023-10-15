@@ -10,7 +10,7 @@
 class Memory
 {
 private:
-    Timer timer;
+    // Timer timer;
 
     int startAddr = 0;
     byte start_addr_Size = 0;

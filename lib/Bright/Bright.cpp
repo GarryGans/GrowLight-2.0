@@ -50,7 +50,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, byte i)
         {
             setMinBright(pin[i], bright[i], riseBright[i]);
 
-            if (timer.wait(speed * 10) && bright[i] < maxBright[i])
+            if (timer[0].wait(speed * 10) && bright[i] < maxBright[i])
             {
                 bright[i]++;
                 analogWrite(pin[i], (maxPWM - bright[i]));
@@ -59,7 +59,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.wait(speed * 10) && bright[i] > setBright[i])
+            if (timer[1].wait(speed * 10) && bright[i] > setBright[i])
             {
                 bright[i]--;
                 analogWrite(pin[i], (maxPWM - bright[i]));
