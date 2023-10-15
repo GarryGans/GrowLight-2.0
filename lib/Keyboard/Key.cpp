@@ -74,9 +74,10 @@ void Key::keyCommands()
 {
     read();
 
-    manualSwitchLight();
     autoScreenMove();
     manualChangeScreen();
+
+    manualSwitchLight();
 
     setSpeed();
 }
@@ -264,7 +265,7 @@ boolean Key::chekSet(Screen screen)
             break;
 
         case manual:
-            // resetManualPot = true;
+            Serial.println("case manual");
             resetManualBright = true;
 
             for (byte i = 0; i < lampAmount; i++)
@@ -286,9 +287,13 @@ boolean Key::chekSet(Screen screen)
         }
 
         if (this->screen != screen)
+        {
             return false;
-
-        return true;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     return false;
@@ -363,7 +368,7 @@ boolean Key::spectrumReDuration()
 boolean Key::changeBright()
 {
     // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
-    if ((justPressed() && getNum == 7) )
+    if ((justPressed() && getNum == 7))
 
     {
         autoMove = false;
@@ -422,11 +427,11 @@ boolean Key::dayReduration()
 
 boolean Key::setVoltage()
 {
-    if (justPressed() && getNum == 4)
-    {
-        screen = voltage;
-        return true;
-    }
+    // if (justPressed() && getNum == 4)
+    // {
+    //     screen = voltage;
+    //     return true;
+    // }
 
     return false;
 }
@@ -434,6 +439,7 @@ boolean Key::setVoltage()
 void Key::skipEnable(boolean &skip)
 {
     if (screen == lamp && ok())
+
     {
         autoMove = false;
 
@@ -491,10 +497,10 @@ void Key::manualSwitchLight()
         }
     }
 
-    if (screen == voltage && ok())
-    {
-        writeBright = true;
-    }
+    // if (screen == voltage && ok())
+    // {
+    //     writeBright = true;
+    // }
 }
 
 boolean Key::allBrigh(byte &val, byte min, byte max)
