@@ -22,7 +22,7 @@ private:
     {
         start,
 
-        lamp,
+        lamp, // Show each Spectr info
 
         manual, // Manual use each lamp for test, on_off bright_level
 
