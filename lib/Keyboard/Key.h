@@ -21,18 +21,28 @@ private:
     enum Screen
     {
         start,
+
         lamp,
+
         manual,
+
         duration,
+
         maxBright,
         riseBright,
         setBright,
+
         sunSpeed,
+
         dayDuration,
+
         watch,
+
         speed,
         interval,
+
         bright,
+
         voltage
     } screen = start;
 
