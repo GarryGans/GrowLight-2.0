@@ -261,7 +261,7 @@ boolean Key::chekSet(Screen screen)
             reBright[id] = false;
             break;
 
-        case dayDuration:
+        case sunDuration:
             writeDay = true;
             correctDay = true;
             reDay = false;
@@ -413,18 +413,18 @@ boolean Key::changeBright()
 
 boolean Key::dayReduration()
 {
-    // if ((justPressed() && getNum == 2) || autoOk(dayDuration))
+    // if ((justPressed() && getNum == 2) || autoOk(sunDuration))
     if (justPressed() && getNum == 2)
     {
         autoMove = false;
 
-        if (chekSet(dayDuration))
+        if (chekSet(sunDuration))
         {
             screen = lamp;
         }
         else
         {
-            screen = dayDuration;
+            screen = sunDuration;
             reDay = true;
         }
     }

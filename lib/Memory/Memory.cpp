@@ -145,7 +145,7 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachTime(watch);
     readEachSkip(watch);
     byte max = 255;
-    read(speed_addr, bright.speed, zero, max);
+    // read(speed_addr, bright.speed, zero, max);
     read(interval_addr, watch.interval, int(zero), int(max));
     read(allBright_addr, bright.allBrigh, zero, bright.maxAllBright);
 }

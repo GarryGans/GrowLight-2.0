@@ -14,7 +14,7 @@ class Bright
 private:
     Timer timer[2];
 
-    byte speed;
+    byte speed[lampAmount];
 
     byte pin[lampAmount];
     byte bright[lampAmount];

@@ -452,7 +452,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
 void Screen::sunTimeScreen(Watch &watch, Key &key)
 {
-    if (key.screen == key.dayDuration)
+    if (key.screen == key.sunDuration)
     {
         firstPage();
         do
