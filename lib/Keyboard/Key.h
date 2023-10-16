@@ -24,25 +24,25 @@ private:
 
         lamp,
 
-        manual,
+        manual, // Manual use each lamp for test, on_off bright_level
 
-        duration,
+        duration, // Spectr duration time by watch
 
         maxBright,
         riseBright,
         setBright,
 
-        sunSpeed,
+        // In  Future realise with encoder
+        sunBright,
+        sunColor,
 
         dayDuration,
 
         watch,
 
-        speed,
-        interval,
+        speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
+        interval, // ManualInterval or AutoInterval or SpecBySpec  or TugetherGroup or Together(NO interval is OFF)
 
-        bright,
-        
         voltage
     } screen = start;
 

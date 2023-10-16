@@ -514,15 +514,15 @@ boolean Key::allBrigh(byte &val, byte min, byte max)
 {
     if (screen == lamp && valChange(val, min, max))
     {
-        screen = bright;
+        screen = sunBright;
     }
 
-    if (autoOk(bright))
+    if (autoOk(sunBright))
     {
         writeAllBright = true;
     }
 
-    if (screen == bright)
+    if (screen == sunBright)
     {
         return true;
     }
