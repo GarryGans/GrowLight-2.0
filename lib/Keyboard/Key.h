@@ -42,7 +42,6 @@ private:
         interval,
 
         bright,
-
         voltage
     } screen = start;
 
