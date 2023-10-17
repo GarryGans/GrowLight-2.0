@@ -7,10 +7,11 @@
 #include <Timer.h>
 #include <Data.h>
 
-#define spectrumTime 14
-#define spectrumBright 7
+#define keyTime 14
+#define keyBright 7
 #define sunTime 2
-
+#define keySpeed 4
+#define keyWatch 3
 
 class Key : public AmperkaKB
 {
@@ -36,8 +37,8 @@ private:
 
         duration, // Each  Spectr duration time by watch
 
-        setBright,
         riseBright,
+        setBright,
         maxBright,
         speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
 

@@ -305,7 +305,7 @@ boolean Key::chekSet(Screen screen)
 void Key::setSpeed()
 {
     // if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
-    if (justPressed() && getNum == 10)
+    if (justPressed() && getNum == keySpeed)
     {
         autoMove = false;
 
@@ -329,7 +329,7 @@ void Key::setSpeed()
 boolean Key::setWatch()
 {
     // if ((justPressed() && getNum == 3) || autoOk(watch))
-    if ((justPressed() && getNum == 3))
+    if ((justPressed() && getNum == keyWatch))
     {
         autoMove = false;
 
@@ -351,7 +351,7 @@ boolean Key::setWatch()
 boolean Key::spectrumReDuration()
 {
     // if ((justPressed() && getNum == 14) || autoOk(duration))
-    if (justPressed() && getNum == spectrumTime)
+    if (justPressed() && getNum == keyTime)
 
     {
         autoMove = false;
@@ -374,7 +374,7 @@ boolean Key::spectrumReDuration()
 boolean Key::changeBright()
 {
     // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
-    if (justPressed() && getNum == spectrumBright)
+    if (justPressed() && getNum == keyBright)
 
     {
         autoMove = false;
@@ -508,16 +508,16 @@ void Key::manualSwitchLight()
         if (justPressed() && getNum == 9)
         {
             Serial.println("manSw");
-            
-            if (!buttonSwitch[id])
-            {
-                buttonSwitch[id] = true;
-            }
 
-            else
-            {
-                buttonSwitch[id] = false;
-            }
+            // if (!buttonSwitch[id])
+            // {
+            //     buttonSwitch[id] = true;
+            // }
+
+            // else
+            // {
+            //     buttonSwitch[id] = false;
+            // }
         }
     }
 
