@@ -351,7 +351,7 @@ boolean Key::setWatch()
 boolean Key::spectrumReDuration()
 {
     // if ((justPressed() && getNum == 14) || autoOk(duration))
-    if (justPressed() && getNum == 14)
+    if (justPressed() && getNum == spectrumTime)
 
     {
         autoMove = false;
@@ -374,7 +374,7 @@ boolean Key::spectrumReDuration()
 boolean Key::changeBright()
 {
     // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
-    if (justPressed() && getNum == 7)
+    if (justPressed() && getNum == spectrumBright)
 
     {
         autoMove = false;
@@ -392,6 +392,21 @@ boolean Key::changeBright()
 
     else if (navigation() && (screen == maxBright || screen == riseBright || screen == setBright))
     {
+        // if (direction == FORWARD)
+        // {
+        //     if (changeScreen() > setBright)
+        //     {
+        //         screen = maxBright;
+        //     }
+        // }
+        // if (direction == BACK)
+        // {
+        //     if (changeScreen() < maxBright)
+        //     {
+        //         screen = setBright;
+        //     }
+        // }
+
         if (direction == FORWARD)
         {
             if (changeScreen() > setBright)
@@ -414,7 +429,7 @@ boolean Key::changeBright()
 boolean Key::dayReduration()
 {
     // if ((justPressed() && getNum == 2) || autoOk(sunDuration))
-    if (justPressed() && getNum == 2)
+    if (justPressed() && getNum == sunTime)
     {
         autoMove = false;
 

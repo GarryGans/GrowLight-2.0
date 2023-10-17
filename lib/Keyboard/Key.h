@@ -1,10 +1,16 @@
 #ifndef Key_H
 #define Key_H
 
+
 #include <Arduino.h>
 #include <AmperkaKB.h>
 #include <Timer.h>
 #include <Data.h>
+
+#define spectrumTime 14
+#define spectrumBright 7
+#define sunTime 2
+
 
 class Key : public AmperkaKB
 {
@@ -30,11 +36,11 @@ private:
 
         duration, // Each  Spectr duration time by watch
 
-        maxBright,
-        riseBright,
         setBright,
-
+        riseBright,
+        maxBright,
         speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
+
         interval, // ManualInterval or AutoInterval or SpecBySpec  or TugetherGroup or Together(NO interval is OFF)
 
         sunDuration,
