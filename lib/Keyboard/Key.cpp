@@ -224,11 +224,11 @@ boolean Key::valChange(T &val, T min, T max)
 
 boolean Key::ok()
 {
-    if (justPressed() && getNum == 9)
-    {
-        return true;
-    }
-    return false;
+    // if (justPressed() && getNum == 9)
+    // {
+    //     return true;
+    // }
+    // return false;
 }
 
 boolean Key::chekSet(Screen screen)
@@ -507,6 +507,8 @@ void Key::manualSwitchLight()
     {
         if (justPressed() && getNum == 9)
         {
+            Serial.println("manSw");
+            
             if (!buttonSwitch[id])
             {
                 buttonSwitch[id] = true;
