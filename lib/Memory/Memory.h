@@ -31,7 +31,8 @@ private:
     int interval_addr;
     int speed_addr;
 
-    byte zero = 0;
+    int max = 256;
+    int zero = 0;
 
 public:
     Memory();
@@ -59,10 +60,10 @@ public:
 
     void writeEachTime(Watch &watch);
 
-    void writeBright(Bright &bright, byte id);
+    void writeBright(Bright &bright, Key &key);
 
-    void writeEachBright(Bright &bright);
-    
+    void writeEachBright(Bright &bright, Key &key);
+
     void writeChanges(Watch &watch, Bright &bright, Key &key);
 };
 

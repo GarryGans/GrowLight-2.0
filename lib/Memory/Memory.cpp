@@ -77,18 +77,31 @@ void Memory::writeEachTime(Watch &watch)
     }
 }
 
-void Memory::writeBright(Bright &bright, byte id)
+void Memory::writeBright(Bright &bright, Key &key)
 {
-    EEPROM.put(setBright_addr[id], bright.setBright[id]);
-    EEPROM.put(riseBright_addr[id], bright.riseBright[id]);
-    EEPROM.put(maxBright_addr[id], bright.maxBright[id]);
+    if (key.writeSetBright)
+    {
+        EEPROM.put(setBright_addr[key.id], bright.setBright[key.id]);
+        key.writeSetBright = false;
+    }
+    if (key.writeRiseBright)
+    {
+        EEPROM.put(riseBright_addr[key.id], bright.riseBright[key.id]);
+        key.writeRiseBright = false;
+    }
+    if (key.writeMaxBright)
+    {
+        EEPROM.put(maxBright_addr[key.id], bright.maxBright[key.id]);
+        key.writeMaxBright = false;
+    }
 }
 
-void Memory::writeEachBright(Bright &bright)
+void Memory::writeEachBright(Bright &bright, Key &key)
 {
     for (byte id = 0; id < lampAmount; id++)
     {
-        writeBright(bright, id);
+        key.id = id;
+        writeBright(bright, key);
     }
 }
 
@@ -110,7 +123,7 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 
     else if (key.writeBright)
     {
-        writeBright(bright, key.id);
+        writeBright(bright, key);
 
         key.writeBright = false;
     }
@@ -144,8 +157,8 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
-    byte max = 255;
-    // read(speed_addr, bright.speed, zero, max);
-    read(interval_addr, watch.interval, int(zero), int(max));
-    read(allBright_addr, bright.allBrigh, zero, bright.maxAllBright);
+    
+    read(speed_addr, bright.speed, zero, max);
+    read(interval_addr, watch.interval, zero, max);
+    read(allBright_addr, bright.allBrigh, byte(zero), bright.maxAllBright);
 }

@@ -481,7 +481,7 @@ void Screen::startScreen(Watch &watch, Key &key)
 
         // static Timer timer;
 
-        static byte a = 5;
+        static byte a = 1;
 
         if (timer.ready(a))
         {

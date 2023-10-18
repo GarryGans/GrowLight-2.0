@@ -22,6 +22,25 @@ void Watch::timeFromMinute(int time, byte &hour, byte &minute)
     minute = time;
 }
 
+void Watch::timeFromSecond(int time, byte &hour, byte &minute, byte &second)
+{
+    hour = 0;
+
+    while (time >= 60)
+    {
+        time -= 60;
+        minute++;
+    }
+
+    while (minute >= 60)
+    {
+        minute -= 60;
+        hour++;
+    }
+
+    second = time;
+}
+
 int Watch::timeToMinute(byte setHour, byte setMinute)
 {
     return (setHour * 60 + setMinute);
@@ -85,11 +104,11 @@ void Watch::autoSwitcher(Key &key)
         SetMin = finishMinute[0];
     }
 
-    if (key.screen != key.manual)
+    if (key.screen != key.manual && !key.reSetting)
     {
         for (byte i = 0; i < lampAmount; i++)
         {
-            if (!skip[i] && !key.reduration[i])
+            if (!skip[i])
             {
                 start[i] = timeToMinute(startHour[i], startMinute[i]);
                 finish[i] = timeToMinute(finishHour[i], finishMinute[i]);

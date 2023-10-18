@@ -13,7 +13,7 @@
 #define keyManual 1
 
 #define keySunTime 2
-#define keyWatch 3
+#define keyWatch 10
 
 #define keyEscape 0
 #define keyOk 9
@@ -24,7 +24,7 @@
 #define keyBack 12
 
 // #define key 5
-// #define key 10
+#define keySkip 3
 // #define key 11
 // #define key 13
 
@@ -98,7 +98,13 @@ private:
     boolean writeAllBright;
     boolean writeAllColor;
 
+    boolean writeMaxBright;
+    boolean writeRiseBright;
+    boolean writeSetBright;
+
     boolean nextScreen;
+
+    boolean reSetting;
 
     boolean reBright[lampAmount];
 
@@ -126,7 +132,6 @@ public:
 
     boolean autoOk(Screen screen);
     // void setScreens();
-    boolean chekSet(Screen screen);
     void keyCommands();
     void idChange();
     // void setSpec();

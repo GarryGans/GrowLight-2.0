@@ -65,6 +65,7 @@ public:
     void setInterval(Key &key);
 
     void timeFromMinute(int time, byte &hour, byte &minute);
+    void timeFromSecond(int time, byte &hour, byte &minute, byte &second);
     int nowTime();
     int timeToMinute(byte setHour, byte setMinute);
     void autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean &brightDown);

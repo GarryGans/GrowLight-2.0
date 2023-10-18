@@ -14,7 +14,7 @@ class Bright
 private:
     Timer timer[2];
 
-    byte speed;
+    int speed;
 
     byte pin[lampAmount];
     byte bright[lampAmount];
@@ -59,7 +59,6 @@ public:
     void changeBright(Key &key, Watch &watch);
 
     void setSetBright(byte &bright, Key &key, byte min, byte max);
-    void setRiseBright(byte &brightRise, Key &key, byte min, byte max);
     void changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max);
 
     boolean setAllBrigh(Key &key);
