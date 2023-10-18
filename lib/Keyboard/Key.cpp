@@ -129,7 +129,7 @@ void Key::manualChangeScreen()
 
 boolean Key::navigation()
 {
-    if (onHold() || justPressed())
+    if (clickOrHold())
     {
         if (getNum == keyForward)
         {
@@ -155,7 +155,7 @@ boolean Key::navigation()
 
 boolean Key::valChange()
 {
-    if (onHold() || justPressed())
+    if (clickOrHold())
     {
         if (getNum == keyDown)
         {
@@ -233,6 +233,7 @@ boolean Key::ok()
 {
     if (click(keyOk))
     {
+        Serial.println("ok");
         return true;
     }
     return false;
@@ -462,13 +463,16 @@ void Key::manualSwitchLight()
     {
         if (ok())
         {
+            Serial.println("sw");
             if (!buttonSwitch[id])
             {
                 buttonSwitch[id] = true;
+                Serial.println("ON");
             }
 
             else
             {
+                Serial.println("OFF");
                 buttonSwitch[id] = false;
             }
         }
@@ -482,22 +486,32 @@ void Key::manualSwitchLight()
 
 boolean Key::dayReduration()
 {
-    if (click(keySunTime) && screen == lamp)
+    // if (click(keySunTime) && nextScreen && screen == sunColor)
+    // {
+    //     nextScreen = false;
+    // }
+
+    // else
+    if (click(keySunTime) && (screen == lamp || screen == sunColor) && !nextScreen)
     {
         autoMove = false;
         screen = sunDuration;
         reDay = true;
-        nextScreen = true;
+        // nextScreen = true;
     }
 
-    else if (reDay && escape())
+     if (reDay && escape())
     {
         reDay = false;
         screen = lamp;
     }
 
-    if (chekSet(sunDuration) && ok())
+     if (ok() && screen == sunDuration)
+    // if (ok() && reDay)
     {
+        writeDay = true;
+        correctDay = true;
+        reDay = false;
         screen = lamp;
     }
 
@@ -506,50 +520,62 @@ boolean Key::dayReduration()
 
 boolean Key::allBrigh(byte &val, byte min, byte max)
 {
-    if (click(keySunTime)  && screen == sunDuration)
-    {
-        screen = sunBright;
-    }
+    // if (click(keySunTime) && nextScreen && screen == sunDuration)
+    // {
+    //     nextScreen = false;
+    // }
 
-    if (ok())
-    {
-        writeAllBright = true;
-    }
+    // else if (click(keySunTime) && screen == sunDuration && !nextScreen)
+    // {
+    //     screen = sunBright;
+    //     nextScreen = true;
+    // }
 
-    if (chekSet(sunBright) && ok())
-    {
-        screen = lamp;
-    }
+    // if (ok())
+    // {
+    //     writeAllBright = true;
+    // }
 
-    if (screen == sunBright)
-    {
-        return true;
-    }
+    // if (chekSet(sunBright) && ok())
+    // {
+    //     screen = lamp;
+    // }
+
+    // if (screen == sunBright)
+    // {
+    //     return true;
+    // }
 
     return false;
 }
 
 boolean Key::allColor(byte &val, byte min, byte max)
 {
-    if (screen == sunBright  && click(keySunTime))
-    {
-        screen = sunColor;
-    }
+    // if (click(keySunTime) && nextScreen && screen == sunBright)
+    // {
+    //     nextScreen = false;
+    // }
 
-    if (ok())
-    {
-        writeAllColor = true;
-    }
+    // else if (screen == sunBright && click(keySunTime) && !nextScreen)
+    // {
+    //     screen = sunColor;
+    //     nextScreen = true;
+    // }
 
-    if (chekSet(sunColor) && ok())
-    {
-        screen = lamp;
-    }
+    // if (ok())
+    // {
+    //     writeAllColor = true;
+    // }
 
-    if (screen == sunColor)
-    {
-        return true;
-    }
+    // if (chekSet(sunColor) && ok())
+    // {
+    //     screen = lamp;
+    // }
+
+    // if (screen == sunColor)
+    // {
+    //     return true;
+    // }
 
     return false;
 }
@@ -563,7 +589,7 @@ void Key::keyCommands()
 
     manualSwitchLight();
 
-    dayReduration();
+    // dayReduration();
 
     setSpeed();
 }
