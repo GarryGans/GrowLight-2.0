@@ -246,42 +246,52 @@ boolean Key::chekSet(Screen screen)
         switch (this->screen)
         {
         case watch:
+            Serial.println("case watch");
             setDateTime = true;
             break;
 
         case duration:
+            Serial.println("case duration");
             writeTime = true;
             reduration[id] = false;
             break;
 
         case maxBright:
+            Serial.println("case maxBright");
             writeBright = true;
             reBright[id] = false;
             break;
 
         case riseBright:
+            Serial.println("case riseBright");
             writeBright = true;
             reBright[id] = false;
             break;
 
         case setBright:
+            Serial.println("case setBright");
             writeBright = true;
             reBright[id] = false;
             break;
 
         case sunDuration:
+            Serial.println("case sunDuration");
             writeDay = true;
             correctDay = true;
             reDay = false;
             break;
 
         case sunBright:
+            Serial.println("case sunBright");
+            writeAllBright = true;
             break;
 
         case sunColor:
+            Serial.println("case sunColor");
             break;
 
         case manual:
+            Serial.println("case manual");
             resetManualBright = true;
 
             for (byte i = 0; i < lampAmount; i++)
@@ -289,11 +299,13 @@ boolean Key::chekSet(Screen screen)
             break;
 
         case interval:
+            Serial.println("case interval");
             writeSpeed = true;
             writeInterval = true;
             break;
 
         case speed:
+            Serial.println("case speed");
             writeSpeed = true;
             writeInterval = true;
             break;
@@ -302,12 +314,9 @@ boolean Key::chekSet(Screen screen)
             break;
         }
 
-        if (this->screen != screen)
+        if (this->screen == screen)
         {
-            return false;
-        }
-        else
-        {
+            Serial.println("checkSEt");
             return true;
         }
     }
@@ -486,33 +495,35 @@ void Key::manualSwitchLight()
 
 boolean Key::dayReduration()
 {
-    // if (click(keySunTime) && nextScreen && screen == sunColor)
-    // {
-    //     nextScreen = false;
-    // }
+    if (click(keySunTime) && nextScreen && screen == sunColor)
+    {
+        nextScreen = false;
+    }
 
-    // else
-    if (click(keySunTime) && (screen == lamp || screen == sunColor) && !nextScreen)
+    else if (click(keySunTime) && (screen == lamp || screen == sunColor) && !nextScreen)
     {
         autoMove = false;
         screen = sunDuration;
         reDay = true;
-        // nextScreen = true;
+        nextScreen = true;
     }
 
-     if (reDay && escape())
+    if (reDay && escape())
     {
         reDay = false;
         screen = lamp;
     }
 
-     if (ok() && screen == sunDuration)
-    // if (ok() && reDay)
+    if (ok() && screen == sunDuration)
     {
-        writeDay = true;
-        correctDay = true;
-        reDay = false;
-        screen = lamp;
+        if (chekSet(sunDuration))
+        {
+            // writeDay = true;
+            // correctDay = true;
+            // reDay = false;
+            nextScreen = false;
+            screen = lamp;
+        }
     }
 
     return reDay;
@@ -520,31 +531,30 @@ boolean Key::dayReduration()
 
 boolean Key::allBrigh(byte &val, byte min, byte max)
 {
-    // if (click(keySunTime) && nextScreen && screen == sunDuration)
-    // {
-    //     nextScreen = false;
-    // }
+    if (click(keySunTime) && nextScreen && screen == sunDuration)
+    {
+        nextScreen = false;
+    }
 
-    // else if (click(keySunTime) && screen == sunDuration && !nextScreen)
-    // {
-    //     screen = sunBright;
-    //     nextScreen = true;
-    // }
+    else if (click(keySunTime) && screen == sunDuration && !nextScreen)
+    {
+        screen = sunBright;
+        nextScreen = true;
+    }
 
-    // if (ok())
-    // {
-    //     writeAllBright = true;
-    // }
+    if (screen == sunBright && ok())
+    {
+        if (chekSet(sunBright))
+        {
+            nextScreen = false;
+            screen = lamp;
+        }
+    }
 
-    // if (chekSet(sunBright) && ok())
-    // {
-    //     screen = lamp;
-    // }
-
-    // if (screen == sunBright)
-    // {
-    //     return true;
-    // }
+    if (screen == sunBright)
+    {
+        return true;
+    }
 
     return false;
 }
