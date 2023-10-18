@@ -143,6 +143,7 @@ void Watch::cursorChange(Key &key, byte &cursor)
                 cursor = 0;
             }
             break;
+
         case key.BACK:
             cursor--;
             cursor = constrain(cursor, 0, 3);
