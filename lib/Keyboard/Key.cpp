@@ -72,18 +72,6 @@ void Key::checkKeyboard()
     Serial.println(getNum);
 }
 
-void Key::keyCommands()
-{
-    read();
-
-    autoScreenMove();
-    manualChangeScreen();
-
-    manualSwitchLight();
-
-    setSpeed();
-}
-
 void Key::idChange()
 {
     id++;
@@ -143,7 +131,7 @@ boolean Key::navigation()
 {
     if (onHold() || justPressed())
     {
-        if (getNum == 8)
+        if (getNum == keyForward)
         {
             resetCounter = true;
 
@@ -151,7 +139,7 @@ boolean Key::navigation()
             return true;
         }
 
-        else if (getNum == 12)
+        else if (getNum == keyBack)
         {
             resetCounter = true;
 
@@ -169,7 +157,7 @@ boolean Key::valChange()
 {
     if (onHold() || justPressed())
     {
-        if (getNum == 6)
+        if (getNum == keyDown)
         {
             resetCounter = true;
 
@@ -178,7 +166,7 @@ boolean Key::valChange()
             return true;
         }
 
-        else if (getNum == 15)
+        else if (getNum == keyUp)
         {
             resetCounter = true;
 
@@ -196,9 +184,9 @@ boolean Key::valChange()
 template <typename T>
 boolean Key::valChange(T &val, T min, T max)
 {
-    if (onHold() || justPressed())
+    if (clickOrHold())
     {
-        if (getNum == 6 && val > min)
+        if (getNum == keyDown && val > min)
         {
             resetCounter = true;
 
@@ -207,7 +195,7 @@ boolean Key::valChange(T &val, T min, T max)
             return true;
         }
 
-        else if (getNum == 15 && val < max)
+        else if (getNum == keyUp && val < max)
         {
             resetCounter = true;
 
@@ -222,13 +210,32 @@ boolean Key::valChange(T &val, T min, T max)
     return false;
 }
 
+boolean Key::clickOrHold()
+{
+    return (justPressed() || onHold());
+}
+
+boolean Key::click(byte key)
+{
+    return justPressed() && getNum == key;
+}
+
+boolean Key::escape()
+{
+    if (click(keyEscape))
+    {
+        return true;
+    }
+    return false;
+}
+
 boolean Key::ok()
 {
-    // if (justPressed() && getNum == 9)
-    // {
-    //     return true;
-    // }
-    // return false;
+    if (click(keyOk))
+    {
+        return true;
+    }
+    return false;
 }
 
 boolean Key::chekSet(Screen screen)
@@ -267,8 +274,13 @@ boolean Key::chekSet(Screen screen)
             reDay = false;
             break;
 
+        case sunBright:
+            break;
+
+        case sunColor:
+            break;
+
         case manual:
-            Serial.println("case manual");
             resetManualBright = true;
 
             for (byte i = 0; i < lampAmount; i++)
@@ -304,8 +316,7 @@ boolean Key::chekSet(Screen screen)
 
 void Key::setSpeed()
 {
-    // if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
-    if (justPressed() && getNum == keySpeed)
+    if (click(keySpeed))
     {
         autoMove = false;
 
@@ -328,8 +339,7 @@ void Key::setSpeed()
 
 boolean Key::setWatch()
 {
-    // if ((justPressed() && getNum == 3) || autoOk(watch))
-    if ((justPressed() && getNum == keyWatch))
+    if (click(keyWatch))
     {
         autoMove = false;
 
@@ -350,8 +360,7 @@ boolean Key::setWatch()
 
 boolean Key::spectrumReDuration()
 {
-    // if ((justPressed() && getNum == 14) || autoOk(duration))
-    if (justPressed() && getNum == keyTime)
+    if (click(keyTime))
 
     {
         autoMove = false;
@@ -373,78 +382,28 @@ boolean Key::spectrumReDuration()
 
 boolean Key::changeBright()
 {
-    // if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
-    if (justPressed() && getNum == keyBright)
+    if (click(keyBright))
 
     {
         autoMove = false;
 
-        if (chekSet(maxBright) || chekSet(riseBright) || chekSet(setBright))
+        if (chekSet(riseBright) || chekSet(maxBright) || chekSet(setBright))
         {
             screen = lamp;
         }
         else
         {
-            screen = maxBright;
+            screen = riseBright;
             reBright[id] = true;
         }
     }
 
-    else if (navigation() && (screen == maxBright || screen == riseBright || screen == setBright))
+    else if (screen == maxBright || screen == riseBright || screen == setBright)
     {
-        // if (direction == FORWARD)
-        // {
-        //     if (changeScreen() > setBright)
-        //     {
-        //         screen = maxBright;
-        //     }
-        // }
-        // if (direction == BACK)
-        // {
-        //     if (changeScreen() < maxBright)
-        //     {
-        //         screen = setBright;
-        //     }
-        // }
-
-        if (direction == FORWARD)
-        {
-            if (changeScreen() > setBright)
-            {
-                screen = maxBright;
-            }
-        }
-        if (direction == BACK)
-        {
-            if (changeScreen() < maxBright)
-            {
-                screen = setBright;
-            }
-        }
+        menuScreen(riseBright, setBright);
     }
 
     return reBright[id];
-}
-
-boolean Key::dayReduration()
-{
-    // if ((justPressed() && getNum == 2) || autoOk(sunDuration))
-    if (justPressed() && getNum == sunTime)
-    {
-        autoMove = false;
-
-        if (chekSet(sunDuration))
-        {
-            screen = lamp;
-        }
-        else
-        {
-            screen = sunDuration;
-            reDay = true;
-        }
-    }
-
-    return reDay;
 }
 
 boolean Key::setVoltage()
@@ -481,20 +440,16 @@ void Key::skipEnable(boolean &skip)
 
 void Key::manualSwitchLight()
 {
-    if (justPressed() && getNum == 1)
+    if (click(keyManual))
     {
-        Serial.println("manual");
         if (chekSet(manual))
         {
-            Serial.println("UNmanual");
             autoMove = true;
             screen = lamp;
         }
 
         else
         {
-
-            Serial.println("manual2");
             autoMove = false;
 
             resetManualBright = true;
@@ -505,19 +460,17 @@ void Key::manualSwitchLight()
 
     if (screen == manual)
     {
-        if (justPressed() && getNum == 9)
+        if (ok())
         {
-            Serial.println("manSw");
+            if (!buttonSwitch[id])
+            {
+                buttonSwitch[id] = true;
+            }
 
-            // if (!buttonSwitch[id])
-            // {
-            //     buttonSwitch[id] = true;
-            // }
-
-            // else
-            // {
-            //     buttonSwitch[id] = false;
-            // }
+            else
+            {
+                buttonSwitch[id] = false;
+            }
         }
     }
 
@@ -527,16 +480,45 @@ void Key::manualSwitchLight()
     // }
 }
 
+boolean Key::dayReduration()
+{
+    if (click(keySunTime) && screen == lamp)
+    {
+        autoMove = false;
+        screen = sunDuration;
+        reDay = true;
+        nextScreen = true;
+    }
+
+    else if (reDay && escape())
+    {
+        reDay = false;
+        screen = lamp;
+    }
+
+    if (chekSet(sunDuration) && ok())
+    {
+        screen = lamp;
+    }
+
+    return reDay;
+}
+
 boolean Key::allBrigh(byte &val, byte min, byte max)
 {
-    if (screen == lamp && valChange(val, min, max))
+    if (click(keySunTime)  && screen == sunDuration)
     {
         screen = sunBright;
     }
 
-    if (autoOk(sunBright))
+    if (ok())
     {
         writeAllBright = true;
+    }
+
+    if (chekSet(sunBright) && ok())
+    {
+        screen = lamp;
     }
 
     if (screen == sunBright)
@@ -545,4 +527,43 @@ boolean Key::allBrigh(byte &val, byte min, byte max)
     }
 
     return false;
+}
+
+boolean Key::allColor(byte &val, byte min, byte max)
+{
+    if (screen == sunBright  && click(keySunTime))
+    {
+        screen = sunColor;
+    }
+
+    if (ok())
+    {
+        writeAllColor = true;
+    }
+
+    if (chekSet(sunColor) && ok())
+    {
+        screen = lamp;
+    }
+
+    if (screen == sunColor)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void Key::keyCommands()
+{
+    read();
+
+    autoScreenMove();
+    manualChangeScreen();
+
+    manualSwitchLight();
+
+    dayReduration();
+
+    setSpeed();
 }

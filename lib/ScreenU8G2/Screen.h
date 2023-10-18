@@ -54,6 +54,9 @@ public:
 
     void blinkSunTime(Key &key, Watch &watch);
 
+
+    /////// SCREENS 
+
     void timerScreen(Watch &watch, Key &key);
 
     void lampScreen(Watch &watch, Switchers &switchers, Key &key, Bright &bright);
@@ -73,6 +76,7 @@ public:
 
 
     void allBrightScreen(Bright &bright, Key &key);
+    void allColorScreen(Bright &bright, Key &key);
 
     void voltageScreen(Bright &bright, Voltage &voltage, Key &key);
 

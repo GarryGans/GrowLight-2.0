@@ -519,6 +519,35 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
     }
 }
 
+void Screen::allColorScreen(Bright &bright, Key &key)
+{
+    if (bright.setAllColor(key))
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("COLOR", PosX::leftSpace, PosY::upSpace);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(bright.allColor, PosX::leftHalf, PosY::center);
+
+            blinkFrame(bright.allColor, PosX::leftHalf, PosY::centerFrame);
+
+            for (byte i = 0; i < lampAmount; i++)
+            {
+                setHeight(u8g2_font_courB08_tf);
+
+                customY(nextY(lampAmount, i));
+                strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
+            }
+
+        } while (nextPage());
+    }
+}
+
 void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 {
     if (key.screen == key.voltage)
@@ -552,14 +581,19 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
 void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright)
 {
-    lampScreen(watch, switchers, key, bright);
-    brightScreen(bright, key);
-    allBrightScreen(bright, key);
-
     startScreen(watch, key);
+
     setWatchScreen(watch, key);
-    sunTimeScreen(watch, key);
+
+    lampScreen(watch, switchers, key, bright);
+
     timerScreen(watch, key);
+    brightScreen(bright, key);
+
     riseSpeedScreen(bright, key);
     intervalScreen(watch, key);
+
+    sunTimeScreen(watch, key);
+    allBrightScreen(bright, key);
+    allColorScreen(bright, key);
 }

@@ -34,6 +34,9 @@ private:
     byte allBrigh;
     byte maxAllBright = 99;
 
+    byte allColor;
+    byte maxAllColor = 99;
+
     byte maxPWM = 255;
 
 public:
@@ -60,6 +63,7 @@ public:
     void changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max);
 
     boolean setAllBrigh(Key &key);
+    boolean setAllColor(Key &key);
 
     void commands(Watch &watch, Key &key);
 };

@@ -1,7 +1,6 @@
 #ifndef Key_H
 #define Key_H
 
-
 #include <Arduino.h>
 #include <AmperkaKB.h>
 #include <Timer.h>
@@ -9,9 +8,25 @@
 
 #define keyTime 14
 #define keyBright 7
-#define sunTime 2
 #define keySpeed 4
+
+#define keyManual 1
+
+#define keySunTime 2
 #define keyWatch 3
+
+#define keyEscape 0
+#define keyOk 9
+
+#define keyUp 15
+#define keyDown 6
+#define keyForward 8
+#define keyBack 12
+
+// #define key 5
+// #define key 10
+// #define key 11
+// #define key 13
 
 class Key : public AmperkaKB
 {
@@ -38,10 +53,10 @@ private:
         duration, // Each  Spectr duration time by watch
 
         riseBright,
-        setBright,
         maxBright,
-        speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
+        setBright,
 
+        speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
         interval, // ManualInterval or AutoInterval or SpecBySpec  or TugetherGroup or Together(NO interval is OFF)
 
         sunDuration,
@@ -81,6 +96,9 @@ private:
     boolean writeInterval;
     boolean writeSpeed;
     boolean writeAllBright;
+    boolean writeAllColor;
+
+    boolean nextScreen;
 
     boolean reBright[lampAmount];
 
@@ -121,7 +139,11 @@ public:
 
     boolean setVoltage();
 
+    boolean clickOrHold();
+    boolean click(byte key);
+    boolean escape();
     boolean ok();
+
     boolean valChange();
 
     // boolean valChange(int &val, int min, int max);
@@ -134,6 +156,7 @@ public:
     boolean setWatch();
     void setSpeed();
     boolean allBrigh(byte &val, byte min, byte max);
+    boolean allColor(byte &val, byte min, byte max);
 
     template <typename T>
     boolean valChange(T &val, T min, T max);

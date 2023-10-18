@@ -194,7 +194,7 @@ void Watch::spectrumReDuration(Key &key)
 
 void Watch::dayReduration(Key &key)
 {
-    if (key.dayReduration())
+    if (key.screen == key.sunDuration)
     {
         if (cursorDay == 0)
         {
