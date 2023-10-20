@@ -35,6 +35,7 @@ private:
     byte allBrigh;
     const byte maxAllBright = 99;
 
+    const byte minAllColor = 0;
     byte allColor;
     const byte maxAllColor = 99;
 

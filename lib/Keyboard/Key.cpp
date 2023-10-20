@@ -328,7 +328,6 @@ boolean Key::setWatch()
 boolean Key::spectrumReDuration()
 {
     if (click(keyTime))
-
     {
         autoMove = false;
 
@@ -518,6 +517,8 @@ boolean Key::dayReduration()
     {
         Serial.println("case sunDuration");
         writeDay = true;
+        writeAllBright = true;
+        writeAllColor = true;
         correctDay = true;
 
         reDay = false;
@@ -556,7 +557,9 @@ boolean Key::allBrigh()
     if (screen == sunBright && ok())
     {
         Serial.println("case sunBright");
+        writeDay = true;
         writeAllBright = true;
+        writeAllColor = true;
 
         reDay = false;
         nextScreen = false;
@@ -571,7 +574,7 @@ boolean Key::allBrigh()
     return false;
 }
 
-boolean Key::allColor(byte &val, byte min, byte max)
+boolean Key::allColor()
 {
     if (click(keySunTime) && nextScreen && screen == sunBright)
     {
@@ -594,6 +597,8 @@ boolean Key::allColor(byte &val, byte min, byte max)
     if (screen == sunColor && ok())
     {
         Serial.println("case sunColor");
+        writeDay = true;
+        writeAllBright = true;
         writeAllColor = true;
 
         reDay = false;

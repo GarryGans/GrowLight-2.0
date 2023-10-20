@@ -16,6 +16,7 @@ private:
     byte start_addr_Size = 0;
 
     int allBright_addr;
+    int allColor_addr;
 
     int maxBright_addr[lampAmount];
     int riseBright_addr[lampAmount];
@@ -49,10 +50,12 @@ public:
 
     void readEachBright(Bright &bright);
 
-    void write(int &addr, byte &var);
-    void write(int &addr, boolean &var);
+    // void write(int &addr, byte &var);
+    // void write(int &addr, boolean &var);
 
-    void writeAllBright(Bright &bright);
+    // void writeAllBright(Bright &bright);
+
+    // void writeAllColor(Bright &bright);
 
     void writeEachSkip(Watch &watch);
 

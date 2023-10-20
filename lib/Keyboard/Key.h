@@ -153,6 +153,11 @@ public:
 
     // boolean valChange(int &val, int min, int max);
 
+    template <typename T>
+    boolean valChange(T &val, T min, T max);
+
+    boolean valChange(byte &val, byte min, byte max);
+
     boolean navigation();
 
     boolean spectrumReDuration();
@@ -161,12 +166,7 @@ public:
     boolean setWatch();
     void setSpeed();
     boolean allBrigh();
-    boolean allColor(byte &val, byte min, byte max);
-
-    template <typename T>
-    boolean valChange(T &val, T min, T max);
-    
-    boolean valChange(byte &val, byte min, byte max);
+    boolean allColor();
 };
 
 #endif

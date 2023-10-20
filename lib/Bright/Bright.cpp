@@ -229,7 +229,17 @@ boolean Bright::setAllBrigh(Key &key)
 
 boolean Bright::setAllColor(Key &key)
 {
-    return key.allColor(allColor, 0, maxAllColor);
+    if (key.allColor())
+    {
+        if (key.valChange(allColor, minAllColor, maxAllColor))
+        {
+            return true;
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 void Bright::commands(Watch &watch, Key &key)

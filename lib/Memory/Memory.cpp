@@ -114,28 +114,30 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
         key.writeTime = false;
     }
 
-    else if (key.writeDay)
+    if (key.writeDay)
     {
         writeEachTime(watch);
 
         key.writeDay = false;
+
+        Serial.println("writeDay");
     }
 
-    else if (key.writeBright)
+    if (key.writeBright)
     {
         writeBright(bright, key);
 
         key.writeBright = false;
     }
 
-    else if (key.writeSkip)
+    if (key.writeSkip)
     {
         EEPROM.put(skip_addr[key.id], watch.skip[key.id]);
 
         key.writeSkip = false;
     }
 
-    else if (key.writeInterval && key.writeSpeed)
+    if (key.writeInterval && key.writeSpeed)
     {
         EEPROM.put(interval_addr, watch.interval);
 
@@ -145,10 +147,20 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
         key.writeSpeed = false;
     }
 
-    else if (key.writeAllBright)
+    if (key.writeAllBright)
     {
         EEPROM.put(allBright_addr, bright.allBrigh);
         key.writeAllBright = false;
+
+        Serial.println("writeAllBright");
+    }
+
+    if (key.writeAllColor)
+    {
+        EEPROM.put(allColor_addr, bright.allColor);
+        key.writeAllColor = false;
+
+        Serial.println("writeAllColor");
     }
 }
 
@@ -157,8 +169,9 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
-    
+
     read(speed_addr, bright.speed, zero, max);
     read(interval_addr, watch.interval, zero, max);
     read(allBright_addr, bright.allBrigh, byte(zero), bright.maxAllBright);
+    read(allColor_addr, bright.allColor, byte(zero), bright.maxAllColor);
 }
