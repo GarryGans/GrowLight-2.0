@@ -203,6 +203,38 @@ boolean Key::valChange(T &val, T min, T max)
 
             return true;
         }
+
+        // val = constrain(val, min, max);
+    }
+
+    resetCounter = false;
+
+    return false;
+}
+
+boolean Key::valChange(byte &val, byte min, byte max)
+{
+    if (clickOrHold())
+    {
+        if (getNum == keyDown && val > min)
+        {
+            resetCounter = true;
+
+            val--;
+
+            return true;
+        }
+
+        else if (getNum == keyUp && val < max)
+        {
+            resetCounter = true;
+
+            val++;
+
+            return true;
+        }
+
+        // val = constrain(val, min, max);
     }
 
     resetCounter = false;
@@ -501,7 +533,7 @@ boolean Key::dayReduration()
     return false;
 }
 
-boolean Key::allBrigh(byte &val, byte min, byte max)
+boolean Key::allBrigh()
 {
     if (click(keySunTime) && nextScreen && screen == sunDuration)
     {

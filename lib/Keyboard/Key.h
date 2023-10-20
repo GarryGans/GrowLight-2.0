@@ -160,11 +160,13 @@ public:
     boolean dayReduration();
     boolean setWatch();
     void setSpeed();
-    boolean allBrigh(byte &val, byte min, byte max);
+    boolean allBrigh();
     boolean allColor(byte &val, byte min, byte max);
 
     template <typename T>
     boolean valChange(T &val, T min, T max);
+    
+    boolean valChange(byte &val, byte min, byte max);
 };
 
 #endif

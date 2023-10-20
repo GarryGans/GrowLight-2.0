@@ -28,16 +28,17 @@ private:
     byte maxManualBright = maxManual;
 
     byte brightLevel;
-    byte lowLevel = 0;
+    const byte lowLevel = 0;
     byte maxLevel[lampAmount];
 
+    const byte minAllBright = 0;
     byte allBrigh;
-    byte maxAllBright = 99;
+    const byte maxAllBright = 99;
 
     byte allColor;
-    byte maxAllColor = 99;
+    const byte maxAllColor = 99;
 
-    byte maxPWM = 255;
+    const byte maxPWM = 255;
 
 public:
     Bright();

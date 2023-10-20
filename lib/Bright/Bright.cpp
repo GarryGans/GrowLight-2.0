@@ -185,7 +185,6 @@ void Bright::setSetBright(byte &bright, Key &key, byte min, byte max)
     }
 }
 
-
 void Bright::changeBright(Key &key, Watch &watch)
 {
     if (key.changeBright())
@@ -215,12 +214,22 @@ void Bright::changeBright(Key &key, Watch &watch)
 
 boolean Bright::setAllBrigh(Key &key)
 {
-    return key.allBrigh(allBrigh, 0, maxAllBright);
+    if (key.allBrigh())
+    {
+        if (key.valChange(allBrigh, minAllBright, maxAllBright))
+        {
+            return true;
+        }
+        
+        return true;
+    }
+
+    return false;
 }
 
 boolean Bright::setAllColor(Key &key)
 {
-    return key.allColor(allColor,0,maxAllColor);
+    return key.allColor(allColor, 0, maxAllColor);
 }
 
 void Bright::commands(Watch &watch, Key &key)
