@@ -18,7 +18,7 @@ boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        static byte a = 5;
+        byte a = 5;
 
         if (timer[0].ready(a, resetCounter))
         {
@@ -86,7 +86,7 @@ void Key::autoScreenMove()
 {
     if (screen == lamp)
     {
-        static byte b = 3;
+        byte b = 3;
 
         if (autoMove && timer[1].ready(b, navigation()))
         {
@@ -501,6 +501,7 @@ boolean Key::dayReduration()
     {
         autoMove = false;
         reDay = true;
+        reSetting = true;
 
         screen = sunDuration;
         nextScreen = true;
@@ -522,6 +523,8 @@ boolean Key::dayReduration()
         correctDay = true;
 
         reDay = false;
+        reSetting = false;
+
         nextScreen = false;
         screen = lamp;
     }

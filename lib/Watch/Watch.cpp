@@ -96,13 +96,13 @@ void Watch::autoSwitcher(Key &key)
 {
     key.skipEnable(skip[key.id]);
 
-    // if (key.screen != key.sunDuration)
-    // {
-    //     RiseHour = startHour[0];
-    //     RiseMin = startMinute[0];
-    //     SetHour = finishHour[0];
-    //     SetMin = finishMinute[0];
-    // }
+    if (key.screen != key.sunDuration)
+    {
+        RiseHour = startHour[0];
+        RiseMin = startMinute[0];
+        SetHour = finishHour[0];
+        SetMin = finishMinute[0];
+    }
 
     if (key.screen != key.manual && !key.reSetting)
     {
