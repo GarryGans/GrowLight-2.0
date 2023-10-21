@@ -195,7 +195,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            escapeBar(key.ok(), 5);
+            escapeBar(key.ok(), escConter, escSec);
 
         } while (nextPage());
     }

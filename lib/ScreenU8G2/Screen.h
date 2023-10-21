@@ -13,7 +13,6 @@
 #include <EFX.h>
 #include <Voltage.h>
 
-
 class Screen : public EFX
 
 {
@@ -25,6 +24,10 @@ private:
     // const char *advise[2] = {"Set SunTime", "Set MaxBright"};
 
     const String daysOfTheWeek[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+    byte escConter = 128;
+
+    int escSec = 100;
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
@@ -54,8 +57,7 @@ public:
 
     void blinkSunTime(Key &key, Watch &watch);
 
-
-    /////// SCREENS 
+    /////// SCREENS
 
     void timerScreen(Watch &watch, Key &key);
 
@@ -73,7 +75,6 @@ public:
     void riseScreen(Bright &bright, Key &key);
     void maxBrightScreen(Bright &bright, Key &key);
     void brightScreen(Bright &bright, Key &key);
-
 
     void allBrightScreen(Bright &bright, Key &key);
     void allColorScreen(Bright &bright, Key &key);
