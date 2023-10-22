@@ -27,7 +27,16 @@ private:
 
     byte escConter = 128;
 
-    int escSec = 100;
+    int escSec = 10;
+
+    byte padding = 10;
+    int moveSpeed = 10;
+
+    byte paddingShot = 10;
+    int moveSpeedShot = 60;
+
+    byte paddingSkip = 10;
+    int moveSpeedSkip = 6;
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);

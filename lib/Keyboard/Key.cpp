@@ -357,6 +357,10 @@ boolean Key::changeBright()
 {
     if (click(keyBright))
     {
+        // Serial.print("escapeBar: ");
+        // Serial.println(escapeBar);
+
+
         autoMove = false;
 
         if (screen == maxBright)
@@ -395,6 +399,7 @@ boolean Key::changeBright()
             writeRiseBright = true;
             reBright[id] = false;
             reSetting = false;
+            // escapeBar = false;
 
             screen = lamp;
         }
