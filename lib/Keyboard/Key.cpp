@@ -210,6 +210,34 @@ boolean Key::valChange(T &val, T min, T max)
     return false;
 }
 
+boolean Key::valChange(int &val, int min, int max)
+{
+    if (clickOrHold())
+    {
+        if (getNum == keyDown && val > min)
+        {
+            resetCounter = true;
+
+            val--;
+
+            return true;
+        }
+
+        else if (getNum == keyUp && val < max)
+        {
+            resetCounter = true;
+
+            val++;
+
+            return true;
+        }
+    }
+
+    resetCounter = false;
+
+    return false;
+}
+
 boolean Key::valChange(byte &val, byte min, byte max)
 {
     if (clickOrHold())
@@ -363,41 +391,54 @@ boolean Key::changeBright()
     if (screen == maxBright || screen == riseBright || screen == setBright)
     {
         menuScreen(riseBright, setBright);
-    }
 
-    if (ok() || escFrScreen)
-    {
-        if (screen == maxBright)
+        if (ok() || escFrScreen)
         {
             writeBright = true;
-            // reBright[id] = false;
-            // screen = lamp;
-        }
-        else if (screen == riseBright)
-        {
-            writeBright = true;
-            // reBright[id] = false;
-            // screen = lamp;
-        }
 
-        else if (screen == setBright)
-        {
-            writeBright = true;
-            // reBright[id] = false;
-            // screen = lamp;
-        }
-
-        if (writeBright)
-        {
             writeMaxBright = true;
             writeSetBright = true;
             writeRiseBright = true;
+
             reBright[id] = false;
             reSetting = false;
             escFrScreen = false;
             // resetCounter = true;
 
             screen = lamp;
+
+            // if (screen == maxBright)
+            // {
+            //     writeBright = true;
+            //     // reBright[id] = false;
+            //     // screen = lamp;
+            // }
+            // else if (screen == riseBright)
+            // {
+            //     writeBright = true;
+            //     // reBright[id] = false;
+            //     // screen = lamp;
+            // }
+
+            // else if (screen == setBright)
+            // {
+            //     writeBright = true;
+            //     // reBright[id] = false;
+            //     // screen = lamp;
+            // }
+
+            // if (writeBright)
+            // {
+            //     writeMaxBright = true;
+            //     writeSetBright = true;
+            //     writeRiseBright = true;
+            //     reBright[id] = false;
+            //     reSetting = false;
+            //     escFrScreen = false;
+            //     // resetCounter = true;
+
+            //     screen = lamp;
+            // }
         }
     }
 

@@ -158,6 +158,8 @@ public:
     template <typename T>
     boolean valChange(T &val, T min, T max);
 
+    boolean valChange(int &val, int min, int max);
+
     boolean valChange(byte &val, byte min, byte max);
 
     boolean navigation();

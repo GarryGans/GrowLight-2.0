@@ -144,6 +144,7 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
         key.writeInterval = false;
 
         EEPROM.put(speed_addr, bright.speed);
+        
         key.writeSpeed = false;
     }
 

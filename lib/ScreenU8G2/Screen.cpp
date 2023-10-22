@@ -102,7 +102,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
         textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
         brightInfo(bright, key);
 
-        escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
+        // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
     }
 
     else
@@ -174,7 +174,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -199,7 +199,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }

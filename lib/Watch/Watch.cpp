@@ -512,13 +512,9 @@ void Watch::setInterval(Key &key)
 {
     if (key.screen == key.interval)
     {
-        if (key.valChange())
+        if (key.valChange(interval, 0, 90))
         {
-            key.act == key.MINUS ? interval-- : interval++;
-            if (interval < 0)
-                interval = 90;
-            if (interval > 90)
-                interval = 0;
+            interval = constrain(interval, 0, 99);
         }
     }
 }

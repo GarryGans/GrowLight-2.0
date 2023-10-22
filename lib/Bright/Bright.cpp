@@ -105,18 +105,8 @@ void Bright::autoBright(Watch &watch, Key &key)
 
 void Bright::changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max)
 {
-    if (key.valChange())
+    if (key.valChange(bright, min, max))
     {
-        if (key.act == key.MINUS && bright > min)
-        {
-            bright--;
-        }
-
-        else if (key.act == key.PLUS && bright < max)
-        {
-            bright++;
-        }
-
         if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
         {
             this->bright[key.id] = bright;
@@ -167,21 +157,20 @@ void Bright::setRiseSpeed(Key &key)
     }
 }
 
-void Bright::setSetBright(byte &bright, Key &key, byte min, byte max)
+void Bright::setSetBright(byte &bright, Watch &watch, Key &key, byte min, byte max)
 {
-    if (key.valChange())
+    if (key.valChange(bright, min, max))
     {
-        if (key.act == key.MINUS && bright > min)
+        if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
         {
-            bright--;
+            this->bright[key.id] = bright;
+            analogWrite(pin[key.id], (maxPWM - this->bright[key.id]));
         }
 
-        else if (key.act == key.PLUS && bright < max)
+        else if (key.buttonSwitch[key.id])
         {
-            bright++;
+            analogWrite(pin[key.id], (maxPWM - bright));
         }
-
-        bright = constrain(bright, min, max);
     }
 }
 
@@ -198,12 +187,12 @@ void Bright::changeBright(Key &key, Watch &watch)
 
         case key.riseBright:
 
-            setSetBright(riseBright[key.id], key, minManualBright, maxBright[key.id]);
+            setSetBright(riseBright[key.id], watch, key, minManualBright, maxBright[key.id]);
             break;
 
         case key.setBright:
 
-            setSetBright(setBright[key.id], key, minManualBright, maxBright[key.id]);
+            setSetBright(setBright[key.id], watch, key, minManualBright, maxBright[key.id]);
             break;
 
         default:
@@ -220,7 +209,7 @@ boolean Bright::setAllBrigh(Key &key)
         {
             return true;
         }
-        
+
         return true;
     }
 
