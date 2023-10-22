@@ -92,7 +92,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, 0, paddingSkip, moveSpeedSkip);
+        moveString("SKIP", PosX::center, PosY::downSpace, false, paddingSkip, moveSpeedSkip);
     }
 
     else if (key.screen == key.manual)
@@ -102,7 +102,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
         textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
         brightInfo(bright, key);
 
-        escapeBar(key.ok() || key., escConter, key.escFrScreen, true, escSpeed);
+        escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
     }
 
     else
@@ -174,6 +174,8 @@ void Screen::setScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+
         } while (nextPage());
     }
 }
@@ -187,7 +189,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace, 0, padding, moveSpeed);
+            moveString("Set Rise", PosX::center, PosY::upSpace, false, padding, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -221,6 +223,8 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
             blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
+
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -503,7 +507,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, 0, paddingShot, moveSpeedShot);
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, false, paddingShot, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -532,7 +536,7 @@ void Screen::allColorScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("COLOR", PosX::leftSpace, PosY::upSpace, paddingShot, moveSpeedShot);
+            moveString("COLOR", PosX::leftSpace, PosY::upSpace, false, paddingShot, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 

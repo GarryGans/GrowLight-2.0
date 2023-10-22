@@ -26,7 +26,6 @@ private:
     const String daysOfTheWeek[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
     byte escConter = 128;
-
     int escSpeed = 60;
 
     byte padding = 10;

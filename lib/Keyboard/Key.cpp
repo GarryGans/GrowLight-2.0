@@ -69,7 +69,7 @@ void Key::menuScreen(Screen start, Screen end)
 
 void Key::checkKeyboard()
 {
-    Serial.println(getNum);
+    // Serial.println(getNum);
 }
 
 void Key::idChange()
@@ -203,8 +203,6 @@ boolean Key::valChange(T &val, T min, T max)
 
             return true;
         }
-
-        // val = constrain(val, min, max);
     }
 
     resetCounter = false;
@@ -233,8 +231,6 @@ boolean Key::valChange(byte &val, byte min, byte max)
 
             return true;
         }
-
-        // val = constrain(val, min, max);
     }
 
     resetCounter = false;
@@ -265,7 +261,7 @@ boolean Key::ok()
 {
     if (click(keyOk))
     {
-        Serial.println("ok");
+        // Serial.println("ok");
         return true;
     }
     return false;
@@ -279,13 +275,11 @@ void Key::setSpeed()
 
         if (screen == speed)
         {
-            Serial.println("case speed");
             writeSpeed = true;
             screen = lamp;
         }
         else if (screen == interval)
         {
-            Serial.println("case interval");
             writeInterval = true;
             screen = lamp;
         }
@@ -310,7 +304,6 @@ boolean Key::setWatch()
 
         if (screen == watch)
         {
-            Serial.println("case watch");
             setDateTime = true;
             screen = lamp;
         }
@@ -333,7 +326,6 @@ boolean Key::spectrumReDuration()
 
         if (screen == duration)
         {
-            Serial.println("case duration");
             writeTime = true;
             reSetting = false;
 
@@ -355,40 +347,44 @@ boolean Key::spectrumReDuration()
 
 boolean Key::changeBright()
 {
-    if (click(keyBright) ||  escFrScreen)
+    if (click(keyBright))
     {
-        Serial.print("escFrScreen: ");
-        Serial.println(escFrScreen);
+        if (screen == lamp)
+        {
+            screen = riseBright;
+            reBright[id] = true;
+            reSetting = true;
+        }
 
+        // resetCounter = true;
         autoMove = false;
+    }
 
+    if (screen == maxBright || screen == riseBright || screen == setBright)
+    {
+        menuScreen(riseBright, setBright);
+    }
+
+    if (ok() || escFrScreen)
+    {
         if (screen == maxBright)
         {
-            Serial.println("case maxBright");
             writeBright = true;
             // reBright[id] = false;
             // screen = lamp;
         }
         else if (screen == riseBright)
         {
-            Serial.println("case riseBright");
-            writeBright = true;
-            // reBright[id] = false;
-            // screen = lamp;
-        }
-        else if (screen == setBright)
-        {
-            Serial.println("case setBright");
             writeBright = true;
             // reBright[id] = false;
             // screen = lamp;
         }
 
-        else if (screen == lamp)
+        else if (screen == setBright)
         {
-            screen = riseBright;
-            reBright[id] = true;
-            reSetting = true;
+            writeBright = true;
+            // reBright[id] = false;
+            // screen = lamp;
         }
 
         if (writeBright)
@@ -399,17 +395,10 @@ boolean Key::changeBright()
             reBright[id] = false;
             reSetting = false;
             escFrScreen = false;
+            // resetCounter = true;
 
             screen = lamp;
-
-            Serial.print("escFrScreen LAMP: ");
-            Serial.println(escFrScreen);
         }
-    }
-
-    else if (screen == maxBright || screen == riseBright || screen == setBright)
-    {
-        menuScreen(riseBright, setBright);
     }
 
     return reBright[id];
@@ -451,19 +440,22 @@ void Key::manualSwitchLight()
 {
     if (click(keyManual) || escFrScreen)
     {
+        // resetCounter = true;
+
         if (screen == manual)
         {
-            Serial.println("case manual");
             resetManualBright = true;
             escFrScreen = false;
             for (byte i = 0; i < lampAmount; i++)
                 buttonSwitch[i] = 0;
             autoMove = true;
+            // resetCounter = true;
             screen = lamp;
         }
 
         else if (screen == lamp)
         {
+            // resetCounter = true;
             autoMove = false;
 
             resetManualBright = true;
@@ -472,28 +464,25 @@ void Key::manualSwitchLight()
         }
     }
 
-    if (screen == manual)
+    if (screen == manual && ok())
     {
-        if (ok())
-        {
-            Serial.println("sw");
-            if (!buttonSwitch[id])
-            {
-                buttonSwitch[id] = true;
-                Serial.println("ON");
-            }
 
-            else
-            {
-                Serial.println("OFF");
-                buttonSwitch[id] = false;
-            }
+        if (!buttonSwitch[id])
+        {
+            // resetCounter = true;
+            buttonSwitch[id] = true;
+        }
+
+        else
+        {
+            // resetCounter = true;
+            buttonSwitch[id] = false;
         }
     }
 
-    // if (screen == voltage && ok())
+    // else
     // {
-    //     writeBright = true;
+    //     resetCounter = false;
     // }
 }
 
@@ -523,7 +512,6 @@ boolean Key::dayReduration()
 
     if (screen == sunDuration && ok())
     {
-        Serial.println("case sunDuration");
         writeDay = true;
         writeAllBright = true;
         writeAllColor = true;
@@ -566,7 +554,6 @@ boolean Key::allBrigh()
 
     if (screen == sunBright && ok())
     {
-        Serial.println("case sunBright");
         writeDay = true;
         writeAllBright = true;
         writeAllColor = true;
@@ -606,7 +593,6 @@ boolean Key::allColor()
 
     if (screen == sunColor && ok())
     {
-        Serial.println("case sunColor");
         writeDay = true;
         writeAllBright = true;
         writeAllColor = true;
