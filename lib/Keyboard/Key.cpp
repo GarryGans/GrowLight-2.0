@@ -355,11 +355,10 @@ boolean Key::spectrumReDuration()
 
 boolean Key::changeBright()
 {
-    if (click(keyBright))
+    if (click(keyBright) ||  escFrScreen)
     {
-        // Serial.print("escapeBar: ");
-        // Serial.println(escapeBar);
-
+        Serial.print("escFrScreen: ");
+        Serial.println(escFrScreen);
 
         autoMove = false;
 
@@ -399,9 +398,12 @@ boolean Key::changeBright()
             writeRiseBright = true;
             reBright[id] = false;
             reSetting = false;
-            // escapeBar = false;
+            escFrScreen = false;
 
             screen = lamp;
+
+            Serial.print("escFrScreen LAMP: ");
+            Serial.println(escFrScreen);
         }
     }
 
@@ -447,13 +449,13 @@ void Key::skipEnable(boolean &skip)
 
 void Key::manualSwitchLight()
 {
-    if (click(keyManual))
+    if (click(keyManual) || escFrScreen)
     {
         if (screen == manual)
         {
             Serial.println("case manual");
             resetManualBright = true;
-
+            escFrScreen = false;
             for (byte i = 0; i < lampAmount; i++)
                 buttonSwitch[i] = 0;
             autoMove = true;

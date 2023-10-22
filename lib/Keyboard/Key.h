@@ -37,7 +37,7 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    // boolean escapeBar;
+    boolean escFrScreen;
 
     byte a = 5;
     byte b = 5;

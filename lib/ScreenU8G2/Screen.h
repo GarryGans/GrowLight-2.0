@@ -27,7 +27,7 @@ private:
 
     byte escConter = 128;
 
-    int escSec = 10;
+    int escSpeed = 60;
 
     byte padding = 10;
     int moveSpeed = 10;
