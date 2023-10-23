@@ -346,6 +346,11 @@ boolean Key::setWatch()
     return false;
 }
 
+void Key::progressBar()
+{
+    
+}
+
 boolean Key::spectrumReDuration()
 {
     if (click(keyTime))

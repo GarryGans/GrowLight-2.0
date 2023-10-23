@@ -164,6 +164,7 @@ public:
 
     boolean navigation();
 
+    void progressBar();
     boolean spectrumReDuration();
     boolean changeBright();
     boolean dayReduration();

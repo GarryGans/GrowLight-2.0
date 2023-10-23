@@ -119,10 +119,10 @@ void Screen::lampInfo(Watch &watch, Key &key)
 {
     setHeight(u8g2_font_courB08_tf);
 
-    // char string[12];
-    // String(WavelengthSMD[key.id]).toCharArray(string, 12);
+    char string[12];
+    String(WavelengthSMD[key.id]).toCharArray(string, 12);
 
-    moveString(WavelengthSMD[key.id], PosX::center, PosY::upHalf);
+    textAlign(string, PosX::center, PosY::upHalf);
 
     setHeight(u8g2_font_crox5tb_tf);
 
@@ -199,7 +199,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -224,7 +224,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
 
             blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -246,6 +246,14 @@ void Screen::timerScreen(Watch &watch, Key &key)
         firstPage();
         do
         {
+            setHeight(u8g2_font_courB08_tn);
+
+            setPosition("00:00:00", PosX::leftSpace, PosY::upSpace);
+
+            Time now = watch.time();
+
+            printWatch(now.hour(), now.minute(), now.second());
+
             setHeight(u8g2_font_ncenB18_tf);
 
             stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
@@ -279,6 +287,8 @@ void Screen::timerScreen(Watch &watch, Key &key)
             default:
                 break;
             }
+
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -367,6 +377,7 @@ void Screen::setWatchScreen(Watch &watch, Key &key)
         {
             blinkDate(key, watch);
             blinkTime(key, watch);
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -433,6 +444,8 @@ void Screen::intervalScreen(Watch &watch, Key &key)
 
             blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.valChange());
 
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+
         } while (nextPage());
     }
 }
@@ -454,6 +467,8 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.valChange());
 
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+
         } while (nextPage());
     }
 }
@@ -469,6 +484,9 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
 
             moveString("Set SunTime", PosX::center, PosY::upSpace);
             blinkSunTime(key, watch);
+
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+
         } while (nextPage());
     }
 }
@@ -484,6 +502,7 @@ void Screen::startScreen(Watch &watch, Key &key)
             headerTime(watch);
 
             showSunTime(watch);
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
 
         } while (nextPage());
 
@@ -522,6 +541,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
                 customY(nextY(lampAmount, i));
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -551,6 +571,8 @@ void Screen::allColorScreen(Bright &bright, Key &key)
                 customY(nextY(lampAmount, i));
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
+
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -582,6 +604,8 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
             digAlign(voltage.ampere[key.id], PosX::rightHalf, PosY::center);
 
             blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
+
+            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
