@@ -9,7 +9,8 @@ Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {
-    // Serial.begin(9600);
+    Serial.begin(9600);
+    Serial.println("begin");
 
     key.begin(KB4x4, holdDelay, holdSpeed);
     delay(100);

@@ -29,17 +29,24 @@ private:
     int escSpeed = 60;
 
     byte padding = 10;
-    int moveSpeed = 10;
+    int moveSpeed = 100;
 
     byte paddingShot = 10;
-    int moveSpeedShot = 60;
+    int moveSpeedShot = 90;
 
     byte paddingSkip = 10;
-    int moveSpeedSkip = 6;
+    int moveSpeedSkip = 120;
+
+    byte paddingSMD = 10;
+    byte deepX_SMD = 10;
+    int moveSpeedSMD = 100;
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
+
+    void emptyDisplay(Key &key);
+    boolean ready;
 
     void printDig(byte value);
     void printTime(byte hh, byte mm);

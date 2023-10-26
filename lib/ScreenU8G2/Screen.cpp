@@ -13,6 +13,18 @@ Screen::~Screen()
 {
 }
 
+void Screen::emptyDisplay(Key &key)
+{
+    if (key.screen == key.lamp && key.justPressed())
+    {
+        firstPage();
+        do
+        {
+            textAlign("READY", PosX::center, PosY::center);
+        } while (nextPage());
+    }
+}
+
 void Screen::printDig(byte value)
 {
     if (value < 10)
@@ -122,7 +134,9 @@ void Screen::lampInfo(Watch &watch, Key &key)
     char string[12];
     String(WavelengthSMD[key.id]).toCharArray(string, 12);
 
-    textAlign(string, PosX::center, PosY::upHalf);
+    // textAlign(string, PosX::center, PosY::upHalf);
+
+    moveString(string, PosX::center, PosY::upHalf, deepX_SMD, paddingSMD, moveSpeedSMD);
 
     setHeight(u8g2_font_crox5tb_tf);
 
@@ -164,7 +178,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace);
+            moveString("Set Set", PosX::center, PosY::upSpace, false, padding, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -214,7 +228,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace);
+            moveString("Set MaxBright", PosX::center, PosY::upSpace, false, padding, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -436,7 +450,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Interval", PosX::center, PosY::upSpace);
+            moveString("Interval", PosX::center, PosY::upSpace, false, padding, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -459,7 +473,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace);
+            moveString("Sun Speed", PosX::center, PosY::upSpace, false, padding, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -482,7 +496,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set SunTime", PosX::center, PosY::upSpace);
+            moveString("Set SunTime", PosX::center, PosY::upSpace, false, padding, moveSpeed);
             blinkSunTime(key, watch);
 
             escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -506,7 +520,7 @@ void Screen::startScreen(Watch &watch, Key &key)
 
         } while (nextPage());
 
-        static Timer timer;
+        // static Timer timer;
 
         byte a = 1;
 
@@ -617,7 +631,26 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
 
     setWatchScreen(watch, key);
 
-    lampScreen(watch, switchers, key, bright);
+    if (key.screen == key.lamp && key.justPressed())
+    {
+        firstPage();
+        do
+        {
+            textAlign("READY", PosX::center, PosY::center);
+
+        } while (nextPage());
+
+        if (key.ok())
+        {
+            ready = true;
+        }
+        
+    }
+    
+    else if (key.screen == key.lamp && ready)
+    {
+        lampScreen(watch, switchers, key, bright);
+    }
 
     timerScreen(watch, key);
     brightScreen(bright, key);
