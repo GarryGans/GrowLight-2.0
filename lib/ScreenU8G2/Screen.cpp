@@ -631,11 +631,14 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
 
     setWatchScreen(watch, key);
 
-    if (key.screen == key.lamp && key.justPressed())
+    if (key.screen == key.lamp && key.justPressed() && empty)
     {
+        empty = false;
+        
         firstPage();
         do
         {
+            setHeight(u8g2_font_ncenB18_tf);
             textAlign("READY", PosX::center, PosY::center);
 
         } while (nextPage());
@@ -644,12 +647,22 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
         {
             ready = true;
         }
-        
     }
-    
+
     else if (key.screen == key.lamp && ready)
     {
         lampScreen(watch, switchers, key, bright);
+    }
+
+    else if (key.screen == key.lamp && !ready)
+    {
+        empty = true;
+
+        firstPage();
+        do
+        {
+
+        } while (nextPage());
     }
 
     timerScreen(watch, key);

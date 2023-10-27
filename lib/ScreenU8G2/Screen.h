@@ -26,13 +26,13 @@ private:
     const String daysOfTheWeek[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
     byte escConter = 128;
-    int escSpeed = 60;
+    int escSpeed = 90;
 
     byte padding = 10;
     int moveSpeed = 100;
 
     byte paddingShot = 10;
-    int moveSpeedShot = 90;
+    int moveSpeedShot = 200;
 
     byte paddingSkip = 10;
     int moveSpeedSkip = 120;
@@ -47,6 +47,7 @@ public:
 
     void emptyDisplay(Key &key);
     boolean ready;
+    boolean empty;
 
     void printDig(byte value);
     void printTime(byte hh, byte mm);
