@@ -99,6 +99,8 @@ public:
 
     void startScreen(Watch &watch, Key &key);
 
+    void sleep(Key &key);
+    
     void screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright);
 };
 

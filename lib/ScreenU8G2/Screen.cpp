@@ -531,6 +531,43 @@ void Screen::startScreen(Watch &watch, Key &key)
     }
 }
 
+void Screen::sleep(Key &key)
+{
+    if (key.screen == key.lamp && key.justPressed() && empty)
+    {
+        empty = false;
+
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_ncenB18_tf);
+            textAlign("READY", PosX::center, PosY::center);
+
+        } while (nextPage());
+
+        if (key.ok())
+        {
+            ready = true;
+        }
+    }
+
+    else if (key.screen == key.lamp && ready)
+    {
+        // lampScreen(watch, switchers, key, bright);
+    }
+
+    else if (key.screen == key.lamp && !ready)
+    {
+        empty = true;
+
+        firstPage();
+        do
+        {
+
+        } while (nextPage());
+    }
+}
+
 void Screen::allBrightScreen(Bright &bright, Key &key)
 {
     if (bright.setAllBrigh(key))
@@ -631,39 +668,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
 
     setWatchScreen(watch, key);
 
-    if (key.screen == key.lamp && key.justPressed() && empty)
-    {
-        empty = false;
-        
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_ncenB18_tf);
-            textAlign("READY", PosX::center, PosY::center);
-
-        } while (nextPage());
-
-        if (key.ok())
-        {
-            ready = true;
-        }
-    }
-
-    else if (key.screen == key.lamp && ready)
-    {
-        lampScreen(watch, switchers, key, bright);
-    }
-
-    else if (key.screen == key.lamp && !ready)
-    {
-        empty = true;
-
-        firstPage();
-        do
-        {
-
-        } while (nextPage());
-    }
+    lampScreen(watch, switchers, key, bright);
 
     timerScreen(watch, key);
     brightScreen(bright, key);
@@ -675,5 +680,5 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
     allBrightScreen(bright, key);
     allColorScreen(bright, key);
 
-    // displa
+    // sleep(key);
 }

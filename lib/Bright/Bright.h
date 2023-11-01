@@ -17,35 +17,32 @@ private:
     int speed;
 
     byte pin[lampAmount];
+
     byte bright[lampAmount];
 
-    byte riseBright[lampAmount]; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
+    byte riseBright[lampAmount]; // 197(340mA)-sunRise    216(120mA)-sunSet     min 196(350mA) max 22(2700ma)
     byte setBright[lampAmount];
-
     byte maxBright[lampAmount];
+
+    // byte minPWM[lampAmount]; // 197(340mA)-sunRise    216(120mA)-sunSet     min 196(350mA) max 22(2700ma)
+    byte maxPWM[lampAmount];
 
     byte minManualBright = minManual;
     byte maxManualBright = maxManual;
 
-    byte brightLevel;
-    const byte lowLevel = 0;
-    byte maxLevel[lampAmount];
-
     const byte minAllBright = 0;
     byte allBrigh;
-    const byte maxAllBright = 99;
+    const byte maxAllBright = 100;
 
-    const byte minAllColor = 0;
+    const byte minAllColor = 1;
     byte allColor;
-    const byte maxAllColor = 99;
+    const byte maxAllColor = 100;
 
-    const byte maxPWM = 255;
+    const byte allMaxPWM = 255;
 
 public:
     Bright();
     ~Bright();
-
-    void brightLevelCount();
 
     void setRiseSpeed(Key &key);
 
@@ -62,6 +59,8 @@ public:
 
     void setSetBright(byte &bright, Watch &watch, Key &key, byte min, byte max);
     void changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max);
+
+    byte mapBright(byte allBrigh, byte setBright, byte maxBright, byte minAllBright, byte maxAllBright);
 
     boolean setAllBrigh(Key &key);
     boolean setAllColor(Key &key);
