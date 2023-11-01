@@ -348,7 +348,6 @@ boolean Key::setWatch()
 
 void Key::progressBar()
 {
-    
 }
 
 boolean Key::spectrumReDuration()
@@ -532,14 +531,31 @@ void Key::manualSwitchLight()
     // }
 }
 
+void Key::resetSunSetting()
+{
+    reSetting = false;
+    reDay = false;
+    nextScreen = false;
+    screen = lamp;
+}
+
+void Key::writeSunSetting()
+{
+    writeDay = true;
+    writeAllBright = true;
+    writeAllColor = true;
+    correctDay = true;
+}
+
 boolean Key::dayReduration()
 {
     if (click(keySunTime) && nextScreen && screen == sunColor)
     {
-        nextScreen = false;
+        screen = sunDuration;
+        nextScreen = true;
     }
 
-    else if (click(keySunTime) && (screen == lamp || screen == sunColor) && !nextScreen)
+    else if (click(keySunTime) && screen == lamp  && !nextScreen)
     {
         autoMove = false;
         reDay = true;
@@ -551,23 +567,14 @@ boolean Key::dayReduration()
 
     if (reDay && escape())
     {
-        reDay = false;
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunDuration && ok())
     {
-        writeDay = true;
-        writeAllBright = true;
-        writeAllColor = true;
-        correctDay = true;
+        writeSunSetting();
 
-        reDay = false;
-        reSetting = false;
-
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunDuration)
@@ -593,20 +600,14 @@ boolean Key::allBrigh()
 
     if (reDay && escape())
     {
-        reDay = false;
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunBright && ok())
     {
-        writeDay = true;
-        writeAllBright = true;
-        writeAllColor = true;
+        writeSunSetting();
 
-        reDay = false;
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunBright)
@@ -632,20 +633,14 @@ boolean Key::allColor()
 
     if (reDay && escape())
     {
-        reDay = false;
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunColor && ok())
     {
-        writeDay = true;
-        writeAllBright = true;
-        writeAllColor = true;
+        writeSunSetting();
 
-        reDay = false;
-        nextScreen = false;
-        screen = lamp;
+        resetSunSetting();
     }
 
     if (screen == sunColor)

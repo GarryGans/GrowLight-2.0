@@ -144,6 +144,8 @@ public:
     void skipEnable(boolean &skip);
     void manualSwitchLight();
 
+    
+
     boolean setVoltage();
 
     boolean clickOrHold();
@@ -167,9 +169,13 @@ public:
     void progressBar();
     boolean spectrumReDuration();
     boolean changeBright();
-    boolean dayReduration();
     boolean setWatch();
     void setSpeed();
+
+    void resetSunSetting();
+    void writeSunSetting();
+
+    boolean dayReduration();
     boolean allBrigh();
     boolean allColor();
 };

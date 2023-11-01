@@ -212,7 +212,7 @@ boolean Bright::setAllBrigh(Key &key)
             {
                 maxBright[i] = mapBright(allBrigh, setBright[i], allMaxPWM, minAllBright, maxAllBright);
                 
-                //   TO DISPLgarri
+                //   TO DISPLAY
 
                 // brightDisplay[i] = map(bright[i], setBright[i], maxBright[i], minAllBright, maxAllBright);
 
