@@ -88,6 +88,7 @@ private:
     boolean reDay;
 
     boolean resetCounter;
+    boolean freezeFrame;
 
     boolean resetManualBright;
 
@@ -144,9 +145,7 @@ public:
     void skipEnable(boolean &skip);
     void manualSwitchLight();
 
-    
-
-    boolean setVoltage();
+        boolean setVoltage();
 
     boolean clickOrHold();
     boolean click(byte key);

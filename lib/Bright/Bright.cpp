@@ -19,23 +19,6 @@ void Bright::begin(byte startBrightPin)
     }
 }
 
-void Bright::setRiseSpeed(Key &key)
-{
-    if (key.screen == key.speed)
-    {
-        if (key.valChange())
-        {
-            key.act == key.MINUS ? speed-- : speed++;
-
-            if (speed < 0)
-                speed = 255;
-
-            if (speed > 255)
-                speed = 0;
-        }
-    }
-}
-
 void Bright::setMinBright(byte pin, byte &bright, byte brightRise)
 {
     if (bright < brightRise)
@@ -207,6 +190,22 @@ boolean Bright::setAllColor(Key &key)
     }
 
     return false;
+}
+
+void Bright::setRiseSpeed(Key &key)
+{
+    if (key.screen == key.speed)
+    {
+        if (key.valChange(speed, 0, 99))
+        {
+            key.freezeFrame = true;
+        }
+
+        else
+        {
+            key.freezeFrame = false;
+        }
+    }
 }
 
 void Bright::commands(Watch &watch, Key &key)
