@@ -396,6 +396,16 @@ boolean Key::changeBright()
     {
         menuScreen(riseBright, setBright);
 
+        if (escape())
+        {
+            reBright[id] = false;
+            reSetting = false;
+            escFrScreen = false;
+            // resetCounter = true;
+
+            screen = lamp;
+        }
+
         if (ok() || escFrScreen)
         {
             writeBright = true;
@@ -413,35 +423,17 @@ boolean Key::changeBright()
 
             // if (screen == maxBright)
             // {
-            //     writeBright = true;
-            //     // reBright[id] = false;
-            //     // screen = lamp;
+
             // }
+
             // else if (screen == riseBright)
             // {
-            //     writeBright = true;
-            //     // reBright[id] = false;
-            //     // screen = lamp;
+
             // }
 
             // else if (screen == setBright)
             // {
-            //     writeBright = true;
-            //     // reBright[id] = false;
-            //     // screen = lamp;
-            // }
 
-            // if (writeBright)
-            // {
-            //     writeMaxBright = true;
-            //     writeSetBright = true;
-            //     writeRiseBright = true;
-            //     reBright[id] = false;
-            //     reSetting = false;
-            //     escFrScreen = false;
-            //     // resetCounter = true;
-
-            //     screen = lamp;
             // }
         }
     }
@@ -555,7 +547,7 @@ boolean Key::dayReduration()
         nextScreen = true;
     }
 
-    else if (click(keySunTime) && screen == lamp  && !nextScreen)
+    else if (click(keySunTime) && screen == lamp && !nextScreen)
     {
         autoMove = false;
         reDay = true;

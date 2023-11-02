@@ -95,7 +95,7 @@ void Screen::brightInfo(Bright &bright, Key &key)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
-    digAlign(bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
+    digAlign(bright.manualBright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
 void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
@@ -188,7 +188,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -213,7 +213,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -238,7 +238,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
 
             blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }

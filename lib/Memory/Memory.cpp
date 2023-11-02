@@ -47,9 +47,9 @@ void Memory::readEachBright(Bright &bright)
 {
     for (byte id = 0; id < lampAmount; id++)
     {
-        read(setBright_addr[id], bright.setBright[id], bright.minManualBright, bright.maxManualBright);
-        read(riseBright_addr[id], bright.riseBright[id], bright.setBright[id], bright.maxManualBright);
-        read(maxBright_addr[id], bright.maxBright[id], bright.setBright[id], bright.maxManualBright);
+        read(setBright_addr[id], bright.setBright[id], bright.allMinPWM, bright.allMaxPWM);
+        read(riseBright_addr[id], bright.riseBright[id], bright.setBright[id], bright.allMaxPWM);
+        read(maxBright_addr[id], bright.maxBright[id], bright.setBright[id], bright.allMaxPWM);
     }
 }
 

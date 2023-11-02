@@ -14,8 +14,25 @@ void Bright::begin(byte startBrightPin)
     {
         this->pin[i] = startBrightPin + i;
         pinMode(pin[i], OUTPUT);
-        bright[i] = minManualBright;
+        bright[i] = allMinPWM;
         analogWrite(pin[i], (allMaxPWM - bright[i]));
+    }
+}
+
+void Bright::setRiseSpeed(Key &key)
+{
+    if (key.screen == key.speed)
+    {
+        if (key.valChange())
+        {
+            key.act == key.MINUS ? speed-- : speed++;
+
+            if (speed < 0)
+                speed = 255;
+
+            if (speed > 255)
+                speed = 0;
+        }
     }
 }
 
@@ -30,7 +47,7 @@ void Bright::setMinBright(byte pin, byte &bright, byte brightRise)
 
 void Bright::resetBright(byte pin, byte &bright)
 {
-    bright = minManualBright;
+    bright = allMinPWM;
     analogWrite(pin, (allMaxPWM - bright));
 }
 
@@ -95,56 +112,14 @@ void Bright::autoBright(Watch &watch, Key &key)
     }
 }
 
-void Bright::changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max)
+void Bright::changeMaxBright(byte &bright, Key &key, Watch &watch, byte min, byte max)
 {
     if (key.valChange(bright, min, max))
     {
         if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
         {
             this->bright[key.id] = bright;
-            analogWrite(pin, (allMaxPWM - this->bright[key.id]));
-        }
-
-        else if (key.buttonSwitch[key.id])
-        {
-            analogWrite(pin, (allMaxPWM - bright));
-        }
-    }
-}
-
-void Bright::manualChangeBright(Watch &watch, Key &key)
-{
-    if (key.screen == key.manual || key.screen == key.voltage)
-    {
-        if (key.buttonSwitch[key.id])
-        {
-            // key.screen = key.voltage;
-
-            changeMaxBright(bright[key.id], pin[key.id], key, watch, minManualBright, maxManualBright);
-            maxBright[key.id] = bright[key.id];
-        }
-
-        else
-        {
-            key.screen = key.manual;
-            resetBright(pin[key.id], bright[key.id]);
-        }
-    }
-}
-
-void Bright::setRiseSpeed(Key &key)
-{
-    if (key.screen == key.speed)
-    {
-        if (key.valChange())
-        {
-            key.act == key.MINUS ? speed-- : speed++;
-
-            if (speed < 0)
-                speed = 255;
-
-            if (speed > 255)
-                speed = 0;
+            analogWrite(pin[key.id], (allMaxPWM - this->bright[key.id]));
         }
     }
 }
@@ -158,11 +133,6 @@ void Bright::setSetBright(byte &bright, Watch &watch, Key &key, byte min, byte m
             this->bright[key.id] = bright;
             analogWrite(pin[key.id], (allMaxPWM - this->bright[key.id]));
         }
-
-        else if (key.buttonSwitch[key.id])
-        {
-            analogWrite(pin[key.id], (allMaxPWM - bright));
-        }
     }
 }
 
@@ -174,17 +144,17 @@ void Bright::changeBright(Key &key, Watch &watch)
         {
         case key.maxBright:
 
-            changeMaxBright(maxBright[key.id], pin[key.id], key, watch, riseBright[key.id], maxManualBright);
+            changeMaxBright(maxBright[key.id], key, watch, riseBright[key.id], allMaxPWM);
             break;
 
         case key.riseBright:
 
-            setSetBright(riseBright[key.id], watch, key, minManualBright, maxBright[key.id]);
+            setSetBright(riseBright[key.id], watch, key, allMinPWM, maxBright[key.id]);
             break;
 
         case key.setBright:
 
-            setSetBright(setBright[key.id], watch, key, minManualBright, maxBright[key.id]);
+            setSetBright(setBright[key.id], watch, key, allMinPWM, maxBright[key.id]);
             break;
 
         default:
@@ -193,13 +163,28 @@ void Bright::changeBright(Key &key, Watch &watch)
     }
 }
 
+void Bright::manualChangeBright(Watch &watch, Key &key)
+{
+    if (key.screen == key.manual)
+    {
+        if (key.buttonSwitch[key.id])
+        {
+            if (key.valChange(manualBright[key.id], allMinPWM, allMaxPWM))
+            {
+                analogWrite(pin[key.id], (allMaxPWM - manualBright[key.id]));
+            }
+        }
+
+        else
+        {
+            resetBright(pin[key.id], manualBright[key.id]);
+        }
+    }
+}
+
 byte Bright::mapBright(byte allBrigh, byte setBright, byte maxBright, byte minAllBright, byte maxAllBright)
 {
-    byte bright;
-
-    bright = ((maxBright - setBright) / maxAllBright) * allBrigh;
-
-    return bright;
+    return ((maxBright - setBright) / maxAllBright) * allBrigh;
 }
 
 boolean Bright::setAllBrigh(Key &key)
@@ -211,7 +196,17 @@ boolean Bright::setAllBrigh(Key &key)
             for (byte i = 0; i < lampAmount; i++)
             {
                 maxBright[i] = mapBright(allBrigh, setBright[i], allMaxPWM, minAllBright, maxAllBright);
-                
+
+                Serial.print(i);
+                Serial.print(": ");
+                Serial.println(setBright[i]);
+
+                Serial.print(allMaxPWM);
+                Serial.print(": ");
+                Serial.print(minAllBright);
+                Serial.print(": ");
+                Serial.println(maxAllBright);
+
                 //   TO DISPLAY
 
                 // brightDisplay[i] = map(bright[i], setBright[i], maxBright[i], minAllBright, maxAllBright);
@@ -246,7 +241,7 @@ boolean Bright::setAllColor(Key &key)
 void Bright::commands(Watch &watch, Key &key)
 {
     autoBright(watch, key);
-    manualChangeBright(watch, key);
     changeBright(key, watch);
+    manualChangeBright(watch, key);
     setRiseSpeed(key);
 }
