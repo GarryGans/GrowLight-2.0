@@ -210,61 +210,65 @@ boolean Key::valChange(T &val, T min, T max)
     return false;
 }
 
-boolean Key::valChange(int &val, int min, int max)
-{
-    if (clickOrHold())
-    {
-        if (getNum == keyDown && val > min)
-        {
-            resetCounter = true;
+template boolean Key::valChange<byte>(byte&, byte, byte);
 
-            val--;
+template boolean Key::valChange<int>(int&, int, int);
 
-            return true;
-        }
+// boolean Key::valChange(int &val, int min, int max)
+// {
+//     if (clickOrHold())
+//     {
+//         if (getNum == keyDown && val > min)
+//         {
+//             resetCounter = true;
 
-        else if (getNum == keyUp && val < max)
-        {
-            resetCounter = true;
+//             val--;
 
-            val++;
+//             return true;
+//         }
 
-            return true;
-        }
-    }
+//         else if (getNum == keyUp && val < max)
+//         {
+//             resetCounter = true;
 
-    resetCounter = false;
+//             val++;
 
-    return false;
-}
+//             return true;
+//         }
+//     }
 
-boolean Key::valChange(byte &val, byte min, byte max)
-{
-    if (clickOrHold())
-    {
-        if (getNum == keyDown && val > min)
-        {
-            resetCounter = true;
+//     resetCounter = false;
 
-            val--;
+//     return false;
+// }
 
-            return true;
-        }
+// boolean Key::valChange(byte &val, byte min, byte max)
+// {
+//     if (clickOrHold())
+//     {
+//         if (getNum == keyDown && val > min)
+//         {
+//             resetCounter = true;
 
-        else if (getNum == keyUp && val < max)
-        {
-            resetCounter = true;
+//             val--;
 
-            val++;
+//             return true;
+//         }
 
-            return true;
-        }
-    }
+//         else if (getNum == keyUp && val < max)
+//         {
+//             resetCounter = true;
 
-    resetCounter = false;
+//             val++;
 
-    return false;
-}
+//             return true;
+//         }
+//     }
+
+//     resetCounter = false;
+
+//     return false;
+// }
 
 boolean Key::clickOrHold()
 {

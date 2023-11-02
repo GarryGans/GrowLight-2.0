@@ -104,7 +104,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, false, paddingSkip, moveSpeedSkip);
+        moveStringDeep("SKIP", PosX::center, PosY::downSpace, false, moveSpeedSkip);
     }
 
     else if (key.screen == key.manual)
@@ -136,7 +136,7 @@ void Screen::lampInfo(Watch &watch, Key &key)
 
     // textAlign(string, PosX::center, PosY::upHalf);
 
-    moveString(string, PosX::center, PosY::upHalf, deepX_SMD, paddingSMD, moveSpeedSMD);
+    moveStringDeep(string, PosX::center, PosY::upHalf, deepX_SMD, moveSpeedSMD);
 
     setHeight(u8g2_font_crox5tb_tf);
 
@@ -178,7 +178,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Set Set", PosX::center, PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -203,7 +203,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Set Rise", PosX::center, PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -228,7 +228,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Set MaxBright", PosX::center, PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -450,7 +450,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Interval", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Interval", PosX::center, PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -472,7 +472,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Sun Speed", PosX::center, PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -495,7 +495,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set SunTime", PosX::center, PosY::upSpace, false, padding, moveSpeed);
+            moveStringDeep("Set SunTime", PosX::center, PosY::upSpace, false, moveSpeed);
             blinkSunTime(key, watch);
 
             escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -576,7 +576,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, false, paddingShot, moveSpeedShot);
+            moveStringDeep("BRIGHT", PosX::leftSpace, PosY::upSpace, false, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -607,7 +607,7 @@ void Screen::allColorScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("COLOR", PosX::leftSpace, PosY::upSpace, false, paddingShot, moveSpeedShot);
+            moveStringDeep("COLOR", PosX::leftSpace, PosY::upSpace, false, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -638,7 +638,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("PWM", PosX::leftSpace, PosY::upSpace);
+            moveStringDeep("PWM", PosX::leftSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -648,7 +648,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("MW", PosX::rightSpace, PosY::upSpace);
+            moveStringDeep("MW", PosX::rightSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
