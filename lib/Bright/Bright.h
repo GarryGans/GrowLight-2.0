@@ -27,19 +27,19 @@ private:
     // byte minPWM[lampAmount]; // 197(340mA)-sunRise    216(120mA)-sunSet     min 196(350mA) max 22(2700ma)
     byte maxPWM[lampAmount];
 
-    const byte minAllBright = 0;
+    const byte minAllBright = 1;
     byte allBrigh;
     const byte maxAllBright = 100;
 
-    const byte minAllColor = 1;
+    const byte minAllColor = 0;
     byte allColor;
-    const byte maxAllColor = 100;
+    const byte maxAllColor = 99;
 
     const byte allMinPWM = 0;
     const byte allMaxPWM = 255;
 
     byte manualBright[lampAmount];
-    
+
 public:
     Bright();
     ~Bright();
@@ -57,10 +57,9 @@ public:
     void resetAllBrights();
     void changeBright(Key &key, Watch &watch);
 
-    void setSetBright(byte &bright, Watch &watch, Key &key, byte min, byte max);
     void changeMaxBright(byte &bright, Key &key, Watch &watch, byte min, byte max);
 
-    byte mapBright(byte allBrigh, byte setBright, byte maxBright, byte minAllBright, byte maxAllBright);
+    byte mapBright(byte allBrigh, byte minAllBright, byte maxAllBright, byte setBright, byte maxBright);
 
     boolean setAllBrigh(Key &key);
     boolean setAllColor(Key &key);

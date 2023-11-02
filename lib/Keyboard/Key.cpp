@@ -299,21 +299,9 @@ void Key::setSpeed()
 {
     if (click(keySpeed))
     {
-        autoMove = false;
-
-        if (screen == speed)
+        if (screen == lamp)
         {
-            writeSpeed = true;
-            screen = lamp;
-        }
-        else if (screen == interval)
-        {
-            writeInterval = true;
-            screen = lamp;
-        }
-
-        else if (screen == lamp)
-        {
+            autoMove = false;
             screen = speed;
         }
     }
@@ -321,6 +309,18 @@ void Key::setSpeed()
     if (screen == speed || screen == interval)
     {
         menuScreen(speed, interval);
+
+        if (ok())
+        {
+            writeInterval = true;
+            writeSpeed = true;
+            screen = lamp;
+        }
+
+        else if (escape())
+        {
+            screen = lamp;
+        }
     }
 }
 
@@ -354,23 +354,27 @@ boolean Key::spectrumReDuration()
 {
     if (click(keyTime))
     {
-        autoMove = false;
-
-        if (screen == duration)
+        if (screen == lamp)
         {
-            writeTime = true;
-            reSetting = false;
+            autoMove = false;
+            screen = duration;
+            reduration[id] = true;
+        }
+    }
 
+    if (screen == duration)
+    {
+        if (escape())
+        {
             reduration[id] = false;
             screen = lamp;
         }
 
-        else if (screen == lamp)
+        if (ok())
         {
-            screen = duration;
-            reSetting = true;
-
-            reduration[id] = true;
+            writeTime = true;
+            reduration[id] = false;
+            screen = lamp;
         }
     }
 
@@ -383,13 +387,11 @@ boolean Key::changeBright()
     {
         if (screen == lamp)
         {
+            autoMove = false;
             screen = riseBright;
             reBright[id] = true;
-            reSetting = true;
+            // resetCounter = true;
         }
-
-        // resetCounter = true;
-        autoMove = false;
     }
 
     if (screen == maxBright || screen == riseBright || screen == setBright)
@@ -399,10 +401,8 @@ boolean Key::changeBright()
         if (escape())
         {
             reBright[id] = false;
-            reSetting = false;
             escFrScreen = false;
             // resetCounter = true;
-
             screen = lamp;
         }
 
@@ -415,26 +415,10 @@ boolean Key::changeBright()
             writeRiseBright = true;
 
             reBright[id] = false;
-            reSetting = false;
             escFrScreen = false;
             // resetCounter = true;
 
             screen = lamp;
-
-            // if (screen == maxBright)
-            // {
-
-            // }
-
-            // else if (screen == riseBright)
-            // {
-
-            // }
-
-            // else if (screen == setBright)
-            // {
-
-            // }
         }
     }
 
@@ -483,8 +467,12 @@ void Key::manualSwitchLight()
         {
             resetManualBright = true;
             escFrScreen = false;
+
             for (byte i = 0; i < lampAmount; i++)
+            {
                 buttonSwitch[i] = 0;
+            }
+
             autoMove = true;
             // resetCounter = true;
             screen = lamp;

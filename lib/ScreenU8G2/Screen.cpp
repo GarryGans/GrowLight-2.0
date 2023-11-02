@@ -592,6 +592,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
                 customY(nextY(lampAmount, i));
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
+            
             escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
