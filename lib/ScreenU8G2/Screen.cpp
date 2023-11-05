@@ -519,9 +519,7 @@ void Screen::startScreen(Watch &watch, Key &key)
 
         } while (nextPage());
 
-        // static Timer timer;
-
-        byte a = 1;
+        byte a = 3;
 
         if (timer.ready(a))
         {

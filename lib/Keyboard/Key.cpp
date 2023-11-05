@@ -45,6 +45,32 @@ Key::Screen Key::changeScreen()
     return screen;
 }
 
+boolean Key::navigation()
+{
+    if (clickOrHold())
+    {
+        if (getNum == keyForward)
+        {
+            resetCounter = true;
+
+            direction = FORWARD;
+            return true;
+        }
+
+        else if (getNum == keyBack)
+        {
+            resetCounter = true;
+
+            direction = BACK;
+            return true;
+        }
+    }
+
+    resetCounter = false;
+
+    return false;
+}
+
 void Key::menuScreen(Screen start, Screen end)
 {
     if (navigation())
@@ -88,12 +114,12 @@ void Key::autoScreenMove()
     {
         byte b = 3;
 
-        if (autoMove && timer[1].ready(b, navigation()))
+        if (autoMove && timer[1].ready(b, resetCounter))
         {
             idChange();
         }
 
-        if (!autoMove && timer[2].ready(b, navigation()))
+        if (!autoMove && timer[2].ready(b, resetCounter))
         {
             autoMove = true;
         }
@@ -125,32 +151,6 @@ void Key::manualChangeScreen()
             }
         }
     }
-}
-
-boolean Key::navigation()
-{
-    if (clickOrHold())
-    {
-        if (getNum == keyForward)
-        {
-            resetCounter = true;
-
-            direction = FORWARD;
-            return true;
-        }
-
-        else if (getNum == keyBack)
-        {
-            resetCounter = true;
-
-            direction = BACK;
-            return true;
-        }
-    }
-
-    resetCounter = false;
-
-    return false;
 }
 
 boolean Key::valChange()
@@ -210,9 +210,9 @@ boolean Key::valChange(T &val, T min, T max)
     return false;
 }
 
-template boolean Key::valChange<byte>(byte&, byte, byte);
+template boolean Key::valChange<byte>(byte &, byte, byte);
 
-template boolean Key::valChange<int>(int&, int, int);
+template boolean Key::valChange<int>(int &, int, int);
 
 // boolean Key::valChange(int &val, int min, int max)
 // {
