@@ -302,7 +302,8 @@ void Screen::timerScreen(Watch &watch, Key &key)
                 break;
             }
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            //  autoBar()
 
         } while (nextPage());
     }
@@ -328,7 +329,7 @@ void Screen::blinkTime(Key &key, Watch &watch)
 
     setPosition("00:00:00", PosX::center, PosY::downHalf);
 
-    printWatch(watch.hour, watch.min, watch.sec);
+    printWatch(watch.hour, watch.minute, watch.second);
 
     switch (watch.cursorDateTime)
     {
@@ -391,7 +392,8 @@ void Screen::setWatchScreen(Watch &watch, Key &key)
         {
             blinkDate(key, watch);
             blinkTime(key, watch);
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+
+            // autoBar(escConter, key.escFrScreen, false, key.resetCounter);
 
         } while (nextPage());
     }
@@ -458,7 +460,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
 
             blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
         } while (nextPage());
     }
 }
@@ -480,7 +482,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -498,7 +500,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
             moveStringDeep("Set SunTime", PosX::center, PosY::upSpace, false, moveSpeed);
             blinkSunTime(key, watch);
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -515,13 +517,13 @@ void Screen::startScreen(Watch &watch, Key &key)
             headerTime(watch);
 
             showSunTime(watch);
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
 
         } while (nextPage());
 
         byte a = 3;
 
-        if (timer.ready(a))
+        if (timer.wait(a * sec))
         {
             key.screen = key.lamp;
         }
@@ -590,7 +592,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -621,7 +623,7 @@ void Screen::allColorScreen(Bright &bright, Key &key)
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }
@@ -654,7 +656,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.freezeFrame);
 
-            escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (nextPage());
     }

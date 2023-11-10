@@ -27,8 +27,8 @@ private:
     byte month;
     byte day;
     byte hour;
-    byte min;
-    byte sec;
+    byte minute;
+    byte second;
     byte dow;
 
     int start[lampAmount];

@@ -463,8 +463,8 @@ void Watch::setWatch(Key &key)
         month = time.month();
         day = time.day();
         hour = time.hour();
-        min = time.minute();
-        sec = time.second();
+        minute = time.minute();
+        second = time.second();
     }
 
     if (key.screen == key.watch)
@@ -491,18 +491,18 @@ void Watch::setWatch(Key &key)
         }
         else if (cursorDateTime == 4)
         {
-            timeChange(min, key);
+            timeChange(minute, key);
         }
         else if (cursorDateTime == 5)
         {
-            timeChange(sec, key);
+            timeChange(second, key);
         }
     }
 
     if (key.setDateTime)
     {
         adjustDate(Date(year, month, day));
-        adjustTime(Time(hour, min, sec));
+        adjustTime(Time(hour, minute, second));
 
         key.setDateTime = false;
     }

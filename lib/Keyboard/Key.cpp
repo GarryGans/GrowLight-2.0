@@ -114,15 +114,11 @@ void Key::autoScreenMove()
     {
         byte b = 3;
 
-        if (autoMove && timer[1].ready(b, resetCounter))
+        if (timer[1].ready(b, resetCounter))
         {
             idChange();
-        }
-
-        if (!autoMove && timer[2].ready(b, resetCounter))
-        {
-            autoMove = true;
-        }
+            // autoMove = false;
+        }        
     }
 }
 
@@ -132,8 +128,6 @@ void Key::manualChangeScreen()
     {
         if (navigation())
         {
-            autoMove = false;
-
             if (direction == BACK)
             {
                 id--;
@@ -214,62 +208,6 @@ template boolean Key::valChange<byte>(byte &, byte, byte);
 
 template boolean Key::valChange<int>(int &, int, int);
 
-// boolean Key::valChange(int &val, int min, int max)
-// {
-//     if (clickOrHold())
-//     {
-//         if (getNum == keyDown && val > min)
-//         {
-//             resetCounter = true;
-
-//             val--;
-
-//             return true;
-//         }
-
-//         else if (getNum == keyUp && val < max)
-//         {
-//             resetCounter = true;
-
-//             val++;
-
-//             return true;
-//         }
-//     }
-
-//     resetCounter = false;
-
-//     return false;
-// }
-
-// boolean Key::valChange(byte &val, byte min, byte max)
-// {
-//     if (clickOrHold())
-//     {
-//         if (getNum == keyDown && val > min)
-//         {
-//             resetCounter = true;
-
-//             val--;
-
-//             return true;
-//         }
-
-//         else if (getNum == keyUp && val < max)
-//         {
-//             resetCounter = true;
-
-//             val++;
-
-//             return true;
-//         }
-//     }
-
-//     resetCounter = false;
-
-//     return false;
-// }
-
 boolean Key::clickOrHold()
 {
     return (justPressed() || onHold());
@@ -305,7 +243,6 @@ void Key::setSpeed()
     {
         if (screen == lamp)
         {
-            autoMove = false;
             screen = speed;
         }
     }
@@ -332,16 +269,13 @@ boolean Key::setWatch()
 {
     if (click(keyWatch))
     {
-        autoMove = false;
-
-        if (screen == watch)
+        if (screen == watch && escFrScreen)
         {
             setDateTime = true;
             screen = lamp;
         }
         else if (screen == lamp)
         {
-            autoMove = false;
             screen = watch;
             return true;
         }
@@ -360,7 +294,6 @@ boolean Key::spectrumReDuration()
     {
         if (screen == lamp)
         {
-            autoMove = false;
             screen = duration;
             reduration[id] = true;
         }
@@ -391,7 +324,6 @@ boolean Key::changeBright()
     {
         if (screen == lamp)
         {
-            autoMove = false;
             screen = riseBright;
             reBright[id] = true;
             // resetCounter = true;
@@ -405,12 +337,13 @@ boolean Key::changeBright()
         if (escape())
         {
             reBright[id] = false;
-            escFrScreen = false;
+            // escFrScreen = false;
             // resetCounter = true;
             screen = lamp;
         }
 
-        if (ok() || escFrScreen)
+        // if (ok() || escFrScreen)
+        if (ok())
         {
             writeBright = true;
 
@@ -419,7 +352,7 @@ boolean Key::changeBright()
             writeRiseBright = true;
 
             reBright[id] = false;
-            escFrScreen = false;
+            // escFrScreen = false;
             // resetCounter = true;
 
             screen = lamp;
@@ -443,10 +376,7 @@ boolean Key::setVoltage()
 void Key::skipEnable(boolean &skip)
 {
     if (screen == lamp && click(keySkip))
-
     {
-        autoMove = false;
-
         if (!skip)
         {
             skip = true;
@@ -463,21 +393,19 @@ void Key::skipEnable(boolean &skip)
 
 void Key::manualSwitchLight()
 {
-    if (click(keyManual) || escFrScreen)
+    if (click(keyManual))
     {
         // resetCounter = true;
 
         if (screen == manual)
         {
             resetManualBright = true;
-            escFrScreen = false;
 
             for (byte i = 0; i < lampAmount; i++)
             {
                 buttonSwitch[i] = 0;
             }
 
-            autoMove = true;
             // resetCounter = true;
             screen = lamp;
         }
@@ -485,7 +413,6 @@ void Key::manualSwitchLight()
         else if (screen == lamp)
         {
             // resetCounter = true;
-            autoMove = false;
 
             resetManualBright = true;
 
@@ -541,7 +468,6 @@ boolean Key::dayReduration()
 
     else if (click(keySunTime) && screen == lamp && !nextScreen)
     {
-        autoMove = false;
         reDay = true;
         reSetting = true;
 

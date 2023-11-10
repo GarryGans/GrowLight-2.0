@@ -81,7 +81,7 @@ private:
         MINUS
     } act;
 
-    boolean autoMove;
+    boolean autoMove = true;
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
