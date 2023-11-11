@@ -56,15 +56,14 @@ void Key::cursor(byte &cursor, byte min, byte max)
             {
                 cursor = min;
             }
+
             break;
 
         case BACK:
             cursor--;
 
-            if (cursor < min)
-            {
-                cursor = max;
-            }
+            cursor = constrain(cursor, min, max);
+
             break;
 
         default:
@@ -203,24 +202,45 @@ boolean Key::valChange()
 }
 
 template <typename T>
-boolean Key::valChange(T &val, T min, T max)
+boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
 {
     if (clickOrHold())
     {
-        if (getNum == keyDown && val > min)
+        if (getNum == keyDown)
         {
             resetCounter = true;
 
-            val--;
+            if (twoDirection)
+            {
+                val--;
+                val = constrain(val, min, max);
+            }
+
+            else if (val > min)
+            {
+                val--;
+            }
 
             return true;
         }
 
-        else if (getNum == keyUp && val < max)
+        else if (getNum == keyUp)
         {
             resetCounter = true;
 
-            val++;
+            if (twoDirection)
+            {
+                val++;
+                if (val > max)
+                {
+                    val = 0;
+                }
+            }
+
+            else if (val < max)
+            {
+                val++;
+            }
 
             return true;
         }
@@ -231,9 +251,9 @@ boolean Key::valChange(T &val, T min, T max)
     return false;
 }
 
-template boolean Key::valChange<byte>(byte &, byte, byte);
+template boolean Key::valChange<byte>(byte &, byte, byte, boolean);
 
-template boolean Key::valChange<int>(int &, int, int);
+template boolean Key::valChange<int>(int &, int, int, boolean);
 
 boolean Key::clickOrHold()
 {

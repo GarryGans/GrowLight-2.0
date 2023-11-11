@@ -132,67 +132,43 @@ void Watch::autoSwitcher(Key &key)
 
 void Watch::hmsChange(Key &key, byte &hms, byte &cursor)
 {
-    // if (key.valChange())
-    // {
-    //     if (key.act == key.MINUS)
-    //     {
-    //         hms--;
-    //         if (cursor == 0 || cursor == 2)
-    //         {
-    //             hms = constrain(hms, 0, 23);
-    //         }
-    //         else
-    //         {
-    //             hms = constrain(hms, 0, 59);
-    //         }
-    //     }
-
-    //     if (key.act == key.PLUS)
-    //     {
-    //         hms++;
-    //         if ((cursor == 0 || cursor == 2) && hms > 23)
-    //         {
-    //             hms = 0;
-    //         }
-    //         if ((cursor == 1 || cursor == 3) && hms > 59)
-    //         {
-    //             hms = 0;
-    //         }
-    //     }
-    // }
-
     if (cursor == 0 || cursor == 2)
     {
-        key.valChange(hms, (byte)0, (byte)23);
+        key.valChange(hms, (byte)0, (byte)23, true);
     }
     else
     {
-        key.valChange(hms, (byte)0, (byte)59);
+        key.valChange(hms, (byte)0, (byte)59, true);
     }
 
     key.cursor(cursor, 0, 3);
+}
+
+void Watch::reTime(Key &key, byte &startHour, byte &startMinute, byte &finishHour, byte &finishMinute, byte &cursor)
+{
+    if (cursor == 0)
+    {
+        hmsChange(key, startHour, cursor);
+    }
+    else if (cursor == 1)
+    {
+        hmsChange(key, startMinute, cursor);
+    }
+    else if (cursor == 2)
+    {
+        hmsChange(key, finishHour, cursor);
+    }
+    else if (cursor == 3)
+    {
+        hmsChange(key, finishMinute, cursor);
+    }
 }
 
 void Watch::spectrumReDuration(Key &key)
 {
     if (key.spectrumReDuration())
     {
-        if (cursorSpectrum == 0)
-        {
-            hmsChange(key, startHour[key.id], cursorSpectrum);
-        }
-        else if (cursorSpectrum == 1)
-        {
-            hmsChange(key, startMinute[key.id], cursorSpectrum);
-        }
-        else if (cursorSpectrum == 2)
-        {
-            hmsChange(key, finishHour[key.id], cursorSpectrum);
-        }
-        else if (cursorSpectrum == 3)
-        {
-            hmsChange(key, finishMinute[key.id], cursorSpectrum);
-        }
+        reTime(key, startHour[key.id], startMinute[key.id], finishHour[key.id], finishMinute[key.id], cursorSpectrum);
     }
 }
 
@@ -200,22 +176,7 @@ void Watch::dayReduration(Key &key)
 {
     if (key.dayReduration())
     {
-        if (cursorDay == 0)
-        {
-            hmsChange(key, RiseHour, cursorDay);
-        }
-        else if (cursorDay == 1)
-        {
-            hmsChange(key, RiseMin, cursorDay);
-        }
-        else if (cursorDay == 2)
-        {
-            hmsChange(key, SetHour, cursorDay);
-        }
-        else if (cursorDay == 3)
-        {
-            hmsChange(key, SetMin, cursorDay);
-        }
+        reTime(key, RiseHour, RiseMin, SetHour, SetMin, cursorDay);
     }
 
     if (key.correctDay)
@@ -428,7 +389,6 @@ void Watch::setWatch(Key &key)
 
     if (key.screen == key.watch)
     {
-
         key.cursor(cursorDateTime, 0, 5);
 
         if (cursorDateTime == 0)

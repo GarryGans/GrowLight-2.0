@@ -16,7 +16,6 @@ class Watch : public RTC_ext_3231
     friend class Bright;
 
 private:
-    
     byte cursorDateTime;
     byte cursorSpectrum;
     byte cursorDay;
@@ -46,7 +45,7 @@ private:
     boolean brightDown[lampAmount];
 
     int intervalDefault = 0;
-     int interval;
+    int interval;
 
     byte startHour[lampAmount];
     byte startMinute[lampAmount];
@@ -72,6 +71,8 @@ public:
     void autoSwitcher(Key &key);
 
     void hmsChange(Key &key, byte &hms, byte &cursor);
+
+    void reTime(Key &key, byte &startHour, byte &startMinute, byte &finishHour, byte &finishMinute, byte &cursor);
 
     void spectrumReDuration(Key &key);
     void dayReduration(Key &key);

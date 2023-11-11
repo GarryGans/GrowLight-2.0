@@ -152,7 +152,7 @@ public:
     boolean valChange();
 
     template <typename T>
-    boolean valChange(T &val, T min, T max);
+    boolean valChange(T &val, T min, T max, boolean twoDirection = false);
 
     void cursor(byte &cursor, byte min, byte max);
     boolean navigation();
