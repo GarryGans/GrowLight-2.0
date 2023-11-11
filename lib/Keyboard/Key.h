@@ -157,7 +157,7 @@ public:
     boolean escape();
     boolean ok();
 
-    boolean valChange();
+    // boolean valChange();
 
     template <typename T>
     boolean valChange(T &val, T min, T max, boolean twoDirection = false);

@@ -107,7 +107,7 @@ Key::Screen Key::menuScreen(Screen start, Screen end)
     {
         if (direction == BACK)
         {
-            screen = (Screen)(Key::screen - 1);
+            screen = (Screen)(screen - 1);
 
             if (screen < start)
             {
@@ -165,33 +165,33 @@ void Key::manualChangeScreen()
     }
 }
 
-boolean Key::valChange()
-{
-    if (clickOrHold())
-    {
-        if (getNum == keyDown)
-        {
-            resetCounter = true;
+// boolean Key::valChange()
+// {
+//     if (clickOrHold())
+//     {
+//         if (getNum == keyDown)
+//         {
+//             resetCounter = true;
 
-            act = MINUS;
+//             act = MINUS;
 
-            return true;
-        }
+//             return true;
+//         }
 
-        else if (getNum == keyUp)
-        {
-            resetCounter = true;
+//         else if (getNum == keyUp)
+//         {
+//             resetCounter = true;
 
-            act = PLUS;
+//             act = PLUS;
 
-            return true;
-        }
-    }
+//             return true;
+//         }
+//     }
 
-    resetCounter = false;
+//     resetCounter = false;
 
-    return false;
-}
+//     return false;
+// }
 
 template <typename T>
 boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
@@ -379,7 +379,7 @@ boolean Key::changeBright()
 
     if (screen == maxBright || screen == riseBright || screen == setBright)
     {
-        // menuScreen(screen, riseBright, setBright);
+        screen = menuScreen(riseBright, setBright);
 
         if (escape())
         {
