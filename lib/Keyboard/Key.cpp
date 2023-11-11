@@ -46,27 +46,19 @@ boolean Key::autoOk(byte count)
     return false;
 }
 
-Key::Screen Key::changeScreen()
-{
-    if (direction == FORWARD)
-    {
-        screen = (Screen)(screen + 1);
-    }
-
-    else if (direction == BACK)
-    {
-        screen = (Screen)(Key::screen - 1);
-    }
-
-    return screen;
-}
-
 void Key::cursor(byte &cursor, byte min, byte max)
 {
     if (navigation())
     {
         switch (direction)
         {
+        case BACK:
+            cursor--;
+
+            cursor = constrain(cursor, min, max);
+
+            break;
+
         case FORWARD:
             cursor++;
 
@@ -74,13 +66,6 @@ void Key::cursor(byte &cursor, byte min, byte max)
             {
                 cursor = min;
             }
-
-            break;
-
-        case BACK:
-            cursor--;
-
-            cursor = constrain(cursor, min, max);
 
             break;
 
@@ -116,26 +101,32 @@ boolean Key::navigation()
     return false;
 }
 
-void Key::menuScreen(Screen start, Screen end)
+Key::Screen Key::menuScreen(Screen start, Screen end)
 {
     if (navigation())
     {
-        if (direction == FORWARD)
-        {
-            if (changeScreen() > end)
-            {
-                screen = start;
-            }
-        }
-
         if (direction == BACK)
         {
-            if (changeScreen() < start)
+            screen = (Screen)(Key::screen - 1);
+
+            if (screen < start)
             {
                 screen = end;
             }
         }
+
+        if (direction == FORWARD)
+        {
+            screen = (Screen)(screen + 1);
+
+            if (screen > end)
+            {
+                screen = start;
+            }
+        }
     }
+
+    return screen;
 }
 
 void Key::checkKeyboard()
@@ -170,24 +161,7 @@ void Key::manualChangeScreen()
 {
     if (screen == lamp || screen == manual)
     {
-        if (navigation())
-        {
-            if (direction == BACK)
-            {
-                id--;
-                id = constrain(id, 0, idLast);
-            }
-
-            else if (direction == FORWARD)
-            {
-                id++;
-
-                if (id > idLast)
-                {
-                    id = idFirst;
-                }
-            }
-        }
+        cursor(id, idFirst, idLast);
     }
 }
 
@@ -321,7 +295,7 @@ void Key::setSpeed()
 
     if (screen == speed || screen == interval)
     {
-        menuScreen(speed, interval);
+        screen = menuScreen(speed, interval);
 
         if (ok() || autoOk(autoWrite))
         {
@@ -334,7 +308,6 @@ void Key::setSpeed()
         {
             screen = lamp;
         }
-
     }
 }
 
@@ -406,7 +379,7 @@ boolean Key::changeBright()
 
     if (screen == maxBright || screen == riseBright || screen == setBright)
     {
-        menuScreen(riseBright, setBright);
+        // menuScreen(screen, riseBright, setBright);
 
         if (escape())
         {

@@ -145,11 +145,12 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor)
     }
 
     key.valChange(hms, (byte)0, max, true);
-    key.cursor(cursor, 0, 3);
 }
 
 void Watch::reTime(Key &key, byte &startHour, byte &startMinute, byte &finishHour, byte &finishMinute, byte &cursor)
 {
+    key.cursor(cursor, 0, 3);
+
     if (cursor == 0)
     {
         hmsChange(key, startHour, cursor);
@@ -317,12 +318,10 @@ void Watch::setWatch(Key &key)
         else if (cursorDateTime == 1)
         {
             monthChange(month, key);
-            // leapYearDay();
         }
         else if (cursorDateTime == 2)
         {
             yearChange(year, key);
-            // leapYearDay();
         }
         else if (cursorDateTime == 3)
         {
@@ -336,6 +335,7 @@ void Watch::setWatch(Key &key)
         {
             timeChange(second, key);
         }
+
         leapYearDay();
     }
 

@@ -130,11 +130,11 @@ public:
     ~Key();
 
     // void setPresets() // Vega, Bloom(time, bright, spectr)
-    Screen changeScreen();
+    // Screen changeScreen();
 
     void checkKeyboard();
 
-    void menuScreen(Screen start, Screen end);
+    Key::Screen menuScreen(Screen start, Screen end);
 
     boolean autoOk(Screen screen);
     boolean autoOk(byte count);
