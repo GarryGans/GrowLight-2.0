@@ -186,7 +186,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
 
             digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -211,7 +211,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -236,7 +236,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -283,19 +283,19 @@ void Screen::timerScreen(Watch &watch, Key &key)
             switch (watch.cursorSpectrum)
             {
             case 0:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, key.freezeFrame);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, key.resetCounter);
                 break;
 
             case 1:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, key.freezeFrame);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, key.resetCounter);
                 break;
 
             case 2:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, key.freezeFrame);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, key.resetCounter);
                 break;
 
             case 3:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, key.freezeFrame);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, key.resetCounter);
                 break;
 
             default:
@@ -333,15 +333,15 @@ void Screen::blinkTime(Key &key, Watch &watch)
     switch (watch.cursorDateTime)
     {
     case 3:
-        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, key.freezeFrame);
+        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, key.resetCounter);
         break;
 
     case 4:
-        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, key.freezeFrame);
+        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, key.resetCounter);
         break;
 
     case 5:
-        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, key.freezeFrame);
+        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, key.resetCounter);
         break;
 
     default:
@@ -366,15 +366,15 @@ void Screen::blinkDate(Key &key, Watch &watch)
     switch (watch.cursorDateTime)
     {
     case 0:
-        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, key.freezeFrame);
+        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, key.resetCounter);
         break;
 
     case 1:
-        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, key.freezeFrame);
+        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, key.resetCounter);
         break;
 
     case 2:
-        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, key.freezeFrame);
+        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, key.resetCounter);
         break;
 
     default:
@@ -422,19 +422,19 @@ void Screen::blinkSunTime(Key &key, Watch &watch)
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, key.freezeFrame);
+        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, key.resetCounter);
         break;
 
     case 1:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, key.freezeFrame);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, key.resetCounter);
         break;
 
     case 2:
-        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, key.freezeFrame);
+        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, key.resetCounter);
         break;
 
     case 3:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, key.freezeFrame);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, key.resetCounter);
         break;
 
     default:
@@ -457,7 +457,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
 
             digStringAlign(watch.interval, " m", PosX::center, PosY::center);
 
-            blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
             
@@ -480,7 +480,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             digStringAlign(bright.speed, " bp", PosX::center, PosY::center);
 
-            blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.resetCounter);
 
             escapeBar(key.awCount, key.click(keySpeed));
 
@@ -562,7 +562,7 @@ void Screen::sleep(Key &key)
 
 void Screen::allBrightScreen(Bright &bright, Key &key)
 {
-    if (bright.setAllBrigh(key))
+    if (key.screen == key.sunBright)
     {
         firstPage();
         do
@@ -593,7 +593,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
 
 void Screen::allColorScreen(Bright &bright, Key &key)
 {
-    if (bright.setAllColor(key))
+    if (key.screen == key.sunColor)
     {
         firstPage();
         do
@@ -637,7 +637,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             digAlign(bright.maxBright[key.id], PosX::leftHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], PosX::leftHalf, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(bright.maxBright[key.id], PosX::leftHalf, PosY::centerFrame, key.resetCounter);
 
             setHeight(u8g2_font_pressstart2p_8f);
 
@@ -647,7 +647,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             digAlign(voltage.ampere[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.freezeFrame);
+            blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 

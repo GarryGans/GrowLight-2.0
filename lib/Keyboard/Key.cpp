@@ -34,8 +34,8 @@ boolean Key::autoOk(byte count)
 
     if (awCount == 0)
     {
-        Serial.print("awCount FIN: ");
-        Serial.println(awCount);
+        // Serial.print("awCount FIN: ");
+        // Serial.println(awCount);
 
         return true;
     }
@@ -164,34 +164,6 @@ void Key::manualChangeScreen()
         cursor(id, idFirst, idLast);
     }
 }
-
-// boolean Key::valChange()
-// {
-//     if (clickOrHold())
-//     {
-//         if (getNum == keyDown)
-//         {
-//             resetCounter = true;
-
-//             act = MINUS;
-
-//             return true;
-//         }
-
-//         else if (getNum == keyUp)
-//         {
-//             resetCounter = true;
-
-//             act = PLUS;
-
-//             return true;
-//         }
-//     }
-
-//     resetCounter = false;
-
-//     return false;
-// }
 
 template <typename T>
 boolean Key::valChange(T &val, T min, T max, boolean twoDirection)

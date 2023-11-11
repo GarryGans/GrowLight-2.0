@@ -28,7 +28,7 @@
 // #define key 11
 // #define key 13
 
-#define autoWrite 128
+#define autoWrite 12
 
 class Key : public AmperkaKB
 {
@@ -79,19 +79,17 @@ private:
         FORWARD
     } direction;
 
-    enum Act
-    {
-        PLUS,
-        MINUS
-    } act;
+    // enum Act
+    // {
+    //     PLUS,
+    //     MINUS
+    // } act;
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
     boolean reDay;
 
     boolean resetCounter;
-
-    boolean freezeFrame;
 
     boolean resetManualBright;
 
@@ -156,8 +154,6 @@ public:
     boolean click(byte key);
     boolean escape();
     boolean ok();
-
-    // boolean valChange();
 
     template <typename T>
     boolean valChange(T &val, T min, T max, boolean twoDirection = false);

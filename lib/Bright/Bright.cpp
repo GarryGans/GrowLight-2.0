@@ -196,15 +196,7 @@ void Bright::setRiseSpeed(Key &key)
 {
     if (key.screen == key.speed)
     {
-        if (key.valChange(speed, 0, 99))
-        {
-            key.freezeFrame = true;
-        }
-
-        else
-        {
-            key.freezeFrame = false;
-        }
+        key.valChange(speed, 0, 99, true);
     }
 }
 
