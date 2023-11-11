@@ -213,6 +213,12 @@ boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
             if (twoDirection)
             {
                 val--;
+
+                if (val < min)
+                {
+                    val = max;
+                }
+
                 val = constrain(val, min, max);
             }
 
@@ -231,6 +237,7 @@ boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
             if (twoDirection)
             {
                 val++;
+
                 if (val > max)
                 {
                     val = min;

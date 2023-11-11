@@ -213,7 +213,7 @@ void Watch::timeChange(byte &time, Key &key)
 
 void Watch::yearChange(int &year, Key &key)
 {
-    key.valChange(year, 2021, 3000, true);
+    key.valChange(year, 2021, 2100, true);
 }
 
 void Watch::monthChange(byte &month, Key &key)
@@ -373,10 +373,7 @@ void Watch::setInterval(Key &key)
 {
     if (key.screen == key.interval)
     {
-        if (key.valChange(interval, 0, 90))
-        {
-            interval = constrain(interval, 0, 99);
-        }
+        key.valChange(interval, 0, 90);
     }
 }
 
