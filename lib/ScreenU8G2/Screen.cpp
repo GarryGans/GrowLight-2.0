@@ -303,7 +303,6 @@ void Screen::timerScreen(Watch &watch, Key &key)
             }
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-            //  autoBar()
 
         } while (nextPage());
     }
@@ -393,7 +392,7 @@ void Screen::setWatchScreen(Watch &watch, Key &key)
             blinkDate(key, watch);
             blinkTime(key, watch);
 
-            // autoBar(escConter, key.escFrScreen, false, key.resetCounter);
+            // escapeBar(key.);
 
         } while (nextPage());
     }
@@ -520,13 +519,6 @@ void Screen::startScreen(Watch &watch, Key &key)
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
 
         } while (nextPage());
-
-        byte a = 3;
-
-        if (timer.wait(a * sec))
-        {
-            key.screen = key.lamp;
-        }
     }
 }
 

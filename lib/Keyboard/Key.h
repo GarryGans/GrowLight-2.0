@@ -37,10 +37,9 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    boolean escFrScreen;
-
-    byte a = 5;
-    byte b = 5;
+    Timer timer_0;
+    Timer timer_1;
+    Timer timer_2;
 
     enum Screen
     {
@@ -80,8 +79,6 @@ private:
         PLUS,
         MINUS
     } act;
-
-    boolean autoMove = true;
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
@@ -145,7 +142,7 @@ public:
     void skipEnable(boolean &skip);
     void manualSwitchLight();
 
-        boolean setVoltage();
+    boolean setVoltage();
 
     boolean clickOrHold();
     boolean click(byte key);
@@ -157,9 +154,7 @@ public:
     template <typename T>
     boolean valChange(T &val, T min, T max);
 
-    // boolean valChange(int &val, int min, int max);
-    // boolean valChange(byte &val, byte min, byte max);
-
+    void cursor(byte &cursor, byte min, byte max);
     boolean navigation();
 
     void progressBar();

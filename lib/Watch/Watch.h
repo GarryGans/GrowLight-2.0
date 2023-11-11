@@ -71,13 +71,11 @@ public:
     void autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean &brightDown);
     void autoSwitcher(Key &key);
 
-    void cursorChange(Key &key, byte &cursor);
     void hmsChange(Key &key, byte &hms, byte &cursor);
 
     void spectrumReDuration(Key &key);
     void dayReduration(Key &key);
 
-    void dtCursor(Key &key);
     void timeChange(byte &time, Key &key);
     void yearChange(int &year, Key &key);
     void monthChange(byte &month, Key &key);

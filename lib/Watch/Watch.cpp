@@ -130,63 +130,47 @@ void Watch::autoSwitcher(Key &key)
     }
 }
 
-void Watch::cursorChange(Key &key, byte &cursor)
-{
-    if (key.navigation())
-    {
-        switch (key.direction)
-        {
-        case key.FORWARD:
-            cursor++;
-            if (cursor > 3)
-            {
-                cursor = 0;
-            }
-            break;
-
-        case key.BACK:
-            cursor--;
-            cursor = constrain(cursor, 0, 3);
-            break;
-
-        default:
-            break;
-        }
-    }
-}
-
 void Watch::hmsChange(Key &key, byte &hms, byte &cursor)
 {
-    if (key.valChange())
-    {
-        if (key.act == key.MINUS)
-        {
-            hms--;
-            if (cursor == 0 || cursor == 2)
-            {
-                hms = constrain(hms, 0, 23);
-            }
-            else
-            {
-                hms = constrain(hms, 0, 59);
-            }
-        }
+    // if (key.valChange())
+    // {
+    //     if (key.act == key.MINUS)
+    //     {
+    //         hms--;
+    //         if (cursor == 0 || cursor == 2)
+    //         {
+    //             hms = constrain(hms, 0, 23);
+    //         }
+    //         else
+    //         {
+    //             hms = constrain(hms, 0, 59);
+    //         }
+    //     }
 
-        if (key.act == key.PLUS)
-        {
-            hms++;
-            if ((cursor == 0 || cursor == 2) && hms > 23)
-            {
-                hms = 0;
-            }
-            if ((cursor == 1 || cursor == 3) && hms > 59)
-            {
-                hms = 0;
-            }
-        }
+    //     if (key.act == key.PLUS)
+    //     {
+    //         hms++;
+    //         if ((cursor == 0 || cursor == 2) && hms > 23)
+    //         {
+    //             hms = 0;
+    //         }
+    //         if ((cursor == 1 || cursor == 3) && hms > 59)
+    //         {
+    //             hms = 0;
+    //         }
+    //     }
+    // }
+
+    if (cursor == 0 || cursor == 2)
+    {
+        key.valChange(hms, (byte)0, (byte)23);
+    }
+    else
+    {
+        key.valChange(hms, (byte)0, (byte)59);
     }
 
-    cursorChange(key, cursor);
+    key.cursor(cursor, 0, 3);
 }
 
 void Watch::spectrumReDuration(Key &key)
@@ -250,31 +234,6 @@ void Watch::dayReduration(Key &key)
         cursorDay = 0;
 
         key.correctDay = false;
-    }
-}
-
-void Watch::dtCursor(Key &key)
-{
-    if (key.navigation())
-    {
-        switch (key.direction)
-        {
-        case key.FORWARD:
-            cursorDateTime++;
-            if (cursorDateTime > 5)
-            {
-                cursorDateTime = 0;
-            }
-            break;
-
-        case key.BACK:
-            cursorDateTime--;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        default:
-            break;
-        }
     }
 }
 
@@ -469,7 +428,8 @@ void Watch::setWatch(Key &key)
 
     if (key.screen == key.watch)
     {
-        dtCursor(key);
+
+        key.cursor(cursorDateTime, 0, 5);
 
         if (cursorDateTime == 0)
         {

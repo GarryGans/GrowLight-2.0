@@ -1,7 +1,5 @@
 #include "Key.h"
 
-Timer timer[3];
-
 Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
 {
 }
@@ -20,7 +18,7 @@ boolean Key::autoOk(Screen screen)
     {
         byte a = 5;
 
-        if (timer[0].ready(a, resetCounter))
+        if (timer_0.ready(a, resetCounter))
         {
             screen = lamp;
             return true;
@@ -43,6 +41,36 @@ Key::Screen Key::changeScreen()
     }
 
     return screen;
+}
+
+void Key::cursor(byte &cursor, byte min, byte max)
+{
+    if (navigation())
+    {
+        switch (direction)
+        {
+        case FORWARD:
+            cursor++;
+
+            if (cursor > max)
+            {
+                cursor = min;
+            }
+            break;
+
+        case BACK:
+            cursor--;
+
+            if (cursor < min)
+            {
+                cursor = max;
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
 }
 
 boolean Key::navigation()
@@ -114,11 +142,10 @@ void Key::autoScreenMove()
     {
         byte b = 3;
 
-        if (timer[1].ready(b, resetCounter))
+        if (timer_1.ready(b, resetCounter))
         {
             idChange();
-            // autoMove = false;
-        }        
+        }
     }
 }
 
@@ -269,16 +296,17 @@ boolean Key::setWatch()
 {
     if (click(keyWatch))
     {
-        if (screen == watch && escFrScreen)
-        {
-            setDateTime = true;
-            screen = lamp;
-        }
-        else if (screen == lamp)
+        if (screen == lamp)
         {
             screen = watch;
             return true;
         }
+    }
+
+    if ((screen == watch && ok()) || autoOk(watch))
+    {
+        setDateTime = true;
+        screen = lamp;
     }
 
     return false;
@@ -326,7 +354,6 @@ boolean Key::changeBright()
         {
             screen = riseBright;
             reBright[id] = true;
-            // resetCounter = true;
         }
     }
 
@@ -337,12 +364,9 @@ boolean Key::changeBright()
         if (escape())
         {
             reBright[id] = false;
-            // escFrScreen = false;
-            // resetCounter = true;
             screen = lamp;
         }
 
-        // if (ok() || escFrScreen)
         if (ok())
         {
             writeBright = true;
@@ -352,8 +376,6 @@ boolean Key::changeBright()
             writeRiseBright = true;
 
             reBright[id] = false;
-            // escFrScreen = false;
-            // resetCounter = true;
 
             screen = lamp;
         }
@@ -395,8 +417,6 @@ void Key::manualSwitchLight()
 {
     if (click(keyManual))
     {
-        // resetCounter = true;
-
         if (screen == manual)
         {
             resetManualBright = true;
@@ -406,14 +426,11 @@ void Key::manualSwitchLight()
                 buttonSwitch[i] = 0;
             }
 
-            // resetCounter = true;
             screen = lamp;
         }
 
         else if (screen == lamp)
         {
-            // resetCounter = true;
-
             resetManualBright = true;
 
             screen = manual;
@@ -425,21 +442,14 @@ void Key::manualSwitchLight()
 
         if (!buttonSwitch[id])
         {
-            // resetCounter = true;
             buttonSwitch[id] = true;
         }
 
         else
         {
-            // resetCounter = true;
             buttonSwitch[id] = false;
         }
     }
-
-    // else
-    // {
-    //     resetCounter = false;
-    // }
 }
 
 void Key::resetSunSetting()
@@ -564,6 +574,14 @@ boolean Key::allColor()
 void Key::keyCommands()
 {
     read();
+
+    if (screen == start)
+    {
+        if (timer_2.ready(3))
+        {
+            screen = lamp;
+        }
+    }
 
     autoScreenMove();
     manualChangeScreen();
