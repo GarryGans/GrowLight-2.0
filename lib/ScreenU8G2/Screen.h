@@ -13,10 +13,10 @@
 #include <EFX.h>
 #include <Voltage.h>
 
-class Screen : public EFX
-
+class Screen
 {
 private:
+    EFX efx;
     Timer timer;
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
@@ -100,7 +100,7 @@ public:
     void startScreen(Watch &watch, Key &key);
 
     void sleep(Key &key);
-    
+
     void screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright);
 };
 

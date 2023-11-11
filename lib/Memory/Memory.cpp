@@ -143,8 +143,8 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 
         key.writeInterval = false;
 
-        EEPROM.put(speed_addr, bright.speed);
-        
+        EEPROM.put(speed_addr, bright.waitTime);
+
         key.writeSpeed = false;
     }
 
@@ -171,7 +171,7 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachTime(watch);
     readEachSkip(watch);
 
-    read(speed_addr, bright.speed, zero, max);
+    read(speed_addr, bright.waitTime, zero, max);
     read(interval_addr, watch.interval, zero, max);
     read(allBright_addr, bright.allBrigh, byte(zero), bright.maxAllBright);
     read(allColor_addr, bright.allColor, byte(zero), bright.maxAllColor);

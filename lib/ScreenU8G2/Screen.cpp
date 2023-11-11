@@ -1,6 +1,6 @@
 #include "Screen.h"
 
-Screen::Screen(String WavelengthSMD[], String lightColor[]) : EFX()
+Screen::Screen(String WavelengthSMD[], String lightColor[]) 
 {
     for (byte i = 0; i < lampAmount; i++)
     {
@@ -17,11 +17,11 @@ void Screen::emptyDisplay(Key &key)
 {
     if (key.screen == key.lamp && key.justPressed())
     {
-        firstPage();
+        efx.firstPage();
         do
         {
-            textAlign("READY", PosX::center, PosY::center);
-        } while (nextPage());
+            efx.textAlign("READY", EFX::PosX::center, EFX::PosY::center);
+        } while (efx.nextPage());
     }
 }
 
@@ -29,17 +29,17 @@ void Screen::printDig(byte value)
 {
     if (value < 10)
     {
-        print("0");
+        efx.print("0");
     }
 
-    print(value);
+    efx.print(value);
 }
 
 void Screen::printTime(byte hh, byte mm)
 {
     printDig(hh);
 
-    print(":");
+    efx.print(":");
 
     printDig(mm);
 }
@@ -48,11 +48,11 @@ void Screen::printWatch(byte hh, byte mm, byte ss)
 {
     printDig(hh);
 
-    print(":");
+    efx.print(":");
 
     printDig(mm);
 
-    print(":");
+    efx.print(":");
 
     printDig(ss);
 }
@@ -85,8 +85,8 @@ void Screen::iGorLogo()
     do
     {
         setHeight(u8g2_font_crox4h_tf);
-        textAlign("Smart Garden", PosX::center, PosY::up);
-        textAlign("iGor_2019", PosX::center, PosY::center);
+        textAlign("Smart Garden", EFX::PosX::center, EFX::PosY::up);
+        textAlign("iGor_2019", EFX::PosX::center, EFX::PosY::center);
 
     } while (nextPage());
 }
@@ -95,7 +95,7 @@ void Screen::brightInfo(Bright &bright, Key &key)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
-    digAlign(key.screen == key.manual ? bright.manualBright[key.id] : bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
+    digAlign(key.screen == key.manual ? bright.manualBright[key.id] : bright.bright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
 }
 
 void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
@@ -104,14 +104,14 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveStringDeep("SKIP", PosX::center, PosY::downSpace, false, moveSpeedSkip);
+        moveStringDeep("SKIP", EFX::PosX::center, EFX::PosY::downSpace, false, moveSpeedSkip);
     }
 
     else if (key.screen == key.manual)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
+        textAlign("MANUAL", EFX::PosX::leftSpace, EFX::PosY::downSpace);
         brightInfo(bright, key);
 
         // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
@@ -120,7 +120,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
     else
     {
         setHeight(u8g2_font_courB08_tn);
-        setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
+        setPosition("00:00-00:00", EFX::PosX::leftSpace, EFX::PosY::downSpace);
 
         printSpecTime(watch, key.id);
         brightInfo(bright, key);
@@ -134,22 +134,22 @@ void Screen::lampInfo(Watch &watch, Key &key)
     char string[12];
     String(WavelengthSMD[key.id]).toCharArray(string, 12);
 
-    // textAlign(string, PosX::center, PosY::upHalf);
+    // textAlign(string, EFX::PosX::center, EFX::PosY::upHalf);
 
-    moveStringDeep(string, PosX::center, PosY::upHalf, deepX_SMD, moveSpeedSMD);
+    moveStringDeep(string, EFX::PosX::center, EFX::PosY::upHalf, deepX_SMD, moveSpeedSMD);
 
     setHeight(u8g2_font_crox5tb_tf);
 
-    stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+    stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], PosX::rightHalf, PosY::center);
+    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], EFX::PosX::rightHalf, EFX::PosY::center);
 }
 
 void Screen::headerTime(Watch &watch)
 {
     setHeight(u8g2_font_courB08_tn);
 
-    setPosition("00:00:00", PosX::rightSpace, PosY::upSpace);
+    setPosition("00:00:00", EFX::PosX::rightSpace, EFX::PosY::upSpace);
 
     Time now = watch.time();
 
@@ -160,13 +160,13 @@ void Screen::headerDate(Watch &watch)
 {
     setHeight(u8g2_font_courB08_tf);
 
-    setPosition("00/00/0000", PosX::leftHalf, PosY::upSpace);
+    setPosition("00/00/0000", EFX::PosX::leftHalf, EFX::PosY::upSpace);
 
     Date now = watch.date();
 
     printDate(now.day(), now.month(), now.year());
 
-    stringAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
+    stringAlign(daysOfTheWeek[now.dayOfTheWeek()], EFX::PosX::leftHalf, EFX::PosY::upHalf);
 }
 
 void Screen::setScreen(Bright &brigth, Key &key)
@@ -178,15 +178,15 @@ void Screen::setScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Set Set", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Set Set", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-            digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
+            digAlign(brigth.setBright[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
-            blinkFrame(brigth.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
+            blinkFrame(brigth.setBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -203,15 +203,15 @@ void Screen::riseScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Set Rise", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Set Rise", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-            digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
+            digAlign(brigth.riseBright[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
-            blinkFrame(brigth.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
+            blinkFrame(brigth.riseBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -228,15 +228,15 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Set MaxBright", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Set MaxBright", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-            digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
+            digAlign(bright.maxBright[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
+            blinkFrame(bright.maxBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
@@ -262,7 +262,7 @@ void Screen::timerScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_courB08_tn);
 
-            setPosition("00:00:00", PosX::leftSpace, PosY::upSpace);
+            setPosition("00:00:00", EFX::PosX::leftSpace, EFX::PosY::upSpace);
 
             Time now = watch.time();
 
@@ -270,32 +270,32 @@ void Screen::timerScreen(Watch &watch, Key &key)
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
             setHeight(u8g2_font_profont22_tn);
 
-            setPosition("00:00", PosX::rightHalf, PosY::upHalf);
+            setPosition("00:00", EFX::PosX::rightHalf, EFX::PosY::upHalf);
             printTime(watch.startHour[key.id], watch.startMinute[key.id]);
 
-            setPosition("00:00", PosX::rightHalf, PosY::downHalf);
+            setPosition("00:00", EFX::PosX::rightHalf, EFX::PosY::downHalf);
             printTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
 
             switch (watch.cursorSpectrum)
             {
             case 0:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, key.resetCounter);
+                blinkFrame("00:00", 2, EFX::PosX::rightHalf, EFX::PosY::upFrameHalf, key.resetCounter);
                 break;
 
             case 1:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, key.resetCounter);
+                blinkFrame("00:00", 2, EFX::PosX::rightFrameHalfSide, EFX::PosY::upFrameHalf, key.resetCounter);
                 break;
 
             case 2:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, key.resetCounter);
+                blinkFrame("00:00", 2, EFX::PosX::rightHalf, EFX::PosY::downFrameHalf, key.resetCounter);
                 break;
 
             case 3:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, key.resetCounter);
+                blinkFrame("00:00", 2, EFX::PosX::rightFrameHalfSide, EFX::PosY::downFrameHalf, key.resetCounter);
                 break;
 
             default:
@@ -326,22 +326,22 @@ void Screen::blinkTime(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
-    setPosition("00:00:00", PosX::center, PosY::downHalf);
+    setPosition("00:00:00", EFX::PosX::center, EFX::PosY::downHalf);
 
     printWatch(watch.hour, watch.minute, watch.second);
 
     switch (watch.cursorDateTime)
     {
     case 3:
-        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, key.resetCounter);
+        blinkFrame("00:00:00", 2, EFX::PosX::center, EFX::PosY::downFrameHalf, key.resetCounter);
         break;
 
     case 4:
-        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, key.resetCounter);
+        blinkFrame("00:00:00", 2, EFX::PosX::centerFrame, EFX::PosY::downFrameHalf, key.resetCounter);
         break;
 
     case 5:
-        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, key.resetCounter);
+        blinkFrame("00:00:00", 2, EFX::PosX::rightFrameSide, EFX::PosY::downFrameHalf, key.resetCounter);
         break;
 
     default:
@@ -353,7 +353,7 @@ void Screen::blinkDate(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
-    setPosition("00/00/0000", PosX::center, PosY::upHalf);
+    setPosition("00/00/0000", EFX::PosX::center, EFX::PosY::upHalf);
 
     printDate(watch.day, watch.month, watch.year);
 
@@ -361,20 +361,20 @@ void Screen::blinkDate(Key &key, Watch &watch)
 
     // Date now = watch.date();
 
-    // textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::center, PosY::center);
+    // textAlign(daysOfTheWeek[now.dayOfTheWeek()], EFX::PosX::center, EFX::PosY::center);
 
     switch (watch.cursorDateTime)
     {
     case 0:
-        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, key.resetCounter);
+        blinkFrame("00/00/0000", 2, EFX::PosX::center, EFX::PosY::upFrameHalf, key.resetCounter);
         break;
 
     case 1:
-        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, key.resetCounter);
+        blinkFrame("00/00/0000", 2, EFX::PosX::centerFrame, EFX::PosY::upFrameHalf, key.resetCounter);
         break;
 
     case 2:
-        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, key.resetCounter);
+        blinkFrame("00/00/0000", 4, EFX::PosX::rightFrameSide, EFX::PosY::upFrameHalf, key.resetCounter);
         break;
 
     default:
@@ -402,10 +402,10 @@ void Screen::showSunTime(Watch &watch)
 {
     setHeight(u8g2_font_9x18_tn);
 
-    setPosition("00:00", PosX::rightSpace, PosY::center);
+    setPosition("00:00", EFX::PosX::rightSpace, EFX::PosY::center);
     printTime(watch.RiseHour, watch.RiseMin);
 
-    setPosition("00:00", PosX::rightSpace, PosY::downSpace);
+    setPosition("00:00", EFX::PosX::rightSpace, EFX::PosY::downSpace);
     printTime(watch.SetHour, watch.SetMin);
 }
 
@@ -413,28 +413,28 @@ void Screen::blinkSunTime(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_profont22_tn);
 
-    setPosition("00:00", PosX::center, PosY::center);
+    setPosition("00:00", EFX::PosX::center, EFX::PosY::center);
     printTime(watch.RiseHour, watch.RiseMin);
 
-    setPosition("00:00", PosX::center, PosY::downSpace);
+    setPosition("00:00", EFX::PosX::center, EFX::PosY::downSpace);
     printTime(watch.SetHour, watch.SetMin);
 
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, key.resetCounter);
+        blinkFrame("00:00", 2, EFX::PosX::center, EFX::PosY::centerFrame, key.resetCounter);
         break;
 
     case 1:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, key.resetCounter);
+        blinkFrame("00:00", 2, EFX::PosX::rightFrameSide, EFX::PosY::centerFrame, key.resetCounter);
         break;
 
     case 2:
-        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, key.resetCounter);
+        blinkFrame("00:00", 2, EFX::PosX::center, EFX::PosY::downFrameSpace, key.resetCounter);
         break;
 
     case 3:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, key.resetCounter);
+        blinkFrame("00:00", 2, EFX::PosX::rightFrameSide, EFX::PosY::downFrameSpace, key.resetCounter);
         break;
 
     default:
@@ -451,13 +451,13 @@ void Screen::intervalScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Interval", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Interval", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digStringAlign(watch.interval, " m", PosX::center, PosY::center);
+            digStringAlign(watch.interval, " m", EFX::PosX::center, EFX::PosY::center);
 
-            blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.resetCounter);
+            blinkFrame(watch.interval, EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
             
@@ -474,13 +474,13 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Sun Speed", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Sun Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digStringAlign(bright.speed, " bp", PosX::center, PosY::center);
+            digStringAlign(bright.waitTime, " bp", EFX::PosX::center, EFX::PosY::center);
 
-            blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.resetCounter);
+            blinkFrame(bright.waitTime, EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
 
             escapeBar(key.awCount, key.click(keySpeed));
 
@@ -497,7 +497,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("Set SunTime", PosX::center, PosY::upSpace, false, moveSpeed);
+            moveStringDeep("Set SunTime", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
             blinkSunTime(key, watch);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -533,7 +533,7 @@ void Screen::sleep(Key &key)
         do
         {
             setHeight(u8g2_font_ncenB18_tf);
-            textAlign("READY", PosX::center, PosY::center);
+            textAlign("READY", EFX::PosX::center, EFX::PosY::center);
 
         } while (nextPage());
 
@@ -569,20 +569,20 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("BRIGHT", PosX::leftSpace, PosY::upSpace, false, moveSpeedShot);
+            moveStringDeep("BRIGHT", EFX::PosX::leftSpace, EFX::PosY::upSpace, false, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(bright.allBrigh, PosX::leftHalf, PosY::center);
+            digAlign(bright.allBrigh, EFX::PosX::leftHalf, EFX::PosY::center);
 
-            blinkFrame(bright.allBrigh, PosX::leftHalf, PosY::centerFrame);
+            blinkFrame(bright.allBrigh, EFX::PosX::leftHalf, EFX::PosY::centerFrame);
 
             for (byte i = 0; i < lampAmount; i++)
             {
                 setHeight(u8g2_font_courB08_tf);
 
                 customY(nextY(lampAmount, i));
-                strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
+                strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -600,20 +600,20 @@ void Screen::allColorScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("COLOR", PosX::leftSpace, PosY::upSpace, false, moveSpeedShot);
+            moveStringDeep("COLOR", EFX::PosX::leftSpace, EFX::PosY::upSpace, false, moveSpeedShot);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(bright.allColor, PosX::leftHalf, PosY::center);
+            digAlign(bright.allColor, EFX::PosX::leftHalf, EFX::PosY::center);
 
-            blinkFrame(bright.allColor, PosX::leftHalf, PosY::centerFrame);
+            blinkFrame(bright.allColor, EFX::PosX::leftHalf, EFX::PosY::centerFrame);
 
             for (byte i = 0; i < lampAmount; i++)
             {
                 setHeight(u8g2_font_courB08_tf);
 
                 customY(nextY(lampAmount, i));
-                strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
+                strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -631,23 +631,23 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("PWM", PosX::leftSpace, PosY::upSpace);
+            moveStringDeep("PWM", EFX::PosX::leftSpace, EFX::PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(bright.maxBright[key.id], PosX::leftHalf, PosY::center);
+            digAlign(bright.maxBright[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], PosX::leftHalf, PosY::centerFrame, key.resetCounter);
+            blinkFrame(bright.maxBright[key.id], EFX::PosX::leftHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveStringDeep("MW", PosX::rightSpace, PosY::upSpace);
+            moveStringDeep("MW", EFX::PosX::rightSpace, EFX::PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(voltage.ampere[key.id], PosX::rightHalf, PosY::center);
+            digAlign(voltage.ampere[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
-            blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.resetCounter);
+            blinkFrame(voltage.ampere[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 

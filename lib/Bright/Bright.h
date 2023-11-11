@@ -12,9 +12,9 @@ class Bright
     friend class Screen;
 
 private:
-    Timer timer[2];
+    Timer timer[lampAmount];
 
-    int speed;
+    int waitTime;
 
     byte pin[lampAmount];
 
