@@ -200,86 +200,27 @@ void Watch::dayReduration(Key &key)
 
 void Watch::timeChange(byte &time, Key &key)
 {
-    if (key.valChange())
+    if (cursorDateTime == 3)
     {
-        if (key.act == key.MINUS)
-        {
-            time--;
+        key.valChange(time, (byte)0, (byte)23, true);
+    }
 
-            if (cursorDateTime == 3)
-            {
-                time = constrain(time, 0, 23);
-            }
-
-            if (cursorDateTime == 4 || cursorDateTime == 5)
-            {
-                time = constrain(time, 0, 59);
-            }
-        }
-
-        if (key.act == key.PLUS)
-        {
-            time++;
-
-            if (cursorDateTime == 3 && time > 23)
-            {
-                time = 0;
-            }
-
-            if ((cursorDateTime == 4 || cursorDateTime == 5) && time > 59)
-            {
-                time = 0;
-            }
-        }
+    if (cursorDateTime == 4 || cursorDateTime == 5)
+    {
+        key.valChange(time, (byte)0, (byte)59, true);
     }
 }
 
 void Watch::yearChange(int &year, Key &key)
 {
-    if (key.valChange())
-    {
-        if (key.act == key.MINUS)
-        {
-            year--;
-
-            if (cursorDateTime == 2 && year < 2021)
-            {
-                year = 2021;
-            }
-        }
-
-        if (key.act == key.PLUS)
-        {
-            year++;
-        }
-    }
+    key.valChange(year, 2021, 3000, true);
 }
 
 void Watch::monthChange(byte &month, Key &key)
 {
-    if (key.valChange())
-    {
-        if (key.act == key.MINUS)
-        {
-            month--;
-
-            if (month < 1)
-            {
-                month = 12;
-            }
-        }
-
-        if (key.act == key.PLUS)
-        {
-            month++;
-
-            if (month > 12)
-            {
-                month = 1;
-            }
-        }
-    }
+    key.valChange(month, (byte)1, (byte)12, true);
 }
+
 void Watch::dayChange(byte &day, Key &key)
 {
     if (key.valChange())

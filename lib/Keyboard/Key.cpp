@@ -216,7 +216,7 @@ boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
                 val = constrain(val, min, max);
             }
 
-            else if (val > min)
+            else if (!twoDirection && val > min)
             {
                 val--;
             }
@@ -233,11 +233,11 @@ boolean Key::valChange(T &val, T min, T max, boolean twoDirection)
                 val++;
                 if (val > max)
                 {
-                    val = 0;
+                    val = min;
                 }
             }
 
-            else if (val < max)
+            else if (!twoDirection && val < max)
             {
                 val++;
             }
@@ -323,7 +323,8 @@ boolean Key::setWatch()
         }
     }
 
-    if ((screen == watch && ok()) || autoOk(watch))
+    // if ((screen == watch && ok()) || autoOk(watch))
+    if (screen == watch && ok())
     {
         setDateTime = true;
         screen = lamp;
