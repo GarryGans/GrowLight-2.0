@@ -132,15 +132,19 @@ void Watch::autoSwitcher(Key &key)
 
 void Watch::hmsChange(Key &key, byte &hms, byte &cursor)
 {
+    byte max;
+
     if (cursor == 0 || cursor == 2)
     {
-        key.valChange(hms, (byte)0, (byte)23, true);
-    }
-    else
-    {
-        key.valChange(hms, (byte)0, (byte)59, true);
+        max = 23;
     }
 
+    else
+    {
+        max = 59;
+    }
+
+    key.valChange(hms, (byte)0, max, true);
     key.cursor(cursor, 0, 3);
 }
 
@@ -213,7 +217,7 @@ void Watch::timeChange(byte &time, Key &key)
 
 void Watch::yearChange(int &year, Key &key)
 {
-    key.valChange(year, 2021, 2100, true);
+    key.valChange(year, 2023, 2100, true);
 }
 
 void Watch::monthChange(byte &month, Key &key)
@@ -223,61 +227,30 @@ void Watch::monthChange(byte &month, Key &key)
 
 void Watch::dayChange(byte &day, Key &key)
 {
-    if (key.valChange())
+    byte max;
+
+    if (month == 4 || month == 6 || month == 9 || month == 11)
     {
-        if (key.act == key.MINUS)
+        max = 30;
+    }
+
+    else if (month == 2)
+    {
+        if (leapYear)
         {
-            day--;
-
-            if (day < 1)
-            {
-                if (month == 4 || month == 6 || month == 9 || month == 11)
-                {
-                    day = 30;
-                }
-
-                else if (month == 2)
-                {
-                    if (leapYear)
-                    {
-                        day = 29;
-                    }
-                    else
-                    {
-                        day = 28;
-                    }
-                }
-
-                else
-                {
-                    day = 31;
-                }
-            }
+            max = 29;
         }
-
-        if (key.act == key.PLUS)
+        else
         {
-            day++;
-
-            if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
-            {
-                day = 1;
-            }
-
-            else if (month == 2)
-            {
-                if ((day > 29 && leapYear) || (day > 28 && !leapYear))
-                {
-                    day = 1;
-                }
-            }
-
-            else if (day > 31)
-            {
-                day = 1;
-            }
+            max = 28;
         }
     }
+    else
+    {
+        max = 31;
+    }
+
+    key.valChange(day, (byte)1, max, true);
 }
 
 void Watch::leapYearDay()
@@ -289,6 +262,11 @@ void Watch::leapYearDay()
     else
     {
         leapYear = false;
+    }
+
+    if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
+    {
+        day = 30;
     }
 
     if (day > 29 && month == 2 && leapYear)
@@ -312,9 +290,9 @@ void Watch::setWatch(Key &key)
 
         dow = time.dayOfTheWeek();
 
-        if (time.year() < 2021)
+        if (time.year() < 2023)
         {
-            year = 2021;
+            year = 2023;
         }
         else
         {
@@ -339,12 +317,12 @@ void Watch::setWatch(Key &key)
         else if (cursorDateTime == 1)
         {
             monthChange(month, key);
-            leapYearDay();
+            // leapYearDay();
         }
         else if (cursorDateTime == 2)
         {
             yearChange(year, key);
-            leapYearDay();
+            // leapYearDay();
         }
         else if (cursorDateTime == 3)
         {
@@ -358,6 +336,7 @@ void Watch::setWatch(Key &key)
         {
             timeChange(second, key);
         }
+        leapYearDay();
     }
 
     if (key.setDateTime)

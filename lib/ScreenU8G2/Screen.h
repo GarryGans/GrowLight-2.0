@@ -35,7 +35,7 @@ private:
     int moveSpeedShot = 200;
 
     byte paddingSkip = 10;
-    int moveSpeedSkip = 120;
+    int moveSpeedSkip = 10;
 
     byte paddingSMD = 10;
     byte deepX_SMD = 10;

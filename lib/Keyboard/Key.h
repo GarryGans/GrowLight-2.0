@@ -28,6 +28,8 @@
 // #define key 11
 // #define key 13
 
+#define autoWrite 128
+
 class Key : public AmperkaKB
 {
     friend class Screen;
@@ -40,6 +42,9 @@ private:
     Timer timer_0;
     Timer timer_1;
     Timer timer_2;
+    Timer timer_3;
+
+    byte awCount = 0;
 
     enum Screen
     {
@@ -85,6 +90,7 @@ private:
     boolean reDay;
 
     boolean resetCounter;
+
     boolean freezeFrame;
 
     boolean resetManualBright;
@@ -131,6 +137,8 @@ public:
     void menuScreen(Screen start, Screen end);
 
     boolean autoOk(Screen screen);
+    boolean autoOk(byte count);
+
     // void setScreens();
     void keyCommands();
     void idChange();

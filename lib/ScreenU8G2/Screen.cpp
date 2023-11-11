@@ -460,6 +460,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
             blinkFrame(watch.interval, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            
         } while (nextPage());
     }
 }
@@ -481,7 +482,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             blinkFrame(bright.speed, PosX::customFrame, PosY::centerFrame, key.freezeFrame);
 
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
+            escapeBar(key.awCount, key.click(keySpeed));
 
         } while (nextPage());
     }

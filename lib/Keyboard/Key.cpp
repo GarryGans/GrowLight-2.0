@@ -28,6 +28,24 @@ boolean Key::autoOk(Screen screen)
     return false;
 }
 
+boolean Key::autoOk(byte count)
+{
+    awCount = timer_3.reduceCounter(count, click(keySpeed));
+
+    if (awCount == 0)
+    {
+        Serial.print("awCount FIN: ");
+        Serial.println(awCount);
+
+        return true;
+    }
+
+    // Serial.print("awCount: ");
+    // Serial.println(awCount);
+
+    return false;
+}
+
 Key::Screen Key::changeScreen()
 {
     if (direction == FORWARD)
@@ -305,7 +323,7 @@ void Key::setSpeed()
     {
         menuScreen(speed, interval);
 
-        if (ok())
+        if (ok() || autoOk(autoWrite))
         {
             writeInterval = true;
             writeSpeed = true;
@@ -316,6 +334,7 @@ void Key::setSpeed()
         {
             screen = lamp;
         }
+
     }
 }
 
@@ -605,7 +624,7 @@ void Key::keyCommands()
 
     if (screen == start)
     {
-        if (timer_2.ready(3))
+        if (timer_2.ready(1))
         {
             screen = lamp;
         }
