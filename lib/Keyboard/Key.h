@@ -23,7 +23,7 @@
 #define keyForward 8
 #define keyBack 12
 
-// #define key 5
+#define keyInterval 5
 #define keySkip 3
 // #define key 11
 // #define key 13
@@ -173,6 +173,7 @@ public:
     boolean dayReduration();
     boolean allBrigh();
     boolean allColor();
+    boolean setInterval();
 };
 
 #endif

@@ -53,6 +53,14 @@ void Memory::readEachBright(Bright &bright)
     }
 }
 
+void Memory::readEachSpeed(Bright &bright)
+{
+    for (byte id = 0; id < lampAmount; id++)
+    {
+        read(speed_addr[id], bright.waitTime[id], bright.minWaitTime, bright.maxWaitTime);
+    }
+}
+
 void Memory::writeEachSkip(Watch &watch)
 {
     for (byte id = 0; id < lampAmount; id++)
@@ -105,6 +113,14 @@ void Memory::writeEachBright(Bright &bright, Key &key)
     }
 }
 
+void Memory::writeEachSpeed(Bright &bright, Key &key)
+{
+    for (byte id = 0; id < lampAmount; id++)
+    {
+        EEPROM.put(speed_addr[id], bright.waitTime[id]);
+    }
+}
+
 void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 {
     if (key.writeTime)
@@ -137,13 +153,16 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
         key.writeSkip = false;
     }
 
-    if (key.writeInterval && key.writeSpeed)
+    if (key.writeInterval)
     {
         EEPROM.put(interval_addr, watch.interval);
 
         key.writeInterval = false;
+    }
 
-        EEPROM.put(speed_addr, bright.waitTime);
+    if (key.writeSpeed)
+    {
+        EEPROM.put(speed_addr[key.id], bright.waitTime[key.id]);
 
         key.writeSpeed = false;
     }
@@ -170,8 +189,9 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
+    readEachSpeed(bright);
 
-    read(speed_addr, bright.waitTime, zero, max);
+    // read(speed_addr, bright.waitTime, zero, max);
     read(interval_addr, watch.interval, zero, max);
     read(allBright_addr, bright.allBrigh, byte(zero), bright.maxAllBright);
     read(allColor_addr, bright.allColor, byte(zero), bright.maxAllColor);

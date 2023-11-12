@@ -17,7 +17,10 @@ class Screen
 {
 private:
     EFX efx;
+    
     Timer timer;
+
+
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
     const String state[2] = {"OFF", "ON"};
@@ -44,6 +47,8 @@ private:
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
+
+    void begin();
 
     void emptyDisplay(Key &key);
     boolean ready;

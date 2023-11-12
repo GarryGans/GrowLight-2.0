@@ -265,13 +265,10 @@ void Key::setSpeed()
         }
     }
 
-    if (screen == speed || screen == interval)
+    if (screen == speed)
     {
-        screen = menuScreen(speed, interval);
-
         if (ok() || autoOk(autoWrite))
         {
-            writeInterval = true;
             writeSpeed = true;
             screen = lamp;
         }
@@ -556,6 +553,38 @@ boolean Key::allColor()
     }
 
     if (screen == sunColor)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+boolean Key::setInterval()
+{
+    if (click(keyInterval))
+    {
+        if (screen == lamp)
+        {
+            screen = interval;
+        }
+    }
+
+    if (screen == interval)
+    {
+        if (ok())
+        {
+            writeInterval = true;
+            screen = lamp;
+        }
+
+        else if (escape())
+        {
+            screen = lamp;
+        }
+    }
+
+    if (screen == interval)
     {
         return true;
     }

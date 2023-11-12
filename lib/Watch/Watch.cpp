@@ -350,9 +350,9 @@ void Watch::setWatch(Key &key)
 
 void Watch::setInterval(Key &key)
 {
-    if (key.screen == key.interval)
+    if (key.setInterval())
     {
-        key.valChange(interval, 0, 90);
+        key.valChange(interval, 0, 90, true);
     }
 }
 

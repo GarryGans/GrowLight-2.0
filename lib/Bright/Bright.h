@@ -14,7 +14,10 @@ class Bright
 private:
     Timer timer[lampAmount];
 
-    int waitTime;
+    int minWaitTime = 0;
+    int maxWaitTime = 90;
+
+    int waitTime[lampAmount];
 
     byte pin[lampAmount];
 

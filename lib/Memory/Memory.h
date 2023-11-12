@@ -18,6 +18,8 @@ private:
     int allBright_addr;
     int allColor_addr;
 
+    int speed_addr[lampAmount];
+
     int maxBright_addr[lampAmount];
     int riseBright_addr[lampAmount];
     int setBright_addr[lampAmount];
@@ -30,7 +32,6 @@ private:
     int skip_addr[lampAmount];
 
     int interval_addr;
-    int speed_addr;
 
     int max = 256;
     int zero = 0;
@@ -50,6 +51,8 @@ public:
 
     void readEachBright(Bright &bright);
 
+    void readEachSpeed(Bright &bright);
+
     // void write(int &addr, byte &var);
     // void write(int &addr, boolean &var);
 
@@ -66,6 +69,8 @@ public:
     void writeBright(Bright &bright, Key &key);
 
     void writeEachBright(Bright &bright, Key &key);
+
+    void writeEachSpeed(Bright &bright, Key &key);
 
     void writeChanges(Watch &watch, Bright &bright, Key &key);
 };

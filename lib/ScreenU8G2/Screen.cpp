@@ -1,6 +1,6 @@
 #include "Screen.h"
 
-Screen::Screen(String WavelengthSMD[], String lightColor[]) 
+Screen::Screen(String WavelengthSMD[], String lightColor[])
 {
     for (byte i = 0; i < lampAmount; i++)
     {
@@ -13,6 +13,11 @@ Screen::~Screen()
 {
 }
 
+void Screen::begin()
+{
+    efx.begin();
+}
+
 void Screen::emptyDisplay(Key &key)
 {
     if (key.screen == key.lamp && key.justPressed())
@@ -20,7 +25,7 @@ void Screen::emptyDisplay(Key &key)
         efx.firstPage();
         do
         {
-            efx.efx.textAlign("READY", EFX::PosX::center, EFX::PosY::center);
+            efx.textAlign("READY", EFX::PosX::center, EFX::PosY::center);
         } while (efx.nextPage());
     }
 }
@@ -455,12 +460,12 @@ void Screen::intervalScreen(Watch &watch, Key &key)
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
-            digefx.stringAlign(watch.interval, " m", EFX::PosX::center, EFX::PosY::center);
+            efx.digStringAlign(watch.interval, " m", EFX::PosX::center, EFX::PosY::center);
 
             efx.blinkFrame(watch.interval, EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-            
+
         } while (efx.nextPage());
     }
 }
@@ -474,15 +479,17 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Sun Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringDeep("Bright Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
-            digefx.stringAlign(bright.waitTime, " bp", EFX::PosX::center, EFX::PosY::center);
+            efx.stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
-            efx.blinkFrame(bright.waitTime, EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
+            efx.digStringAlign(bright.waitTime[key.id], " ms", EFX::PosX::rightHalf, EFX::PosY::center);
 
-            escapeBar(key.awCount, key.click(keySpeed));
+            efx.blinkFrame(bright.waitTime[key.id], EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
+
+            efx.escapeBar(key.awCount, key.click(keySpeed));
 
         } while (efx.nextPage());
     }
@@ -581,8 +588,8 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
             {
                 efx.setHeight(u8g2_font_courB08_tf);
 
-                customY(nextY(lampAmount, i));
-                strefx.digAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
+                efx.customY(efx.nextY(lampAmount, i));
+                efx.strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -612,8 +619,8 @@ void Screen::allColorScreen(Bright &bright, Key &key)
             {
                 efx.setHeight(u8g2_font_courB08_tf);
 
-                customY(nextY(lampAmount, i));
-                strefx.digAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
+                efx.customY(efx.nextY(lampAmount, i));
+                efx.strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
