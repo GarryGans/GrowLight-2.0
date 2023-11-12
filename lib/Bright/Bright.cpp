@@ -8,9 +8,14 @@ Bright::~Bright()
 {
 }
 
-double Bright::myMap(double x, double in_min, double in_max, double out_min, double out_max) // 2 - 1 - 3 - 255 - 100  
+// double Bright::myMap(double x, double in_min, double in_max, double out_min, double out_max) // 2 - 1 - 3 - 255 - 100  
+// {
+//     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min; // 1 * - 155 / 2 + 255
+// }
+
+byte Bright::myMap(byte x, byte in_min, byte in_max, byte out_min, byte out_max)
 {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min; // 1 * - 155 / 2 + 255
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 void Bright::begin(byte startBrightPin)

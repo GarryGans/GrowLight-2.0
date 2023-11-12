@@ -47,7 +47,9 @@ public:
     Bright();
     ~Bright();
 
-    double myMap(double x, double in_min, double in_max, double out_min, double out_max);
+    // double myMap(double x, double in_min, double in_max, double out_min, double out_max);
+
+    byte myMap(byte x, byte in_min, byte in_max, byte out_min, byte out_max);
 
     void correctAllBright();
     void setRiseSpeed(Key &key);
