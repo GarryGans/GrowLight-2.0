@@ -30,7 +30,7 @@ boolean Key::autoOk(Screen screen)
 
 boolean Key::autoOk(byte count)
 {
-    awCount = timer_3.reduceCounter(count, click(keySpeed));
+    awCount = timer_3.reduceCounter(count, resetCounter);
 
     if (awCount == 0)
     {
@@ -267,7 +267,7 @@ void Key::setSpeed()
 
     if (screen == speed)
     {
-        if (ok() || autoOk(autoWrite))
+        if (ok())
         {
             writeSpeed = true;
             screen = lamp;
@@ -609,7 +609,7 @@ void Key::keyCommands()
         }
     }
 
-    autoScreenMove();
+    // autoScreenMove();
     manualChangeScreen();
 
     manualSwitchLight();

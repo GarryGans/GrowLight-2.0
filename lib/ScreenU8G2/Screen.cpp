@@ -198,9 +198,6 @@ void Screen::setScreen(Bright &brigth, Key &key)
             efx.digAlign(brigth.setBright[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
             efx.blinkFrame(brigth.setBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -224,8 +221,6 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             efx.blinkFrame(brigth.riseBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
 
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -248,8 +243,6 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
             efx.digAlign(bright.maxBright[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
             efx.blinkFrame(bright.maxBright[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
 
         } while (efx.nextPage());
     }
@@ -312,9 +305,6 @@ void Screen::timerScreen(Watch &watch, Key &key)
             default:
                 break;
             }
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -402,9 +392,6 @@ void Screen::setWatchScreen(Watch &watch, Key &key)
         {
             blinkDate(key, watch);
             blinkTime(key, watch);
-
-            // escapeBar(key.);
-
         } while (efx.nextPage());
     }
 }
@@ -469,9 +456,6 @@ void Screen::intervalScreen(Watch &watch, Key &key)
             efx.digStringAlign(watch.interval, " m", EFX::PosX::center, EFX::PosY::center);
 
             efx.blinkFrame(watch.interval, EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -494,9 +478,6 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
             efx.digStringAlign(bright.waitTime[key.id], " ms", EFX::PosX::rightHalf, EFX::PosY::center);
 
             efx.blinkFrame(bright.waitTime[key.id], EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
-
-            efx.escapeBar(key.awCount, key.click(keySpeed) || key.resetCounter);
-
         } while (efx.nextPage());
     }
 }
@@ -512,9 +493,6 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
 
             efx.moveStringPad("Set SunTime", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
             blinkSunTime(key, watch);
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -530,8 +508,6 @@ void Screen::startScreen(Watch &watch, Key &key)
             headerTime(watch);
 
             showSunTime(watch);
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -597,9 +573,6 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
                 efx.customY(efx.nextY(lampAmount, i));
                 efx.strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -628,9 +601,6 @@ void Screen::allColorScreen(Bright &bright, Key &key)
                 efx.customY(efx.nextY(lampAmount, i));
                 efx.strDigAlign(lightColor[i], bright.maxBright[i], EFX::PosX::rightHalf, EFX::PosY::custom);
             }
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
@@ -661,9 +631,6 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
             efx.digAlign(voltage.ampere[key.id], EFX::PosX::rightHalf, EFX::PosY::center);
 
             efx.blinkFrame(voltage.ampere[key.id], EFX::PosX::rightHalf, EFX::PosY::centerFrame, key.resetCounter);
-
-            // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
-
         } while (efx.nextPage());
     }
 }
