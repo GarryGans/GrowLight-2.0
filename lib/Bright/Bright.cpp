@@ -234,7 +234,6 @@ void Bright::setRiseSpeed(Key &key)
 
 void Bright::commands(Watch &watch, Key &key)
 {
-
     autoBright(watch, key);
 
     changeBright(key, watch);
