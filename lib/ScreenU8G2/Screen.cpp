@@ -107,7 +107,7 @@ void Screen::timerLine(Watch &watch, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
-        efx.setHeight(u8g2_font_crox4h_tf);
+        efx.setHeight(u8g2_font_pixelmordred_tf);
 
         efx.moveStringPad("SKIP", EFX::PosX::center, EFX::PosY::downSpace, paddingSkip, moveSpeedSkip);
     }
@@ -120,9 +120,11 @@ void Screen::timerLine(Watch &watch, Key &key, Bright &bright)
 
         efx.setHeight(u8g2_font_HelvetiPixelOutline_tr);
 
-        efx.textAlign("PWM: ", EFX::PosX::center, EFX::PosY::downSpace);
+        // efx.textAlign("PWM: ", EFX::PosX::center, EFX::PosY::downSpace);
 
-        efx.digAlign(bright.manualBright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
+        // efx.digAlign(bright.manualBright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
+
+        efx.strDigAlign("PWM: ", bright.manualBright[key.id], EFX::PosX::center, EFX::PosY::downSpace);
     }
 
     else
@@ -277,7 +279,7 @@ void Screen::timerScreen(Watch &watch, Key &key)
 
             printWatch(now.hour(), now.minute(), now.second());
 
-            efx.setHeight(u8g2_font_ncenB18_tf);
+            efx.setHeight(u8g2_font_inb16_mf);
 
             efx.stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
@@ -485,7 +487,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             efx.moveStringPad("Bright Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
-            efx.setHeight(u8g2_font_ncenB18_tf);
+            efx.setHeight(u8g2_font_crox5tb_tf);
 
             efx.stringAlign(lightColor[key.id], EFX::PosX::leftHalf, EFX::PosY::center);
 
@@ -493,7 +495,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             efx.blinkFrame(bright.waitTime[key.id], EFX::PosX::customFrame, EFX::PosY::centerFrame, key.resetCounter);
 
-            efx.escapeBar(key.awCount, key.click(keySpeed));
+            efx.escapeBar(key.awCount, key.click(keySpeed) || key.resetCounter);
 
         } while (efx.nextPage());
     }
