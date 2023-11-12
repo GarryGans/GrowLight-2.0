@@ -30,7 +30,7 @@ boolean Key::autoOk(Screen screen)
 
 boolean Key::autoOk(byte count)
 {
-    awCount = timer_3.reduceCounter(count, resetCounter);
+    awCount = timer_2.reduceCounter(count);
 
     if (awCount == 0)
     {
@@ -598,12 +598,14 @@ boolean Key::setInterval()
 }
 
 void Key::keyCommands()
-{
+{  
     read();
 
     if (screen == start)
     {
-        if (timer_2.ready(1))
+        resetCounter = true;
+
+        if (autoOk(4))
         {
             screen = lamp;
         }

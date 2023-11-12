@@ -507,7 +507,7 @@ void Screen::startScreen(Watch &watch, Key &key)
             headerDate(watch);
             headerTime(watch);
 
-            showSunTime(watch);
+            // efx.escapeBar(key.awCount, key.resetCounter);
         } while (efx.nextPage());
     }
 }

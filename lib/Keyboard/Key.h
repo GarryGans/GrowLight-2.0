@@ -45,9 +45,10 @@ private:
     Timer timer_0;
     Timer timer_1;
     Timer timer_2;
-    Timer timer_3;
+    // Timer timer_3;
 
     byte awCount = 0;
+    // boolean first = true;
 
     enum Screen
     {
@@ -75,6 +76,7 @@ private:
         speed, // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
 
         voltage
+
     } screen = start;
 
     enum Direction
