@@ -20,7 +20,7 @@
 #define moveSpeed 100
 
 #define paddingShot 0
-#define moveSpeedShot 100
+#define moveSpeedShot 180
 
 #define paddingSkip 20
 #define moveSpeedSkip 100

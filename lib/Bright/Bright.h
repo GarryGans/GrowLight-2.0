@@ -32,7 +32,7 @@ private:
 
     const byte minAllBright = 1;
     byte allBrigh;
-    const byte maxAllBright = 100;
+    const byte maxAllBright = 9;
 
     const byte minAllColor = 1;
     byte allColor;
@@ -46,6 +46,8 @@ private:
 public:
     Bright();
     ~Bright();
+
+    double myMap(double x, double in_min, double in_max, double out_min, double out_max);
 
     void correctAllBright();
     void setRiseSpeed(Key &key);

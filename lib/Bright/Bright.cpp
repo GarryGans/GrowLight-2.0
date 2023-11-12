@@ -8,6 +8,11 @@ Bright::~Bright()
 {
 }
 
+double Bright::myMap(double x, double in_min, double in_max, double out_min, double out_max) // 2 - 1 - 3 - 255 - 100  
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min; // 1 * - 155 / 2 + 255
+}
+
 void Bright::begin(byte startBrightPin)
 {
     for (byte i = 0; i < lampAmount; i++)
@@ -178,12 +183,12 @@ boolean Bright::setAllBrigh(Key &key)
         {
             for (byte i = 0; i < lampAmount; i++)
             {
-                maxBright[i] = map(allBrigh, minAllBright, maxAllBright, setBright[i], allMaxPWM);
+                maxBright[i] = myMap(allBrigh, minAllBright, maxAllBright, riseBright[i], allMaxPWM);
 
                 analogWrite(pin[i], (allMaxPWM - maxBright[i]));
 
                 //   TO DISPLAY
-                // brightDisplay[i] = map(bright[i], setBright[i], maxBright[i], minAllBright, maxAllBright);
+                // brightDisplay[i] = map(bright[i], riseBright[i], maxBright[i], minAllBright, maxAllBright);
             }
         }
 
@@ -201,18 +206,18 @@ boolean Bright::setAllColor(Key &key)
         {
             for (byte i = 0; i < 2; i++)
             {
-                maxBright[i] = map(allColor, minAllColor, maxAllColor, setBright[i], allMaxPWM);
+                maxBright[i] = myMap(allColor, minAllColor, maxAllColor, riseBright[i], allMaxPWM);
 
                 analogWrite(pin[i], (allMaxPWM - maxBright[i]));
             }
 
-            // maxBright[2] = map(allColor, minAllColor, maxAllColor, setBright[2], allMaxPWM);
+            // maxBright[2] = map(allColor, minAllColor, maxAllColor, riseBright[2], allMaxPWM);
 
             analogWrite(pin[2], (allMaxPWM - maxBright[2]));
 
             for (byte i = 3; i < lampAmount; i++)
             {
-                maxBright[i] = map(allColor, minAllColor, maxAllColor, allMaxPWM, setBright[i]);
+                maxBright[i] = myMap(allColor, minAllColor, maxAllColor, allMaxPWM, riseBright[i]);
 
                 analogWrite(pin[i], (allMaxPWM - maxBright[i]));
             }
