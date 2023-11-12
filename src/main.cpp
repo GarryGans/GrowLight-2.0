@@ -31,6 +31,9 @@ void setup()
 
     memory.begin(watch, bright);
     delay(100);
+
+    bright.correctAllBright();
+    delay(100);
 }
 
 void loop()

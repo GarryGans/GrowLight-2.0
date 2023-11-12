@@ -98,36 +98,40 @@ void Screen::iGorLogo()
 
 void Screen::brightInfo(Bright &bright, Key &key)
 {
-    efx.setHeight(u8g2_font_pressstart2p_8f);
+    efx.setHeight(u8g2_font_t0_12b_tf);
 
-    efx.digAlign(key.screen == key.manual ? bright.manualBright[key.id] : bright.bright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
+    efx.digAlign(bright.bright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
 }
 
-void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
+void Screen::timerLine(Watch &watch, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
         efx.setHeight(u8g2_font_crox4h_tf);
 
-        efx.moveStringDeep("SKIP", EFX::PosX::center, EFX::PosY::downSpace, false, moveSpeedSkip);
+        efx.moveStringPad("SKIP", EFX::PosX::center, EFX::PosY::downSpace, paddingSkip, moveSpeedSkip);
     }
 
     else if (key.screen == key.manual)
     {
-        efx.setHeight(u8g2_font_crox4h_tf);
+        efx.setHeight(u8g2_font_pressstart2p_8f);
 
-        efx.textAlign("MANUAL", EFX::PosX::leftSpace, EFX::PosY::downSpace);
-        brightInfo(bright, key);
+        efx.textAlign("MANUAL", EFX::PosX::center, EFX::PosY::upHalf);
 
-        // escapeBar(key.resetCounter, escConter, key.escFrScreen, true, escSpeed);
+        efx.setHeight(u8g2_font_HelvetiPixelOutline_tr);
+
+        efx.textAlign("PWM: ", EFX::PosX::center, EFX::PosY::downSpace);
+
+        efx.digAlign(bright.manualBright[key.id], EFX::PosX::rightHalf, EFX::PosY::downSpace);
     }
 
     else
     {
-        efx.setHeight(u8g2_font_courB08_tn);
-        efx.setPosition("00:00-00:00", EFX::PosX::leftSpace, EFX::PosY::downSpace);
+        efx.setHeight(u8g2_font_pressstart2p_8f);
+        efx.setPosition("00:00-00:00", EFX::PosX::center, EFX::PosY::upHalf);
 
         printSpecTime(watch, key.id);
+
         brightInfo(bright, key);
     }
 }
@@ -141,7 +145,7 @@ void Screen::lampInfo(Watch &watch, Key &key)
 
     // efx.textAlign(string, EFX::PosX::center, EFX::PosY::upHalf);
 
-    efx.moveStringDeep(string, EFX::PosX::center, EFX::PosY::upHalf, deepX_SMD, moveSpeedSMD);
+    efx.moveStringPad(string, EFX::PosX::leftHalf, EFX::PosY::upSpace, paddingSMD, moveSpeedSMD);
 
     efx.setHeight(u8g2_font_crox5tb_tf);
 
@@ -183,7 +187,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Set Set", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Set Set", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -208,7 +212,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Set Rise", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Set Rise", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -233,7 +237,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Set MaxBright", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Set MaxBright", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -322,7 +326,7 @@ void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Bright &br
         {
             headerTime(watch);
             lampInfo(watch, key);
-            bottomLine(watch, key, bright);
+            timerLine(watch, key, bright);
         } while (efx.nextPage());
     }
 }
@@ -456,7 +460,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Interval", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Interval", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -479,7 +483,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Bright Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Bright Speed", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -504,7 +508,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("Set SunTime", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
+            efx.moveStringPad("Set SunTime", EFX::PosX::center, EFX::PosY::upSpace, false, moveSpeed);
             blinkSunTime(key, watch);
 
             // escapeBar(key.resetCounter, escConter, key.escFrScreen, false, escSpeed);
@@ -576,13 +580,13 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("BRIGHT", EFX::PosX::leftSpace, EFX::PosY::upSpace, false, moveSpeedShot);
+            efx.moveStringPad("BRIGHT", EFX::PosX::leftHalf, EFX::PosY::upSpace, paddingShot, moveSpeedShot);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
             efx.digAlign(bright.allBrigh, EFX::PosX::leftHalf, EFX::PosY::center);
 
-            efx.blinkFrame(bright.allBrigh, EFX::PosX::leftHalf, EFX::PosY::centerFrame);
+            efx.blinkFrame(bright.allBrigh, EFX::PosX::leftHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             for (byte i = 0; i < lampAmount; i++)
             {
@@ -607,13 +611,13 @@ void Screen::allColorScreen(Bright &bright, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("COLOR", EFX::PosX::leftSpace, EFX::PosY::upSpace, false, moveSpeedShot);
+            efx.moveStringPad("COLOR", EFX::PosX::leftHalf, EFX::PosY::upSpace, false, moveSpeedShot);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
             efx.digAlign(bright.allColor, EFX::PosX::leftHalf, EFX::PosY::center);
 
-            efx.blinkFrame(bright.allColor, EFX::PosX::leftHalf, EFX::PosY::centerFrame);
+            efx.blinkFrame(bright.allColor, EFX::PosX::leftHalf, EFX::PosY::centerFrame, key.resetCounter);
 
             for (byte i = 0; i < lampAmount; i++)
             {
@@ -638,7 +642,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
         {
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("PWM", EFX::PosX::leftSpace, EFX::PosY::upSpace);
+            efx.moveStringPad("PWM", EFX::PosX::leftHalf, EFX::PosY::upSpace);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -648,7 +652,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             efx.setHeight(u8g2_font_pressstart2p_8f);
 
-            efx.moveStringDeep("MW", EFX::PosX::rightSpace, EFX::PosY::upSpace);
+            efx.moveStringPad("MW", EFX::PosX::rightHalf, EFX::PosY::upSpace);
 
             efx.setHeight(u8g2_font_ncenB18_tf);
 
@@ -674,11 +678,11 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
     brightScreen(bright, key);
 
     riseSpeedScreen(bright, key);
-    intervalScreen(watch, key);
 
     sunTimeScreen(watch, key);
     allBrightScreen(bright, key);
     allColorScreen(bright, key);
+    intervalScreen(watch, key);
 
     // sleep(key);
 }

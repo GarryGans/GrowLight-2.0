@@ -13,13 +13,28 @@
 #include <EFX.h>
 #include <Voltage.h>
 
+#define escConter 4
+#define escSpeed 90
+
+#define padding 10
+#define moveSpeed 100
+
+#define paddingShot 0
+#define moveSpeedShot 100
+
+#define paddingSkip 20
+#define moveSpeedSkip 100
+
+#define paddingSMD 10
+#define deepX_SMD 10
+#define moveSpeedSMD 100
+
 class Screen
 {
 private:
     EFX efx;
-    
-    Timer timer;
 
+    Timer timer;
 
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
@@ -27,22 +42,6 @@ private:
     // const char *advise[2] = {"Set SunTime", "Set MaxBright"};
 
     const String daysOfTheWeek[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
-    byte escConter = 4;
-    int escSpeed = 90;
-
-    byte padding = 10;
-    int moveSpeed = 100;
-
-    byte paddingShot = 10;
-    int moveSpeedShot = 200;
-
-    byte paddingSkip = 10;
-    int moveSpeedSkip = 10;
-
-    byte paddingSMD = 10;
-    byte deepX_SMD = 10;
-    int moveSpeedSMD = 100;
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
@@ -67,7 +66,7 @@ public:
 
     void brightInfo(Bright &bright, Key &key);
 
-    void bottomLine(Watch &watch, Key &key, Bright &bright);
+    void timerLine(Watch &watch, Key &key, Bright &bright);
 
     void lampInfo(Watch &watch, Key &key);
 

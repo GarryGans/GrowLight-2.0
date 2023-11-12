@@ -19,6 +19,22 @@ void Bright::begin(byte startBrightPin)
     }
 }
 
+void Bright::correctAllBright()
+{
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        if (riseBright[i] < setBright[i])
+        {
+            riseBright[i] = setBright[i];
+        }
+
+        if (maxBright[i] < riseBright[i])
+        {
+            maxBright[i] = riseBright[i];
+        }
+    }
+}
+
 void Bright::setMinBright(byte pin, byte &bright, byte brightRise)
 {
     if (bright < brightRise)
@@ -183,7 +199,23 @@ boolean Bright::setAllColor(Key &key)
     {
         if (key.valChange(allColor, minAllColor, maxAllColor))
         {
-            return true;
+            for (byte i = 0; i < 2; i++)
+            {
+                maxBright[i] = map(allColor, minAllColor, maxAllColor, setBright[i], allMaxPWM);
+
+                analogWrite(pin[i], (allMaxPWM - maxBright[i]));
+            }
+
+            // maxBright[2] = map(allColor, minAllColor, maxAllColor, setBright[2], allMaxPWM);
+
+            analogWrite(pin[2], (allMaxPWM - maxBright[2]));
+
+            for (byte i = 3; i < lampAmount; i++)
+            {
+                maxBright[i] = map(allColor, minAllColor, maxAllColor, allMaxPWM, setBright[i]);
+
+                analogWrite(pin[i], (allMaxPWM - maxBright[i]));
+            }
         }
 
         return true;
@@ -202,8 +234,15 @@ void Bright::setRiseSpeed(Key &key)
 
 void Bright::commands(Watch &watch, Key &key)
 {
+
     autoBright(watch, key);
+
     changeBright(key, watch);
+
     manualChangeBright(watch, key);
+
     setRiseSpeed(key);
+
+    setAllBrigh(key);
+    setAllColor(key);
 }

@@ -34,6 +34,6 @@ String WavelengthSMD[lampAmount] = {
     "660nm",
     "3000K",
     "440nm",
-    "365nm+385nm"};
+    "385nm"};
 
 String lightColor[lampAmount] = {"FR", "RED", "CXB", "BL", "UV"};

@@ -34,9 +34,9 @@ private:
     byte allBrigh;
     const byte maxAllBright = 100;
 
-    const byte minAllColor = 0;
+    const byte minAllColor = 1;
     byte allColor;
-    const byte maxAllColor = 99;
+    const byte maxAllColor = 5;
 
     const byte allMinPWM = 0;
     const byte allMaxPWM = 255;
@@ -47,6 +47,7 @@ public:
     Bright();
     ~Bright();
 
+    void correctAllBright();
     void setRiseSpeed(Key &key);
 
     void begin(byte startBrightPin);

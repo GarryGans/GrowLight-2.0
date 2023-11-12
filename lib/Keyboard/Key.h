@@ -10,9 +10,13 @@
 #define keyBright 7
 #define keySpeed 4
 
-#define keyManual 1
+#define keyManual 11
 
 #define keySunTime 2
+#define keySunBright 3
+#define keySunColor 1
+#define keyInterval 5
+
 #define keyWatch 10
 
 #define keyEscape 0
@@ -23,10 +27,9 @@
 #define keyForward 8
 #define keyBack 12
 
-#define keyInterval 5
-#define keySkip 3
-// #define key 11
-// #define key 13
+#define keySkip 13
+
+
 
 #define autoWrite 12
 
@@ -62,13 +65,14 @@ private:
         maxBright,
         setBright,
 
-        speed,    // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
         interval, // ManualInterval or AutoInterval or SpecBySpec  or TugetherGroup or Together(NO interval is OFF)
 
         sunDuration,
         // In  Future realise with encoder
         sunBright,
         sunColor,
+        
+        speed, // Manual Sun Speed Set  or (Always At Start  Only Sun Rise) or No Speed is OFF
 
         voltage
     } screen = start;

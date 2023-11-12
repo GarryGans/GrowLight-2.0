@@ -459,31 +459,36 @@ void Key::writeSunSetting()
 
 boolean Key::dayReduration()
 {
-    if (click(keySunTime) && nextScreen && screen == sunColor)
+    if (click(keySunTime))
     {
-        screen = sunDuration;
-        nextScreen = true;
-    }
+        if (screen == lamp)
+        {
+            reDay = true;
+            reSetting = true;
 
-    else if (click(keySunTime) && screen == lamp && !nextScreen)
-    {
-        reDay = true;
-        reSetting = true;
-
-        screen = sunDuration;
-        nextScreen = true;
+            screen = sunDuration;
+        }
     }
 
     if (reDay && escape())
     {
-        resetSunSetting();
+        reSetting = false;
+        reDay = false;
+
+        screen = lamp;
     }
 
     if (screen == sunDuration && ok())
     {
-        writeSunSetting();
+        writeDay = true;
 
-        resetSunSetting();
+        correctDay = true;
+
+        reSetting = false;
+
+        reDay = false;
+
+        screen = lamp;
     }
 
     if (screen == sunDuration)
@@ -496,27 +501,27 @@ boolean Key::dayReduration()
 
 boolean Key::allBrigh()
 {
-    if (click(keySunTime) && nextScreen && screen == sunDuration)
-    {
-        nextScreen = false;
-    }
-
-    else if (click(keySunTime) && screen == sunDuration && !nextScreen)
+    if (click(keySunBright) && screen == lamp)
     {
         screen = sunBright;
-        nextScreen = true;
     }
 
-    if (reDay && escape())
+    if (screen == sunBright && escape())
     {
-        resetSunSetting();
+        reSetting = false;
+
+        screen = lamp;
     }
 
     if (screen == sunBright && ok())
     {
-        writeSunSetting();
+        writeAllBright = true;
 
-        resetSunSetting();
+        correctDay = true;
+
+        reSetting = false;
+
+        screen = lamp;
     }
 
     if (screen == sunBright)
@@ -529,27 +534,27 @@ boolean Key::allBrigh()
 
 boolean Key::allColor()
 {
-    if (click(keySunTime) && nextScreen && screen == sunBright)
-    {
-        nextScreen = false;
-    }
-
-    else if (click(keySunTime) && screen == sunBright && !nextScreen)
+    if (click(keySunColor) && screen == lamp)
     {
         screen = sunColor;
-        nextScreen = true;
     }
 
-    if (reDay && escape())
+    if (screen == sunColor && escape())
     {
-        resetSunSetting();
+        reSetting = false;
+
+        screen = lamp;
     }
 
     if (screen == sunColor && ok())
     {
-        writeSunSetting();
+        writeAllColor = true;
 
-        resetSunSetting();
+        correctDay = true;
+
+        reSetting = false;
+
+        screen = lamp;
     }
 
     if (screen == sunColor)
