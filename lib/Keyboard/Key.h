@@ -31,7 +31,7 @@
 
 
 
-#define autoWrite 12
+#define autoEsc 12
 
 class Key : public AmperkaKB
 {
@@ -45,10 +45,10 @@ private:
     Timer timer_0;
     Timer timer_1;
     Timer timer_2;
-    // Timer timer_3;
+    Timer timer_3;
 
-    byte awCount = 0;
-    // boolean first = true;
+    byte awCount = autoEsc;
+    boolean first = true;
 
     enum Screen
     {

@@ -30,9 +30,9 @@ boolean Key::autoOk(Screen screen)
 
 boolean Key::autoOk(byte count)
 {
-    awCount = timer_2.reduceCounter(count);
+    count = timer_2.reduceCounter(count);
 
-    if (awCount == 0)
+    if (count == 0)
     {
         // Serial.print("awCount FIN: ");
         // Serial.println(awCount);
@@ -598,18 +598,16 @@ boolean Key::setInterval()
 }
 
 void Key::keyCommands()
-{  
+{
     read();
 
-    if (screen == start)
+    if (screen == start && awCount == 0)
     {
-        resetCounter = true;
-
-        if (autoOk(4))
-        {
-            screen = lamp;
-        }
+        screen = lamp;
+        first = false;
     }
+
+    awCount = timer_3.reduceCounter(autoEsc);
 
     // autoScreenMove();
     manualChangeScreen();
