@@ -48,7 +48,7 @@ private:
     Timer timer_3;
 
     byte awCount = autoEsc;
-    
+
     enum Screen
     {
         start,
