@@ -507,8 +507,6 @@ void Screen::startScreen(Watch &watch, Key &key)
             headerDate(watch);
             headerTime(watch);
 
-            // efx.progressBar(key.awCount);
-            // efx.escapeBar(key.awCount);
             efx.bar(key.awCount, true);
 
         } while (efx.nextPage());

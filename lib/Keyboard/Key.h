@@ -31,7 +31,7 @@
 
 
 
-#define autoEsc 4
+#define autoEsc 1
 
 class Key : public AmperkaKB
 {
