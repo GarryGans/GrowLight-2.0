@@ -31,7 +31,7 @@
 
 
 
-#define autoEsc 12
+#define autoEsc 4
 
 class Key : public AmperkaKB
 {
@@ -48,8 +48,7 @@ private:
     Timer timer_3;
 
     byte awCount = autoEsc;
-    boolean first = true;
-
+    
     enum Screen
     {
         start,

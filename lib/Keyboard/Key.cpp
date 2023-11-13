@@ -601,13 +601,17 @@ void Key::keyCommands()
 {
     read();
 
-    if (screen == start && awCount == 0)
+    if (screen == start)
     {
-        screen = lamp;
-        first = false;
+        if (awCount == 0)
+        {
+            screen = lamp;
+        }
+        else
+        {
+            awCount = timer_3.reduceCounter(autoEsc);
+        }
     }
-
-    awCount = timer_3.reduceCounter(autoEsc);
 
     // autoScreenMove();
     manualChangeScreen();
